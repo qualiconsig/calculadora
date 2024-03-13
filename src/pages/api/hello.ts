@@ -1,13 +1,12 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
+import axios from 'axios'
 
-type Data = {
-  name: string;
-};
+const url = axios.create({
+  baseURL: 'http://127.0.0.1:8080/'
+})
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>,
-) {
-  res.status(200).json({ name: "John Doe" });
-}
+export const calculadora = url.post('calculadora', {
+  prazo: '313131',
+  parcela: "222",
+  vl: '2222',
+  parcelas: 'sss'
+})
