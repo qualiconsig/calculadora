@@ -5,8 +5,12 @@ import { CiSearch } from "react-icons/ci";
 
 export default function Home () {
   return (
-    <Flex h={'100vh'} align={'center'}>
-      <Box position={'absolute'}><Image alt="fundo" src={fundo}/></Box>
+    <Flex h={'100vh'}  bg={'blue.600'} align={'center'}>
+      <Box position={'absolute'}><Image alt="fundo" src={fundo} style={{
+        backgroundRepeat: 'no-repeat',
+        height: '100vh',
+        width: "100vw"
+      }}/></Box>
       <Flex margin={'0 auto'} mt={60} gap={10} zIndex={999} >
         <Link href={'/calculadora/pagbank'}>
           <Button w={'150px'} color={'white'} boxShadow= "3px 2px 8px 3px rgba(0,0,0,0.75)" h={20} bg={'#2980B9'} _hover={{
