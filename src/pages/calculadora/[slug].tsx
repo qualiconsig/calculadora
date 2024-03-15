@@ -1,14 +1,19 @@
+'use client'
+import { resultProps } from "@/types";
 import { Box, Button, Checkbox, Flex, Grid, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import quali from '../../../public/Qualiconsig.png'
 
 export default function Calculadora() {
   const route = useRouter();
   const r = route.query.slug;
 
   const [formData, setFormData] = useState()
+  const [result, setResult] = useState<resultProps[]>()
 
   const {
     register,
@@ -22,68 +27,75 @@ export default function Calculadora() {
       const response = await axios.post('http://127.0.0.1:8080/calculadora', {
         data
       })
-      console.log(response)
-      console.log(data)
+      if(response) {
+        setResult(response.data)
+        console.log(result)
+      }
     } catch (e) {
       console.log(e)
     }
-   
   }
+  
   return (
     <Box w={"100vw"}>
-      <Box w={"80%"} m="0 auto"></Box>
+      <Box w={"80%"}m="0 auto"></Box>
       <Flex>
         <Box
-         
+         h={'100vh'}
           flex={1}
-          bgGradient={"linear(to-r, #0BA360, #0BA360, #2DB382 )"}
+        bg={"#FFF"}
           color={"white"}
+          boxShadow={'1px 2px 2px red'}
         >
-          <Box w={"90%"} m={"0 auto"} mt={10}>
-            <Text fontSize={20}>Simular calculadora {r}</Text>
+          <Box w={"90%"} m={"0 auto"} mt={10} color={'black'}>
+            <Text fontSize={20}>Simulação calculadora </Text>
             <Box w={"100%"}>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex mt={20} mb={7}>
-                  <Text w={"25%"}>Prazo inicial</Text>
+                  <Text w={"30%"}>Prazo inicial</Text>
                   <Input
                     focusBorderColor="white"
-                    border={"none"}
-                    bg={"black"}
+                    border={"1px solid #d6d0f5"}
+                    bg={"#edeafd"}
                     w={"40%"}
                     {...register('prazo')}
                   />
                 </Flex>
                 <Flex mb={7}>
-                  <Text w={"25%"}>Parcela Atual</Text>
+                  <Text w={"30%"}>Parcela Atual</Text>
                   <Input
                     focusBorderColor="white"
-                    border={"none"}
-                    bg={"black"}
+                    border={"1px solid #d6d0f5"}
+                    bg={"#edeafd"}
                     w={"40%"}
                     {...register('parcela atual')}
                   />
                 </Flex>
                 <Flex mb={7}>
-                  <Text w={"25%"}>Vl Emprestimo</Text>
+                  <Text w={"30%"}>Vl Emprestimo</Text>
                   <Input
                     focusBorderColor="white"
-                    border={"none"}
-                    bg={"black"}
+                    border={"1px solid #d6d0f5"}
+                    bg={"#edeafd"}
+                    
                     w={"40%"}
                     {...register('vl emprestimo')}
                   />
                 </Flex>
                 <Flex>
-                  <Text w={"25%"}>Parcelas Pagas</Text>
+                  <Text w={"30%"}>Parcelas Pagas</Text>
                   <Input
-                    bg={"black"}
+                    
                     focusBorderColor="white"
-                    border={"none"}
+                    border={"1px solid #d6d0f5"}
+                    bg={"#edeafd"}
                     w={"40%"}
                     {...register('parcelaPaga')}
                   />
                 </Flex>
-                <Button type="submit">Calcular</Button>
+                <Button mt={10} bg={'#3f5ee9'} color={'#FFF'} _hover={{
+                  background: "#066986"
+                }}  type="submit">Calcular</Button>
               </form>
             </Box>
             <Flex
@@ -92,43 +104,84 @@ export default function Calculadora() {
               justify={"center"}
               align={"center"}
             >
-              <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+              {/* <Grid templateColumns="repeat(2, 1fr)" gap={4}>
                 <Box>
                   <Text>Taxa atual</Text>
-                  <Box bg="blue.200" p={4} borderRadius="md" textAlign="center">
+                  <Box bg={'#ffc'} border={'1px solid #f5ecb7'} p={4} borderRadius="full" textAlign="center">
                     <p>Quadrado 1</p>
                   </Box>
                 </Box>
                 <Box>
                   <Text>Parcelas restantes</Text>
-                  <Box bg="green.200" p={4} borderRadius="md" textAlign="center">
+                  <Box border={'1px solid #f5ecb7'} bg={'#ffc'} p={4} borderRadius="full" textAlign="center">
                     <p>Quadrado 2</p>
                   </Box>
                 </Box>
                 <Box>
                   <Text>Parcelas restantes</Text>
-                  <Box bg="purple.200" p={4} borderRadius="md" textAlign="center">
+                  <Box border={'1px solid #f5ecb7'} bg={'#ffc'} p={4} borderRadius="full" textAlign="center">
                     <p>Quadrado 3</p>
                   </Box>
                 </Box>
                 <Box>
-                  <Flex gap={5} justify={'center'}>
+                  <Flex gap={5} justify={'center'} bg={'#ffc'}>
                   <Text>Saldo real</Text>
                  
-                  <Checkbox/>
+                  <Checkbox color={'black'} />
                   </Flex>
                  
                  
                 </Box>
                 
-              </Grid>
+              </Grid> */}
             </Flex>
           </Box>
         </Box>
-        <Box flex={1} bgGradient={"linear(to-r, #09203F, #537895)"}>
-          d
+        <Box flex={2} bg={'#436087'} >
+        <Flex w={'80%'}  m={"50px auto"}  p={5} borderRadius={5}  justifyContent="space-between" bg={'#2D2772'} color="white">
+        <Flex flexDir={'column'} align={'center'}>
+          <Text color={'#F8D23A'} fontWeight={'600'}>Economia Mensal do Cliente</Text>
+          {result?.map((item:resultProps, index:number) => (
+        <Flex key={index} justifyContent="space-between" color={'white'}>
+          <Box>{item.economiaMensalCliente}</Box>
+          
+        </Flex>
+      ))}
+        </Flex>
+        <Flex flexDir={'column'} align={'center'} >
+          <Text color={'#F8D23A'} fontWeight={'600'}>Nova Taxa</Text>
+          {result?.map((item:resultProps, index:number) => (
+        <Flex key={index} justifyContent="space-between" color={'white'}>
+          <Box>{item.novataxa}</Box>
+          
+        </Flex>
+      ))}
+        </Flex>
+        <Flex flexDir={'column'} align={'center'} >
+          <Text color={'#F8D23A'} fontWeight={'600'}>Nova Parcela</Text>
+          {result?.map((item:resultProps, index:number) => (
+        <Flex key={index} justifyContent="space-between" color={'white'}>
+          <Box>{item.novaParcela}</Box>
+          
+        </Flex>
+      ))}
+        </Flex>
+        <Flex flexDir={'column'} align={'center'} >
+          <Text color={'#F8D23A'} fontWeight={'600'}>Economia Total no Período</Text>
+          {result?.map((item:resultProps, index:number) => (
+        <Flex key={index} justifyContent="space-between" color={'white'}>
+          <Box>{item.economiaTotalPeriodo}</Box>
+          
+        </Flex>
+      ))}
+        </Flex>
+      </Flex>
+      <Box position={'absolute'} right={10} bottom={10}>
+         <Image quality={100} src={quali} alt="logo"/>
+         </Box>
         </Box>
       </Flex>
+      
     </Box>
   );
 }
