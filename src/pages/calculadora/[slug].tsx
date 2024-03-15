@@ -4,9 +4,10 @@ import { Box, Button, Checkbox, Flex, Grid, Input, Text } from "@chakra-ui/react
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import quali from '../../../public/Qualiconsig.png'
+import quali from '../../../public/qualiconsig.png'
+import Loading from "@/components/loading";
 
 export default function Calculadora() {
   const route = useRouter();
@@ -14,6 +15,7 @@ export default function Calculadora() {
 
   const [formData, setFormData] = useState()
   const [result, setResult] = useState<resultProps[]>()
+  const [loading, setLoading] = useState(false)
 
   const {
     register,
@@ -35,8 +37,22 @@ export default function Calculadora() {
       console.log(e)
     }
   }
-  
+  const activeLoading = () => {
+    
+    setTimeout(() => {
+     setLoading(true)
+      
+    }, 3000); // 3000 milissegundos = 3 segundos
+  };
+  useEffect(()=>{
+    activeLoading()
+  },[])
   return (
+    <>
+    {loading === false && 
+      <Loading/>
+    } 
+    {loading === true && 
     <Box w={"100vw"}>
       <Box w={"80%"}m="0 auto"></Box>
       <Flex>
@@ -183,5 +199,7 @@ export default function Calculadora() {
       </Flex>
       
     </Box>
+    }
+    </>
   );
 }
