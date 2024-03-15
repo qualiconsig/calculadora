@@ -29,22 +29,12 @@ export default function Calculadora() {
     }
    
   }
-    
-   
-
-
-
-  const handleSendForm = async () => {
-
-    
-  }
-
   return (
     <Box w={"100vw"}>
       <Box w={"80%"} m="0 auto"></Box>
       <Flex>
         <Box
-          h={"100vh"}
+         
           flex={1}
           bgGradient={"linear(to-r, #0BA360, #0BA360, #2DB382 )"}
           color={"white"}
