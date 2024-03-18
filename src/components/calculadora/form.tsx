@@ -1,6 +1,6 @@
 // CalculatorForm.jsx
 import { resultProps } from "@/types";
-import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Select, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -32,7 +32,25 @@ export function CalculatorForm({calculated, formreceived}: any) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex mt={20} mb={7}>
+      <Flex align={'center'} mt={20} mb={7}>
+        <Text w={"30%"}>Banco</Text>
+        <Select
+          placeholder="Selecione um banco"
+          color={"#485252"}
+          focusBorderColor="white"
+          border={"1px solid #d6d0f5"}
+          bg={"#edeafd"}
+          w={"70%"}
+          {...register("selectedBank")}
+        >
+          <option>C6</option>
+          <option>Inbursa</option>
+          <option>PagBank</option>
+          <option>calculadora do cidadao(bacen)</option>
+          <option>Todos</option>
+        </Select>
+      </Flex>
+      <Flex mb={7}  align={'center'}>
         <Text w={"30%"}>Prazo inicial</Text>
         <Input
           focusBorderColor="white"
@@ -42,7 +60,7 @@ export function CalculatorForm({calculated, formreceived}: any) {
           {...register("prazo")}
         />
       </Flex>
-      <Flex mb={7}>
+      <Flex mb={7} align={'center'}>
         <Text w={"30%"}>Parcela Atual</Text>
         <Input
           focusBorderColor="white"
@@ -52,7 +70,7 @@ export function CalculatorForm({calculated, formreceived}: any) {
           {...register("parcela atual")}
         />
       </Flex>
-      <Flex mb={7}>
+      <Flex mb={7} align={'center'}>
         <Text w={"30%"}>Vl Emprestimo</Text>
         <Input
           focusBorderColor="white"
@@ -62,7 +80,7 @@ export function CalculatorForm({calculated, formreceived}: any) {
           {...register("vl emprestimo")}
         />
       </Flex>
-      <Flex>
+      <Flex mb={7} align={'center'}>
         <Text w={"30%"}>Parcelas Pagas</Text>
         <Input
           focusBorderColor="white"
@@ -72,6 +90,7 @@ export function CalculatorForm({calculated, formreceived}: any) {
           {...register("parcelaPaga")}
         />
       </Flex>
+      
       <Button
         mt={10}
         bg={"#3f5ee9"}
