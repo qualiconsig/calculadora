@@ -19,7 +19,7 @@ export default function Home () {
             boxShadow: "-1px 1px 6px 2px rgba(0,0,0,0.75)"
           }}>Simulação</Button>
         </Link>
-        <Link href={'/calculadora/Calculadora'}>
+        <Link href={'/calculator'}>
           <Button boxShadow= "3px 2px 8px 3px rgba(0,0,0,0.75)" color={'white'} w={'150px'} h={20} bg={'#2980B9'} _hover={{
             background: "#2675aa",
             padding:'5px',

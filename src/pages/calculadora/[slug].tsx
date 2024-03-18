@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import quali from '../../../public/qualiconsig.png'
 import Loading from "@/components/loading";
+import { ListRight } from "@/components/rightside";
 
 export default function Calculadora() {
   const route = useRouter();
@@ -57,9 +58,9 @@ export default function Calculadora() {
       <Box w={"80%"}m="0 auto"></Box>
       <Flex>
         <Box
-         h={'100vh'}
+          h={'100vh'}
           flex={1}
-        bg={"#FFF"}
+          bg={"#FFF"}
           color={"white"}
           boxShadow={'1px 2px 2px red'}
         >
@@ -158,37 +159,25 @@ export default function Calculadora() {
         <Flex flexDir={'column'} align={'center'}>
           <Text color={'#F8D23A'} fontWeight={'600'}>Economia Mensal do Cliente</Text>
           {result?.map((item:resultProps, index:number) => (
-        <Flex key={index} justifyContent="space-between" color={'white'}>
-          <Box>{item.economiaMensalCliente}</Box>
-          
-        </Flex>
+            <ListRight item={item.economiaMensalCliente} index={index}/>
       ))}
         </Flex>
         <Flex flexDir={'column'} align={'center'} >
           <Text color={'#F8D23A'} fontWeight={'600'}>Nova Taxa</Text>
           {result?.map((item:resultProps, index:number) => (
-        <Flex key={index} justifyContent="space-between" color={'white'}>
-          <Box>{item.novataxa}</Box>
-          
-        </Flex>
+          <ListRight item={item.novataxa} index={index}/>
       ))}
         </Flex>
         <Flex flexDir={'column'} align={'center'} >
           <Text color={'#F8D23A'} fontWeight={'600'}>Nova Parcela</Text>
           {result?.map((item:resultProps, index:number) => (
-        <Flex key={index} justifyContent="space-between" color={'white'}>
-          <Box>{item.novaParcela}</Box>
-          
-        </Flex>
+          <ListRight item={item.novaParcela} index={index}/>
       ))}
         </Flex>
         <Flex flexDir={'column'} align={'center'} >
           <Text color={'#F8D23A'} fontWeight={'600'}>Economia Total no Período</Text>
           {result?.map((item:resultProps, index:number) => (
-        <Flex key={index} justifyContent="space-between" color={'white'}>
-          <Box>{item.economiaTotalPeriodo}</Box>
-          
-        </Flex>
+         <ListRight item={item.economiaTotalPeriodo} index={index}/>
       ))}
         </Flex>
       </Flex>
