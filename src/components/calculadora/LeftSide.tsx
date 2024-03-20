@@ -27,10 +27,11 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
     color={"white"}
     boxShadow={"1px 2px 2px red"}
   >
+    
     <Box w={"90%"} m={"0 auto"} mt={10} color={"black"}>
       <Text fontSize={20}>Simulação calculadora </Text>
       <Box w={"100%"}>
-       <CalculatorForm calculated={handleCalc} formreceived={handleFormData}/>
+       <CalculatorForm calculated={handleCalc} formreceived={handleFormData} taxx={tax}/>
       </Box>
       <Flex
         flexDir={"column"}
@@ -39,9 +40,7 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
         align={"center"}
       >
       </Flex>
-      <Box>
-        <Text>Taxa atual {tax}</Text>
-      </Box>
+      
     </Box>
   </Box>
   )
