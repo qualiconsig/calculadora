@@ -3,7 +3,7 @@ import { CalculatorForm } from "./form"
 import { useState } from "react";
 import { resultProps } from "@/types";
 
-export const LeftSide = ({calculated, formreceived}:any) => {
+export const LeftSide = ({calculated, formreceived, tax}:any) => {
 
   const [formData, setFormData] = useState();
   const [calcResult, setCalcResult] = useState<resultProps[]>();
@@ -38,8 +38,10 @@ export const LeftSide = ({calculated, formreceived}:any) => {
         justify={"center"}
         align={"center"}
       >
-      
       </Flex>
+      <Box>
+        <Text>Taxa atual {tax}</Text>
+      </Box>
     </Box>
   </Box>
   )

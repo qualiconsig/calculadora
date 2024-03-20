@@ -6,19 +6,60 @@ import Loading from "@/components/loading";
 import { LeftSide } from "@/components/calculadora/LeftSide";
 import { InfoSection } from "@/components/rightside/buscas";
 import { QualiFooter } from "@/components/LogoQuali/footer";
+import { Refin } from "@/components/rightside/refin";
+import { calcularPMT, calcularTaxa } from "@/math";
+import { form } from "@/types/mod";
+import { Taxas } from "@/math";
 
 export default function Calculadora() {
 
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState<form>();
   const [result, setCalcResult] = useState<resultProps[]>();
   const [loading, setLoading] = useState(false);
 
+  const [pmt, setPMT]= useState<any>()
+
+  const [taxa, setTaxa] = useState<any>()
+  const [valorAtualParcela, setValorAtualParcela] = useState<number>()
   const activeLoading = () => setTimeout(() => setLoading(true), 3000);
-  const handleFormData = (dataform: any) => setFormData(dataform);
-  const handleCalc = (datacalc: any) => setCalcResult(datacalc)
+
+  const handleFormData =  (dataform: any)  => {
+    setFormData(dataform);
+    console.log(dataform)
+    if(dataform) {
+      
+      
+    } else {
+      return
+    }
+  } 
+  const received = () => {
+    if(formData) {
+      const parcelaAtual =  parseFloat(formData.parcelaAtual)
+      setValorAtualParcela(parcelaAtual.toFixed(2))
+      const parcelaRestante =  parseInt(formData.parcelaRestante)
+      console.log(parcelaRestante)
+      const saldoDevedor =  parseFloat(formData!.vlEmprestimo)
+      const taxaEncontrada =  calcularTaxa(parcelaAtual, parcelaRestante, -saldoDevedor, 1e-6);
+      setTaxa(taxaEncontrada)
+
+      const calc = calcularPMT(saldoDevedor, parcelaRestante)
+      setPMT(calc)
+    }
+  }
+  useEffect(() => {
+    received()
+  },[formData])
+
+  const handleCalc = (datacalc: any) => {
+    setCalcResult(datacalc)
+    console.log(datacalc)
+  }
 
   useEffect(() => {
     activeLoading();
+    
+    console.log(formData)
   }, []);
   return (
     <>
@@ -26,8 +67,8 @@ export default function Calculadora() {
       {loading === true && (
         <Box w={"100vw"}>
           <Box w={"80%"} m="0 auto"></Box>
-          <Flex>
-            <LeftSide calculated={handleCalc} formreceived={handleFormData} />
+          <Flex >
+            <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
             <Box flex={2} bg={"#436087"}>
               <Flex
                 w={"80%"}
@@ -40,23 +81,27 @@ export default function Calculadora() {
               >
                 <InfoSection
                   title="Economia Mensal do Cliente"
-                  items={result?.map((item) => item.economiaMensalCliente)}
+                  items={pmt?.map((item) =>  (valorAtualParcela - item  ).toFixed(2)                                                                                                                                                                     )}
                 />
                 <InfoSection
                   title="Nova Taxa"
-                  items={result?.map((item) => item.novataxa)}
+                  items={Taxas?.map((item) => item)}
                 />
                 <InfoSection
                   title="Nova Parcela"
-                  items={result?.map((item) => item.novaParcela)}
+                  items={pmt?.map((item:any) => item)}
                 />
                 <InfoSection
                   title="Economia Total no Período"
                   items={result?.map((item) => item.economiaTotalPeriodo)}
                 />
               </Flex>
+              <Flex >
+                <Refin/>
+              </Flex>
              <QualiFooter/>
             </Box>
+          
           </Flex>
         </Box>
       )}

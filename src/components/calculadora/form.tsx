@@ -1,8 +1,10 @@
 // CalculatorForm.jsx
+import { CalcMath, Calcu, CalcularTaxaAtual, calcularPMT, calcularTaxa, taxa } from "@/math";
 import { resultProps } from "@/types";
+import { form } from "@/types/mod";
 import { Box, Button, Flex, Input, Select, Text } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export function CalculatorForm({calculated, formreceived}: any) {
@@ -11,29 +13,23 @@ export function CalculatorForm({calculated, formreceived}: any) {
     handleSubmit,
     formState: { errors },
   } = useForm<any>();
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState<form>();
   const [result, setResult] = useState<resultProps[]>();
   const onSubmit: SubmitHandler<any> = async (data) => {
-    setFormData(data);
-    try {
-      const response = await axios.post("http://127.0.0.1:8080/calculadora", {
-        data,
-      });
-      if (response) {
-        setResult(response.data);
-        calculated(response.data);
-        formreceived(data)
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+      setFormData(data);
+      formreceived(data)
+    } 
  
+ useEffect(()=> {
+   
+    
+  
+ },[])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex align={'center'} mt={20} mb={7}>
-        <Text w={"30%"}>Banco</Text>
+        <Text w={"38%"}>Banco</Text>
         <Select
           placeholder="Selecione um banco"
           color={"#485252"}
@@ -51,46 +47,37 @@ export function CalculatorForm({calculated, formreceived}: any) {
         </Select>
       </Flex>
       <Flex mb={7}  align={'center'}>
-        <Text w={"30%"}>Prazo inicial</Text>
+        <Text w={"35%"}>Valor Parcela Atual</Text>
         <Input
           focusBorderColor="white"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
           w={"40%"}
-          {...register("prazo")}
+          {...register("parcelaAtual")}
         />
       </Flex>
       <Flex mb={7} align={'center'}>
-        <Text w={"30%"}>Parcela Atual</Text>
+        <Text w={"35%"}>Parcela Restante</Text>
         <Input
           focusBorderColor="white"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
           w={"40%"}
-          {...register("parcela atual")}
+          {...register("parcelaRestante")}
         />
       </Flex>
       <Flex mb={7} align={'center'}>
-        <Text w={"30%"}>Vl Emprestimo</Text>
+        <Text w={"35%"}>Vl Emprestimo</Text>
         <Input
-          focusBorderColor="white"
+          focusBorderColor="#fff"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
           w={"40%"}
-          {...register("vl emprestimo")}
+          {...register("vlEmprestimo")}
         />
       </Flex>
-      <Flex mb={7} align={'center'}>
-        <Text w={"30%"}>Parcelas Pagas</Text>
-        <Input
-          focusBorderColor="white"
-          border={"1px solid #d6d0f5"}
-          bg={"#edeafd"}
-          w={"40%"}
-          {...register("parcelaPaga")}
-        />
-      </Flex>
-      
+     
+
       <Button
         mt={10}
         bg={"#3f5ee9"}
