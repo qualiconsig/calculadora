@@ -2,19 +2,9 @@ import { useEffect } from "react";
 
 export const Taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
 
-export const CalcMath = () => {
-  
-  
-  const novaParcela = () => {
-    taxa.forEach(taxa => {
-      
-    });
-  };
 
-  novaParcela();
-};
 
-export function calcularPMT(valorPresente, numeroParcelas ) {
+export function calcularPMT(valorPresente:number, numeroParcelas:number ) {
   let result:any = []
   Taxas.forEach(taxa => {
     const tx = taxa / 100;

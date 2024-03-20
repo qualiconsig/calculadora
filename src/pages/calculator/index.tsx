@@ -35,7 +35,7 @@ export default function Calculadora() {
   } 
   const received = () => {
     if(formData) {
-      const parcelaAtual =  parseFloat(formData.parcelaAtual)
+      const parcelaAtual:any =  parseFloat(formData.parcelaAtual)
       setValorAtualParcela(parcelaAtual.toFixed(2))
       const parcelaRestante =  parseInt(formData.parcelaRestante)
       console.log(parcelaRestante)
@@ -81,7 +81,7 @@ export default function Calculadora() {
               >
                 <InfoSection
                   title="Economia Mensal do Cliente"
-                  items={pmt?.map((item) =>  (valorAtualParcela - item  ).toFixed(2)                                                                                                                                                                     )}
+                  items={pmt?.map((item:any) =>  (valorAtualParcela! - item  ).toFixed(2)                                                                                                                                                                     )}
                 />
                 <InfoSection
                   title="Nova Taxa"

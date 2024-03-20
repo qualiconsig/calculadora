@@ -1,9 +1,9 @@
 // CalculatorForm.jsx
-import { CalcMath, Calcu, CalcularTaxaAtual, calcularPMT, calcularTaxa, taxa } from "@/math";
+import { calcularPMT, calcularTaxa  } from "@/math";
 import { resultProps } from "@/types";
 import { form } from "@/types/mod";
 import { Box, Button, Flex, Input, Select, Text } from "@chakra-ui/react";
-import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
