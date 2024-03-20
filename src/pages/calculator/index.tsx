@@ -21,6 +21,7 @@ export default function Calculadora() {
 
   const [taxa, setTaxa] = useState<any>()
   const [valorAtualParcela, setValorAtualParcela] = useState<number>()
+  const [parcelaRestante, setParcelaRestante] = useState<number>()
   const activeLoading = () => setTimeout(() => setLoading(true), 3000);
 
   const handleFormData =  (dataform: any)  => {
@@ -38,7 +39,7 @@ export default function Calculadora() {
       const parcelaAtual:any =  parseFloat(formData.parcelaAtual)
       setValorAtualParcela(parcelaAtual.toFixed(2))
       const parcelaRestante =  parseInt(formData.parcelaRestante)
-      console.log(parcelaRestante)
+      setParcelaRestante(parcelaRestante)
       const saldoDevedor =  parseFloat(formData!.vlEmprestimo)
       const taxaEncontrada =  calcularTaxa(parcelaAtual, parcelaRestante, -saldoDevedor, 1e-6);
       setTaxa(taxaEncontrada)
@@ -81,19 +82,23 @@ export default function Calculadora() {
               >
                 <InfoSection
                   title="Economia Mensal do Cliente"
-                  items={pmt?.map((item:any) =>  (valorAtualParcela! - item  ).toFixed(2)                                                                                                                                                                     )}
+                  icon="R$"  
+                  items={pmt?.map((item:any) =>  (valorAtualParcela! - item  ).toFixed(2)                                                                                                                                                                )}
                 />
                 <InfoSection
                   title="Nova Taxa"
                   items={Taxas?.map((item) => item)}
+                  icon="%"
                 />
                 <InfoSection
                   title="Nova Parcela"
                   items={pmt?.map((item:any) => item)}
+                  icon="R$"
+                  
                 />
                 <InfoSection
                   title="Economia Total no Período"
-                  items={result?.map((item) => item.economiaTotalPeriodo)}
+                  items={pmt?.map((item:any) => ((valorAtualParcela! - item  ) * parcelaRestante!).toFixed(2))}
                 />
               </Flex>
               <Flex >
