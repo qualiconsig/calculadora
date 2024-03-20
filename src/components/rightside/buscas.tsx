@@ -8,7 +8,7 @@ export  function InfoSection({ title, items,icon }:any) {
       </Text>
      
       {items?.map((item:any, index:any) => (
-        <Text key={index}>{icon} {item} </Text>
+        <Text  w={['80%']} key={index}>{icon} {item} </Text>
       ))}
     </Flex>
   );
@@ -39,7 +39,10 @@ export  function InfoVal({ title, items,icon }:any) {
       </Text>
      
       {items?.map((item:any, index:any) => (
-        <Text key={index}> {item} {icon}</Text>
+        <Flex w={'100%'}>
+            <Text  w={'50%'}  key={index}> {item} </Text><Text w={'80%'}>{icon}</Text>
+        </Flex>
+        
       ))}
     </Flex>
   );
