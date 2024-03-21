@@ -38,6 +38,31 @@ export default function Calculadora() {
         console.error("Elemento de captura não encontrado.");
     }
 };
+
+const handleCaptured = () => {
+  if (captureRef.current) {
+      html2canvas(captureRef.current).then(canvas => {
+          if (canvas) {
+              canvas.toBlob(blob => {
+                  if (blob) {
+                      const item = new ClipboardItem({ 'image/png': blob });
+                      navigator.clipboard.write([item]).then(() => {
+                          console.log("Captura de tela copiada para a área de transferência!");
+                      }).catch(err => {
+                          console.error("Erro ao copiar a captura de tela para a área de transferência:", err);
+                      });
+                  } else {
+                      console.error("Erro ao criar o blob da captura.");
+                  }
+              }, 'image/png');
+          } else {
+              console.error("Erro ao criar o canvas da captura.");
+          }
+      });
+  } else {
+      console.error("Elemento de captura não encontrado.");
+  }
+};
   
   const [formData, setFormData] = useState<form>();
   const [result, setCalcResult] = useState<resultProps[]>();
@@ -99,16 +124,18 @@ export default function Calculadora() {
 
         <Box w={"100vw"} >
        
-          <Box w={"80%"} m="0 auto"></Box>
+          <Box w={"80%"}  m="0 auto"></Box>
           <Flex >
             
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
-            <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Capturar tela</Button></Box>
+            <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button></Box>
             <Box flex={2} bg={"#436087"} ref={captureRef}>
               <Flex
-                w={"80%"}
+                w={["100%", "95%", "95%", '95%',  '80%']}
+
                 m={"50px auto"}
                 p={5}
+                gap={['5px', '4px', '3px', '4px', '3px']}
                 borderRadius={5}
                 justifyContent="space-between"
                 bg={"#2D2772"}
@@ -124,7 +151,7 @@ export default function Calculadora() {
                   items={Taxas?.map((item) => item)}
                   icon="%"
                 />
-                <Box position={'absolute'} right={'20px'} bottom={'60%'}><Button bg={'gray.300'} onClick={handleCapture}>Capturar tela</Button></Box>
+                <Box position={'absolute'} right={'20px'} bottom={'60%'}><Button alignItems={'center'} bg={'transparent'} onClick={handleCaptured}>Capturar tela</Button></Box>
                 <InfoSection
                   title="Nova Parcela"
                   items={pmt?.map((item:any) => item)}
@@ -137,7 +164,7 @@ export default function Calculadora() {
                   icon="R$"
                 />
               </Flex>
-              <Flex >
+              <Flex  >
                 <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela}/>
               </Flex>
              <QualiFooter/>
