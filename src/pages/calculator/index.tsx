@@ -125,7 +125,7 @@ const handleCaptured = () => {
         <Box w={"100vw"} >
        
           <Box w={["100%", "80%"]}  m="0 auto"></Box>
-          <Flex flexDir={['column', 'row']} >
+          <Flex flexDir={['column','column', 'row']} >
             
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
             <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button></Box>
@@ -151,7 +151,7 @@ const handleCaptured = () => {
                   items={Taxas?.map((item) => item)}
                   icon="%"
                 />
-                <Box position={'absolute'} right={'20px'} bottom={'60%'}><Button alignItems={'center'} bg={'transparent'} onClick={handleCaptured}>Capturar tela</Button></Box>
+                <Box position={'absolute'} right={'20px'} bottom={['21%', '24%', '50%', '50%', '56%']}><Button alignItems={'center'} bg={'transparent'} onClick={handleCaptured}>Capturar tela</Button></Box>
                 <InfoSection
                   title="Nova Parcela"
                   items={pmt?.map((item:any) => item)}
@@ -167,7 +167,9 @@ const handleCaptured = () => {
               <Flex >
                 <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela}/>
               </Flex>
-             <QualiFooter/>
+              
+              <QualiFooter/>
+             
             </Box>
           
           </Flex>
