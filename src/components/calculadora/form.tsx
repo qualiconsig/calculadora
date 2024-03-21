@@ -30,7 +30,7 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex align={'center'} mt={20} mb={7}>
 
-        <Text w={"38%"}>Banco</Text>
+        {/* <Text w={"38%"}>Banco</Text>
         <Select
           placeholder="Selecione um banco"
           color={"#485252"}
@@ -45,11 +45,12 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
           <option>PagBank</option>
           <option>calculadora do cidadao(bacen)</option>
           <option>Todos</option>
-        </Select>
+        </Select> */}
       </Flex>
       <Flex mb={7}  align={'center'}>
         <Text w={"35%"}>Valor Parcela Atual</Text>
         <Input
+          type="number"
           focusBorderColor="white"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
@@ -68,6 +69,7 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
       <Flex mb={7} align={'center'}>
         <Text w={"35%"}>Parcela Restante</Text>
         <Input
+        type="number"
           focusBorderColor="white"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
@@ -78,6 +80,7 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
       <Flex mb={7} align={'center'}>
         <Text w={"35%"}>Vl Emprestimo</Text>
         <Input
+         type="number"
           focusBorderColor="#fff"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
