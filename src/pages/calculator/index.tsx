@@ -96,15 +96,14 @@ export default function Calculadora() {
       {loading === false && <Loading />}
       {loading === true && (
         <>
-        
-        
+
         <Box w={"100vw"} >
        
           <Box w={"80%"} m="0 auto"></Box>
           <Flex >
             
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
-            <Box position={'absolute'}  bottom={'50px'}><Button bg={'blue.600'} onClick={handleCapture}>Capturar tela</Button></Box>
+            <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Capturar tela</Button></Box>
             <Box flex={2} bg={"#436087"} ref={captureRef}>
               <Flex
                 w={"80%"}
@@ -125,6 +124,7 @@ export default function Calculadora() {
                   items={Taxas?.map((item) => item)}
                   icon="%"
                 />
+                <Box position={'absolute'} right={'20px'} bottom={'60%'}><Button bg={'gray.300'} onClick={handleCapture}>Capturar tela</Button></Box>
                 <InfoSection
                   title="Nova Parcela"
                   items={pmt?.map((item:any) => item)}
