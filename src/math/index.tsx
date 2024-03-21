@@ -16,10 +16,6 @@ export function calcularPMT(valorPresente:number, numeroParcelas:number ) {
  
 }
 
-
-
-
-
 export function calcularTaxa(
   pagamento: number,
   numeroDePeriodos: number,

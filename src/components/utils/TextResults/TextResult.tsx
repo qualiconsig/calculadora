@@ -5,7 +5,7 @@ export const TextResponse = ({ item, rest }: any) => {
     <Text
       mb={"5px"}
      
-      fontSize={["13px", "13px", "13px", "14px", "15px"]}
+      fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']}
       {...rest}
     >
       {item}

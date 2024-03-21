@@ -124,15 +124,15 @@ const handleCaptured = () => {
 
         <Box w={"100vw"} >
        
-          <Box w={"80%"}  m="0 auto"></Box>
-          <Flex >
+          <Box w={["100%", "80%"]}  m="0 auto"></Box>
+          <Flex flexDir={['column', 'row']} >
             
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
             <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button></Box>
             <Box flex={2} bg={"#436087"} ref={captureRef}>
               <Flex
                 w={["100%", "95%", "95%", '95%',  '80%']}
-
+                
                 m={"50px auto"}
                 p={5}
                 gap={['5px', '4px', '3px', '4px', '3px']}
@@ -164,7 +164,7 @@ const handleCaptured = () => {
                   icon="R$"
                 />
               </Flex>
-              <Flex  >
+              <Flex >
                 <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela}/>
               </Flex>
              <QualiFooter/>

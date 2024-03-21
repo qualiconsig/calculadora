@@ -13,13 +13,13 @@ const breakpoints = {
 
 export  function InfoSection({ title, items,icon }:any) {
   return (
-    <Flex flexDir={"column"} align={"center"} >
-      <Text color={"#F8D23A"} fontSize={['13px', '13px', '15px', '15px', '16px']}  w={['40%','80%','100%']} mr={['10px', '5px', '0px']} fontWeight={"600"} mb={'10px'}>
+    <Flex flexDir={["column"]} align={"center"} >
+      <Text color={"#F8D23A"} fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']} mr={['10px', '5px', '0px']} fontWeight={"600"} mb={'10px'}>
         {title}
       </Text>
      
       {items?.map((item:any, index:any) => (
-        <Text fontSize={['13px', '13px', '13px', '14px', '15px']}  mb={'5px'} w={'80%'} key={index}>{icon} {item} </Text>
+        <Text fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']}  mb={'5px'} key={index}>{icon} {item} </Text>
       ))}
     </Flex>
   );
@@ -29,7 +29,7 @@ export function SaldoDev ({title, saldo}:any) {
 
   return (
   <Flex flexDir={"column"} align={"center"}>
-      <Text color={"#F8D23A"} fontSize={['13px', '13px', '15px', '15px', '16px']} fontWeight={"600"} mr={['10px', '5px', '0px']} mb={'10px'}>
+      <Text color={"#F8D23A"} fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']} fontWeight={"600"} mr={['10px', '5px', '0px']} mb={'10px'}>
         {title}
       </Text>
         <TextResponse item={saldo}/> 
@@ -44,7 +44,7 @@ export function SaldoDev ({title, saldo}:any) {
 export  function InfoVal({ title, items,icon }:any) {
   return (
     <Flex flexDir={"column"} align={"center"}>
-      <Text color={"#F8D23A"} fontWeight={"600"} fontSize={['13px', '13px', '15px', '15px', '16px']}  mr={['10px', '5px', '0px']} mb={'10px'}>
+      <Text color={"#F8D23A"} fontWeight={"600"} fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']}  mr={['10px', '5px', '0px']} mb={'10px'}>
         {title}
       </Text>
 

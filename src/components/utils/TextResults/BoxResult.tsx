@@ -7,12 +7,12 @@ export const BoxResult = ({ item, icon, index }: any) => {
         mb={"5px"}
        
         key={index}
-        fontSize={["13px", "13px", "13px", "14px", "15px"]}
+        fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']}
       >
         {" "}
         {item}{" "}
       </Text>
-      <Text w={"80%"}>{icon}</Text>
+      <Text fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']} w={"80%"}>{icon}</Text>
     </Flex>
   );
 };
