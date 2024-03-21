@@ -22,7 +22,7 @@ export default function Load() {
           },
         }}
       >
-        <Box w={"500px"}>
+        <Box w={['300px','400px', "500px"]}>
           <Image alt="Qualiconsig" src={qu} />
         </Box>
       </motion.div>
