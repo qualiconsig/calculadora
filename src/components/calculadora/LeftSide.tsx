@@ -25,7 +25,6 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
     flex={1}
     bg={"#FFF"}
     color={"white"}
-    boxShadow={"1px 2px 2px red"}
   >
     
     <Box w={"90%"} m={"0 auto"} mt={10} color={"black"}>
