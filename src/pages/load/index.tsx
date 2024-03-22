@@ -27,9 +27,7 @@ export default function Load() {
        
       </motion.div>
       <Flex align={'center'} justify={'center'}>
-      <Box w={"500px"}>
-          <Image alt="Qualiconsig" src={qu} />
-        </Box>
+     
         <motion.div
           style={{
             width: "50px",
@@ -43,7 +41,9 @@ export default function Load() {
           <Image alt="carregando" src={load} />
           
         </motion.div>
-        
+        <Box w={"500px"}>
+          <Image alt="Qualiconsig" src={qu} />
+        </Box>
       </Flex>
       
     </Flex>
