@@ -24,16 +24,18 @@ export default function Load() {
         }}
       >
        
-        <Box w={"500px"}>
+       
+      </motion.div>
+      <Flex align={'center'} justify={'center'}>
+      <Box w={"500px"}>
           <Image alt="Qualiconsig" src={qu} />
         </Box>
-      </motion.div>
-      <div>
         <motion.div
           style={{
             width: "50px",
             height: "50px",
             borderRadius: "5px",
+            marginTop: '30px'            
           }}
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -42,7 +44,7 @@ export default function Load() {
           
         </motion.div>
         
-      </div>
+      </Flex>
       
     </Flex>
     
