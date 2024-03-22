@@ -21,7 +21,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex align={"center"} ></Flex>
+      <Flex align={"center"}></Flex>
 
       <Flex>
           <BoxForm text={'Prazo inicial'}>

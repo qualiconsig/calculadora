@@ -44,10 +44,11 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
     flex={1}
     bg={"#FFF"}
     color={"white"}
-    h={'100vh'}
+    
+    
   >
     
-    <Box w={"90%"} m={"0 auto"} mt={10} color={"black"}>
+    <Box w={"90%"} h={'100vh'} m={"0 auto"} mt={10} color={"black"}>
       <Text fontSize={20}>Simulação calculadora </Text>
       <Box w={"100%"} >
         <Flex gap={'40px'}mt={2} justify={'center'}>

@@ -126,17 +126,16 @@ const handleCaptured = () => {
       {loading === true && (
         <>
 
-        <Box  w={"100vw"} >
+        <Box  w={"100vw"}  >
        
           <Box  w={["100%", "80%"]}  m="0 auto"></Box>
           <Flex flexDir={['column','column', 'row']} >
-            
+            <Flex flexDir={'column'} w={'30%'}  >
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
-            <Box><Button position={'absolute'} bottom={'40px'} left={'200px'} bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button>
-           
-            </Box>
+            
+            </Flex>
             <Box flex={2} bg={"#436087"} ref={captureRef}>
-              {/* <Flex
+               <Flex
                 w={["100%", "95%", "95%", '95%',  '80%']}
                 m={"50px auto"}
                 p={5}
@@ -171,15 +170,12 @@ const handleCaptured = () => {
                   items={pmt?.map((item:any) => ((valorAtualParcela! - item  ) * parcelaRestante!).toFixed(2))}
                   icon="R$"
                 />
-              </Flex> */}
-              {/* <Flex >
+              </Flex> 
+             <Flex >
                 <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela} parcelaRest={parcelaRestante} />
-              </Flex> */}
-              
+              </Flex> 
               <QualiFooter/>
-             
             </Box>
-          
           </Flex>
         </Box>
         </>
