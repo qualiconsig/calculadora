@@ -132,7 +132,7 @@ const handleCaptured = () => {
           <Flex flexDir={['column','column', 'row']} >
             
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
-            <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button>
+            <Box  ><Button bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button>
            
             </Box>
             <Box flex={2} bg={"#436087"} ref={captureRef}>

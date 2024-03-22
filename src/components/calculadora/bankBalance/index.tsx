@@ -1,4 +1,3 @@
-// CalculatorForm.jsx
 
 import { BoxForm } from "@/components/utils/formBox";
 import { resultProps } from "@/types";
@@ -37,7 +36,6 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
           </BoxForm>
        
         <BoxForm text={"Parcela atual"}>
-        
           <Input
             type="number"
             focusBorderColor="white"
@@ -115,9 +113,9 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
           <Text ml={"10px"}> {taxx}</Text>
         </Flex>
       </Flex>
-
+    
       <Button
-        mt={10}
+        
         bg={"#3f5ee9"}
         color={"#FFF"}
         _hover={{
