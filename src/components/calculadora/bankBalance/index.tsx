@@ -7,7 +7,7 @@ import {  Button, Flex, Input, Select, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-export function CalculatorForm({calculated, formreceived, taxx}: any) {
+export function CalculateRealBalance({calculated, formreceived, taxx}: any) {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
     } 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex align={'center'} mt={20} mb={7}>
+      <Flex align={'center'} mt={'10px'} mb={7}>
 
         {/* <Text w={"38%"}>Banco</Text>
         <Select
@@ -41,9 +41,22 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
         </Select> */}
       </Flex>
       <Flex mb={7}  align={'center'}>
-        <Text w={"35%"}>Valor Parcela Atual</Text>
+        <Text w={"35%"}>Prazo inicial</Text>
         <Input
           type="number"
+          focusBorderColor="white"
+          border={"1px solid #d6d0f5"}
+          bg={"#edeafd"}
+          w={"40%"}
+          {...register("PrazoInicial")}
+        />
+      </Flex>
+      
+     
+      <Flex mb={7} align={'center'}>
+        <Text w={"35%"}>Parcela Atual</Text>
+        <Input
+        type="number"
           focusBorderColor="white"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
@@ -51,35 +64,51 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
           {...register("parcelaAtual")}
         />
       </Flex>
-      <Flex mb={7}  align={'center'}>
-        <Text w={"35%"}>Taxa atual</Text>
-        <Flex  borderRadius={'7px'} bg={"#edeafd"} h={'40px'} align={'center'} w={'40%'}>
-          <Text ml={'10px'}> {taxx}</Text>
-        </Flex>
-       
-      </Flex>
-     
       <Flex mb={7} align={'center'}>
-        <Text w={"35%"}>Parcela Restante</Text>
-        <Input
-        type="number"
-          focusBorderColor="white"
-          border={"1px solid #d6d0f5"}
-          bg={"#edeafd"}
-          w={"40%"}
-          {...register("parcelaRestante")}
-        />
-      </Flex>
-      <Flex mb={7} align={'center'}>
-        <Text w={"35%"}>Vl Emprestimo</Text>
+        <Text w={"35%"}>Valor de emprestimo contratado</Text>
         <Input
          type="number"
           focusBorderColor="#fff"
           border={"1px solid #d6d0f5"}
           bg={"#edeafd"}
           w={"40%"}
-          {...register("vlEmprestimo")}
+          {...register("valorEmprestimoContrado")}
         />
+      </Flex>
+      <Flex mb={7} align={'center'}>
+        <Text w={"35%"}>Parcelas pagas</Text>
+        <Input
+         type="number"
+          focusBorderColor="#fff"
+          border={"1px solid #d6d0f5"}
+          bg={"#edeafd"}
+          w={"40%"}
+          {...register("parcelaPaga")}
+        />
+      </Flex>
+
+      <Flex mb={7}  align={'center'}>
+        <Text w={"35%"}>Taxa atual</Text>
+        <Flex  borderRadius={'7px'} bg={"#dce493"} h={'40px'} align={'center'} w={'40%'}>
+          <Text ml={'10px'}> {taxx}</Text>
+        </Flex>
+       
+      </Flex>
+
+      <Flex mb={7}  align={'center'}>
+        <Text w={"35%"}>Taxa atual do contrato</Text>
+        <Flex  borderRadius={'7px'} bg={"#dce493"} h={'40px'} align={'center'} w={'40%'}>
+          <Text ml={'10px'}> {taxx}</Text>
+        </Flex>
+       
+      </Flex>
+
+      <Flex mb={7}  align={'center'}>
+        <Text w={"35%"}>Saldo devedor aproximado</Text>
+        <Flex  borderRadius={'7px'} bg={"#dce493"} h={'40px'} align={'center'} w={'40%'}>
+          <Text ml={'10px'}> {taxx}</Text>
+        </Flex>
+       
       </Flex>
      
 

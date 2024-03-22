@@ -9,9 +9,15 @@ export function calcularPMT(valorPresente:number, numeroParcelas:number ) {
   Taxas.forEach(taxa => {
     const tx = taxa / 100;
     let total = (valorPresente * tx) / (1 - Math.pow(1 + tx, -numeroParcelas))
+
+
+    const pmtResult = (total.toFixed(2))
+    const totalReplaced = pmtResult.toString().replace(".",",")
+    result.push((parseFloat(totalReplaced)))
+    console.log(totalReplaced)
     
-    result.push(total.toFixed(2))
   });
+  console.log('esse é o valor', result)
   return result
  
 }
