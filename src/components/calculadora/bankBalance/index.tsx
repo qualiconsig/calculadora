@@ -23,16 +23,15 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex align={"center"} mt={"10px"} mb={7}></Flex>
-      <Flex>
 
-       
+      <Flex>
           <BoxForm text={'Prazo inicial'}>
           <Input
             type="number"
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
             bg={"#edeafd"}
-            w={"80%"}
+            w={"95%"}
             {...register("PrazoInicial")}
           />
           </BoxForm>
@@ -44,21 +43,21 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
             bg={"#edeafd"}
-            w={"80%"}
+            w={"95%"}
             {...register("parcelaAtual")}
           />
         
         </BoxForm>
       </Flex>
 
-      <Flex>
-       <BoxForm text={'Valor de emprestimo contratado'}>
+      <Flex >
+       <BoxForm text={'Vl. de emprestimo contratado'}>
        <Input
         type="number"
         focusBorderColor="#fff"
         border={"1px solid #d6d0f5"}
         bg={"#edeafd"}
-        w={"80%"}
+        w={"95%"}
         {...register("valorEmprestimoContrado")}
     />
        </BoxForm>
@@ -70,7 +69,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
               focusBorderColor="#fff"
               border={"1px solid #d6d0f5"}
               bg={"#edeafd"}
-              w={"80%"}
+              w={"95%"}
               {...register("parcelaPaga")}
             />
           </BoxForm>
