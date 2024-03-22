@@ -1,6 +1,6 @@
 "use client";
 import { resultProps } from "@/types";
-import {Box,Button,Flex} from "@chakra-ui/react";
+import {Box,Button,Flex, Text} from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import Loading from "@/components/loading";
 import { LeftSide } from "@/components/calculadora/LeftSide";
@@ -16,7 +16,7 @@ import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver'
 
 export default function Calculadora() {
-
+  const [screentext, setScreenText] = useState<string>()
   const captureRef = useRef<HTMLDivElement>(null);
 
   const handleCapture = () => {
@@ -47,7 +47,10 @@ const handleCaptured = () => {
                   if (blob) {
                       const item = new ClipboardItem({ 'image/png': blob });
                       navigator.clipboard.write([item]).then(() => {
-                          console.log("Captura de tela copiada para a área de transferência!");
+                        setScreenText("Captura de tela copiada para a área de transferência!");
+                        setTimeout(() => {
+                          setScreenText('');
+                        }, 3000);
                       }).catch(err => {
                           console.error("Erro ao copiar a captura de tela para a área de transferência:", err);
                       });
@@ -92,6 +95,7 @@ const handleCaptured = () => {
       setValorAtualParcela(parcelaAtual.toFixed(2))
       const parcelaRestante =  parseInt(formData.parcelaRestante)
       setParcelaRestante(parcelaRestante)
+      
       const saldoDevedor:any =  parseFloat(formData!.vlEmprestimo)
       setSaldoDev(saldoDevedor)
       const taxaEncontrada =  calcularTaxa(parcelaAtual, parcelaRestante, -saldoDevedor, 1e-6);
@@ -128,7 +132,9 @@ const handleCaptured = () => {
           <Flex flexDir={['column','column', 'row']} >
             
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
-            <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button></Box>
+            <Box position={'absolute'} bottom={'20px'}><Button bg={'gray.300'} onClick={handleCapture}>Baixar Resultados</Button>
+           
+            </Box>
             <Box flex={2} bg={"#436087"} ref={captureRef}>
               <Flex
                 w={["100%", "95%", "95%", '95%',  '80%']}
@@ -151,7 +157,10 @@ const handleCaptured = () => {
                   items={Taxas?.map((item) => item)}
                   icon="%"
                 />
-                <Box position={'absolute'} right={'20px'} bottom={['21%', '24%', '50%', '50%', '56%']}><Button alignItems={'center'} bg={'transparent'} onClick={handleCaptured}>Capturar tela</Button></Box>
+                <Box position={'absolute'} right={'20px'} bottom={['21%', '24%', '50%', '50%', '56%']}><Button alignItems={'center'} bg={'transparent'} onClick={handleCaptured}>Capturar tela</Button>
+                  { screentext &&
+                    <Text transform={'all ease 0.2'} bg={'yellow.500'} borderRadius={4} p={2} color={'black'}>{screentext}</Text>}
+                </Box>
                 <InfoSection
                   title="Nova Parcela"
                   items={pmt?.map((item:any) => item)}
@@ -165,7 +174,7 @@ const handleCaptured = () => {
                 />
               </Flex>
               <Flex >
-                <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela}/>
+                <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela} parcelaRest={parcelaRestante} />
               </Flex>
               
               <QualiFooter/>

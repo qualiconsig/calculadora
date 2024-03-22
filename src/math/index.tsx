@@ -36,7 +36,7 @@ export function calcularTaxa(
 
   // Verifica se o valor presente com taxa min e taxa max têm sinais opostos
   if (valorPresenteComTaxa(taxaMin) * valorPresenteComTaxa(taxaMax) >= 0) {
-    throw new Error("Não é possível determinar a taxa com os valores fornecidos");
+    return (0)
   }
 
   // Loop para encontrar a taxa com a precisão especificada

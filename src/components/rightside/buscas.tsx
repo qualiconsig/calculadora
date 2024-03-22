@@ -19,24 +19,24 @@ export  function InfoSection({ title, items,icon }:any) {
       </Text>
      
       {items?.map((item:any, index:any) => (
-        <Text fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']}  mb={'5px'} key={index}>{icon} {item} </Text>
+        <Text fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']}  mb={'5px'} key={index}> {item} {icon} </Text>
       ))}
     </Flex>
   );
 }
 
-export function SaldoDev ({title, saldo}:any) {
+export function SaldoDev ({title, saldo, icon}:any) {
 
   return (
   <Flex flexDir={"column"} align={"center"}>
       <Text color={"#F8D23A"} fontSize={['10px', '13px', '15px', '15px', '16px']}  w={['100%','80%','100%']} fontWeight={"600"} mr={['10px', '5px', '0px']} mb={'10px'}>
         {title}
       </Text>
-        <TextResponse item={saldo}/> 
-        <TextResponse item={saldo}/>
-        <TextResponse item={saldo}/>
-        <TextResponse item={saldo}/>
-        <TextResponse item={saldo}/>
+        <TextResponse item={saldo} icon={"R$"}/> 
+        <TextResponse item={saldo} icon={"R$"}/>
+        <TextResponse item={saldo} icon={"R$"}/>
+        <TextResponse item={saldo} icon={"R$"}/>
+        <TextResponse item={saldo} icon={"R$"}/>
     </Flex>
 )
 }

@@ -1,8 +1,9 @@
 import { Box, Flex } from "@chakra-ui/react"
 import { InfoSection, SaldoDev } from "./buscas"
 import { Taxas } from "@/math"
+import { Prazo } from "../calculadora/prazo"
 
-export const Refin = ({saldo, parcelaAtual}:any) => {
+export const Refin = ({saldo, parcelaAtual, parcelaRest}:any) => {
   const arr = [100,78,56,47]
 
   return (
@@ -13,11 +14,11 @@ export const Refin = ({saldo, parcelaAtual}:any) => {
         color={'white'}
         borderRadius={5}>
           
-      <InfoSection title={"nova taxa"} items={Taxas?.map((item:any) => item)}  />
+      <InfoSection title={"nova taxa"} items={Taxas?.map((item:any) => item)} icon={"%"}   />
       <SaldoDev title={"Saldo Dev"} saldo={saldo}  />
       <SaldoDev title={"parcela"}  saldo={parcelaAtual}  />
       <InfoSection title={"troco"}  items={arr?.map((item:any) => item)}  />
-      <InfoSection title={"prazo"}  items={arr?.map((item:any) => item)}  />
+      <Prazo prazo={parcelaRest}   />
     </Flex>
   )
 }
