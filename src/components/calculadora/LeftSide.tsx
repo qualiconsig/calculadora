@@ -50,9 +50,9 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
     <Box w={"90%"} m={"0 auto"} mt={10} color={"black"}>
       <Text fontSize={20}>Simulação calculadora </Text>
       <Box w={"100%"} >
-        <Flex gap={5}mt={2} >
-          <Button fontSize={'13px'} onClick={handleSelectDataSis}>Simulação com dados no sistema</Button>
-          <Button fontSize={'13px'} onClick={handleSelectBank}>Simulação com saldo real banco</Button>
+        <Flex gap={'40px'}mt={2} justify={'center'}>
+          <Button fontSize={'13px'} onClick={handleSelectDataSis}>Dados sistema</Button>
+          <Button fontSize={'13px'} onClick={handleSelectBank}>Saldo real </Button>
         </Flex>
         {dataSystem === true &&
         <CalculatorForm calculated={handleCalc} formreceived={handleFormData} taxx={tax}/>

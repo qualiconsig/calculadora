@@ -40,7 +40,7 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
           <option>Todos</option>
         </Select> */}
       </Flex>
-      <Flex mb={7}  align={'center'}>
+      <Flex mb={7}  >
         <Text w={"35%"}>Valor Parcela Atual</Text>
         <Input
           type="number"
