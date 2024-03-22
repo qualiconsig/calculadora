@@ -16,19 +16,9 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
   const [formData, setFormData] = useState<form>();
   const [result, setResult] = useState<resultProps[]>();
   const onSubmit: SubmitHandler<any> = async (data) => {
-    
-      
-  
       setFormData(data);
       formreceived(data)
     } 
- 
- useEffect(()=> {
-   
-    
-  
- },[])
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex align={'center'} mt={20} mb={7}>
