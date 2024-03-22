@@ -7,8 +7,7 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
 
   const [formData, setFormData] = useState();
   const [calcResult, setCalcResult] = useState<resultProps[]>();
-  const [loading, setLoading] = useState(false);
-
+  
   const handleFormData = ( dataform:any ) => {
     setFormData(dataform)
     formreceived(dataform)
