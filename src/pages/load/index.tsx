@@ -7,7 +7,6 @@ import { Box, Flex } from "@chakra-ui/react";
 export default function Load() {
   return (
     <Flex h={'100vh'} justify={"center"} flexDir={"column"} align={"center"}>
-      
       <motion.div
         className="box"
         initial={{ opacity: 0, scale: 0.5 }}
@@ -23,30 +22,24 @@ export default function Load() {
           },
         }}
       >
-       
-       
+        <Flex align={'center'} justify={'center'}>
+          <motion.div
+            style={{
+              width: "70px",
+              height: "70px",
+              borderRadius: "5px",
+              marginTop: '30px'            
+            }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          >
+            <Image alt="carregando" src={load} />
+          </motion.div>
+          <Box w={"500px"}>
+            <Image alt="Qualiconsig" src={qu} />
+          </Box>
+        </Flex>
       </motion.div>
-      <Flex align={'center'} justify={'center'}>
-     
-        <motion.div
-          style={{
-            width: "50px",
-            height: "50px",
-            borderRadius: "5px",
-            marginTop: '30px'            
-          }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-        >
-          <Image alt="carregando" src={load} />
-          
-        </motion.div>
-        <Box w={"500px"}>
-          <Image alt="Qualiconsig" src={qu} />
-        </Box>
-      </Flex>
-      
     </Flex>
-    
   );
 }
