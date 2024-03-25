@@ -84,7 +84,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
           align={"center"}
           w={"40%"}
         >
-          <Text ml={"10px"}> {taxx}</Text>
+          <Text ml={"10px"}></Text>
         </Flex>
       </Flex>
 
@@ -97,7 +97,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
           align={"center"}
           w={"40%"}
         >
-          <Text ml={"10px"}> {taxx}</Text>
+          <Text ml={"10px"}></Text>
         </Flex>
       </Flex>
 
@@ -110,7 +110,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
           align={"center"}
           w={"40%"}
         >
-          <Text ml={"10px"}> {taxx}</Text>
+          <Text ml={"10px"}></Text>
         </Flex>
       </Flex>
     

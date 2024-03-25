@@ -132,53 +132,10 @@ const handleCaptured = () => {
           <Flex flexDir={['column','column', 'row']} >
             <Flex flexDir={'column'} w={'30%'}  >
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
+          
+            </Flex>
             
             </Flex>
-            {/* <Box flex={2} bg={"#436087"} ref={captureRef}>
-               <Flex
-                w={["100%", "95%", "95%", '95%',  '80%']}
-                m={"50px auto"}
-                p={5}
-                gap={['5px', '4px', '3px', '4px', '3px']}
-                borderRadius={5}
-                justifyContent="space-between"
-                bg={"#2D2772"}
-                color="white"
-              >
-                <InfoSection
-                  title="Economia Mensal do Cliente"
-                  icon="R$"  
-                  items={pmt?.map((item:any) =>  (valorAtualParcela! - item  ).toFixed(2)                                                                                                                                                                )}
-                />
-                <InfoVal
-                  title="Nova Taxa"
-                  items={Taxas?.map((item) => item)}
-                  icon="%"
-                />
-
-                 <Box position={'absolute'} right={'20px'} bottom={['21%', '24%', '50%', '50%', '56%']}><Button alignItems={'center'} bg={'transparent'} onClick={handleCaptured}>Capturar tela</Button>
-                  { screentext &&
-                    <Text transform={'all ease 0.2'} bg={'yellow.500'} borderRadius={4} p={2} color={'black'}>{screentext}</Text>}
-                </Box> 
-                <InfoSection
-                  title="Nova Parcela"
-                  items={pmt?.map((item:any) => item)}
-                  icon="R$"
-                  
-                />
-                <InfoSection
-                  title="Economia Total no Período"
-                  items={pmt?.map((item:any) => ((valorAtualParcela! - item  ) * parcelaRestante!).toFixed(2))}
-                  icon="R$"
-                />
-              </Flex> 
-             <Flex >
-                <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela} parcelaRest={parcelaRestante} />
-              </Flex>  
-              <QualiFooter/>
-            </Box>
-            */}
-          </Flex>
         </Box>
         </>
       )}

@@ -2,12 +2,12 @@
 
 import { resultProps } from "@/types";
 import { form } from "@/types/mod";
-import {  Button, Flex, Input, Select, Text } from "@chakra-ui/react";
+import { Button, Flex, Input, Select, Text } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-export function CalculatorForm({calculated, formreceived, taxx}: any) {
+export function CalculatorForm({ calculated, formreceived, taxx }: any) {
   const {
     register,
     handleSubmit,
@@ -16,73 +16,64 @@ export function CalculatorForm({calculated, formreceived, taxx}: any) {
   const [formData, setFormData] = useState<form>();
   const [result, setResult] = useState<resultProps[]>();
   const onSubmit: SubmitHandler<any> = async (data) => {
-      setFormData(data);
-      formreceived(data)
-    } 
+    setFormData(data);
+    formreceived(data);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex align={'center'} mt={20} mb={7}>
-
-        {/* <Text w={"38%"}>Banco</Text>
-        <Select
-          placeholder="Selecione um banco"
-          color={"#485252"}
-          focusBorderColor="white"
-          border={"1px solid #d6d0f5"}
-          bg={"#edeafd"}
-          w={"70%"}
-          {...register("selectedBank")}
-        >
-          <option>C6</option>
-          <option>Inbursa</option>
-          <option>PagBank</option>
-          <option>calculadora do cidadao(bacen)</option>
-          <option>Todos</option>
-        </Select> */}
-      </Flex>
-      <Flex mb={7}  >
-        <Text w={"35%"}>Valor Parcela Atual</Text>
-        <Input
-          type="number"
-          focusBorderColor="white"
-          border={"1px solid #d6d0f5"}
-          bg={"#edeafd"}
-          w={"40%"}
-          {...register("parcelaAtual")}
-        />
-      </Flex>
       
-     
-      <Flex mb={7} align={'center'}>
-        <Text w={"35%"}>Parcela Restante</Text>
-        <Input
-        type="number"
-          focusBorderColor="white"
-          border={"1px solid #d6d0f5"}
-          bg={"#edeafd"}
-          w={"40%"}
-          {...register("parcelaRestante")}
-        />
-      </Flex>
-      <Flex mb={7} align={'center'}>
-        <Text w={"35%"}>Vl Emprestimo</Text>
-        <Input
-         type="number"
-          focusBorderColor="#fff"
-          border={"1px solid #d6d0f5"}
-          bg={"#edeafd"}
-          w={"40%"}
-          {...register("vlEmprestimo")}
-        />
-      </Flex>
-      <Flex mb={7}  align={'center'}>
-        <Text w={"35%"}>Taxa atual</Text>
-        <Flex  borderRadius={'7px'} bg={"#dce493"} h={'40px'} align={'center'} w={'40%'}>
-          <Text ml={'10px'}> {taxx}</Text>
+      <Flex h={'40%'} justify={'center'} align={'center'} mt={'120px'} mb={20}>
+        <Flex flex={1}  flexDir={'column'} textAlign={'center'} justify={'center'} align={'center'}>
+          <Text w={"100%"} mb={'30px'}>Valor Parcela Atual</Text>
+          <Input
+            type="number"
+            focusBorderColor="white"
+            border={"1px solid #d6d0f5"}
+            bg={"#edeafd"}
+            w={"90%"}
+            {...register("parcelaAtual")}
+          />
         </Flex>
-       
+
+        <Flex w={'50%'}  align={"center"} flexDir={'column'} textAlign={'center'} justify={'center'}>
+          <Text  mb={'30px'} w={"100%"}>Parcela Restante</Text>
+          <Input
+            type="number"
+            focusBorderColor="white"
+            border={"1px solid #d6d0f5"}
+            bg={"#edeafd"}
+            w={"90%"}
+            {...register("parcelaRestante")}
+          />
+        </Flex>
       </Flex>
-     
+
+      <Flex gap={4}>
+        <Flex flex={1}  align={"center"} flexDir={'column'} textAlign={'center'} justify={'center'} >
+          <Text w={"100%"}  mb={'30px'}>Vl Emprestimo</Text>
+          <Input
+            type="number"
+            focusBorderColor="#fff"
+            border={"1px solid #d6d0f5"}
+            bg={"#edeafd"}
+           
+            {...register("vlEmprestimo")}
+          />
+        </Flex>
+        <Flex flex={1}  align={"center"} textAlign={'center'} flexDir={'column'} justify={'center'} >
+          <Text w={"100%"}  mb={'30px'}>Taxa atual</Text>
+          <Flex
+            borderRadius={"7px"}
+            bg={"#dce493"}
+            h={"40px"}
+            align={"center"}
+            w={"100%"}
+            textAlign={'center'} justify={'center'}
+          >
+            <Text ml={"10px"}> {taxx}</Text>
+          </Flex>
+        </Flex>
+      </Flex>
 
       <Button
         mt={10}
