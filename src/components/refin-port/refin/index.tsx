@@ -1,13 +1,13 @@
 import { InfoSection, InfoVal } from "@/components/rightside/buscas"
 import { Box, Flex, Text } from "@chakra-ui/react"
 
-export const Port = ({bank}:any) => {
+export const Port = ({bank, color}:any) => {
   
 
   return (
     <Box flex={1} mt={'20px'} >
       <Text color={'#bbd5ed'} fontSize={['13px', '15px', '20px']}>Banco: {bank}</Text>
-      <Flex  gap={'20px'} bg={'#0B132B'} p={'20px'} borderRadius={'8px'}> 
+      <Flex  gap={'20px'} bg={color} p={'20px'} borderRadius={'8px'}> 
           <Box>
             <Text>Nova Taxa</Text>
             <Box textAlign={'center'}>

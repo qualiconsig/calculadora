@@ -168,13 +168,22 @@ export default function Calculadora() {
                   tax={taxa}
                 />
               </Flex>
-              <Flex flex={2} bg={"#2D2772"}  h={['100vh', '100vh']}  >
+              <Flex flex={2} bg={"#2D2772"}    >
                 <Box  w={["100%", "95%", "95%", '95%',  '80%']}  >
                   <Flex mt={2} ml={2} gap={2}>
                     <div onClick={selectPortabilidade}><Butto text="Portabilidade" /></div>
                     <div onClick={selectRefinanciamento}><Butto text="Refinanciamento"  /></div>
-                  </Flex> 
+                  </Flex>
+                  <Flex justify={'center'} margin={'0 auto'}>
+                    <Flex gap={'20px'} fontSize={'16px'} fontWeight={'700'} p={2} borderRadius={2} bg={'#636792'}>
+                      <Text color={'#50d61f'}>PagBank</Text>
+                      <Text color={'#0e0f1b'}>C6</Text>
+                      <Text color={'#4c1999'}>Inbursa</Text>
+                    </Flex>
+                     
+                    </Flex> 
                   <Flex justify={'center'}>
+                    
                   {refin === true &&
                     <Text color={'white'}>Refinanciamento</Text>
                   }
@@ -182,9 +191,9 @@ export default function Calculadora() {
                   <Box color={'white'}>
                     <Text color={'white'}>Portabilidade</Text>
                     
-                      <Port bank={'Inbursa'}/>
-                      <Port bank={'C6'}/>
-                      <Port bank={'Pagbank'}/>
+                      <Port bank={'Inbursa'} color={"#4c1999"}/>
+                      <Port bank={'C6'} color={"#0e0f1b"}/>
+                      <Port bank={'Pagbank'} color={"#50d61f"}/>
                     </Box>
                   }
                  </Flex>
