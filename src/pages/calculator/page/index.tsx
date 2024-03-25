@@ -161,15 +161,15 @@ export default function Calculadora() {
           <Box w={["100vw", "100vw", "100vw", "100vw", "98.8vw"]}>
             <Box w={["100%", "80%"]} m="0 auto"></Box>
             <Flex flexDir={["column", "column", "row"]}>
-              <Flex flexDir={"column"} w={"30%"}>
+              <Flex flexDir={"column"} >
                 <LeftSide
                   calculated={handleCalc}
                   formreceived={handleFormData}
                   tax={taxa}
                 />
               </Flex>
-              <Flex>
-                <Box w={"70vw"} bg={"#2D2772"}>
+              <Flex flex={2} bg={"#2D2772"}  h={['100vh', '100vh']}  >
+                <Box  w={["100%", "95%", "95%", '95%',  '80%']}  >
                   <Flex mt={2} ml={2} gap={2}>
                     <div onClick={selectPortabilidade}><Butto text="Portabilidade" /></div>
                     <div onClick={selectRefinanciamento}><Butto text="Refinanciamento"  /></div>
@@ -181,7 +181,10 @@ export default function Calculadora() {
                   {portabilidade == true &&
                   <Box color={'white'}>
                     <Text color={'white'}>Portabilidade</Text>
-                      <Port/>
+                    
+                      <Port bank={'Inbursa'}/>
+                      <Port bank={'C6'}/>
+                      <Port bank={'Pagbank'}/>
                     </Box>
                   }
                  </Flex>

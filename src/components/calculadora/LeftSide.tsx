@@ -44,8 +44,8 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
     flex={1}
     bg={"#FFF"}
     color={"white"}
-    
-    
+    w={['100vw',"100vw",'40vw', '35vw',  '100%']}
+   
   >
     
     <Box w={"90%"} h={'100vh'} m={"0 auto"} mt={10} color={"black"}>
@@ -53,7 +53,7 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
       <Text fontSize={20}>Simulação calculadora </Text>
       <Text mt={2} mb={2}>Preencher somente os dados em amarelo</Text>
       <Box w={"100%"} >
-        <Flex gap={'40px'}mt={2} justify={'center'}>
+        <Flex gap={'40px'}mt={2} justify={'center'} w={['80%', '80%','80%','80%', '100%']}>
           <Button fontSize={'13px'} onClick={handleSelectDataSis}>Dados sistema</Button>
           <Button fontSize={'13px'} onClick={handleSelectBank}>Saldo real </Button>
         </Flex>

@@ -21,9 +21,9 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex align={"center"}></Flex>
+     
 
-      <Flex>
+      <Flex w={['100%', '100%','80%','80%', '100%']}>
           <BoxForm text={'Prazo inicial'}>
           <Input
             type="number"
@@ -48,7 +48,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
         </BoxForm>
       </Flex>
 
-      <Flex >
+      <Flex w={['100%', '100%','80%','80%', '100%']}>
        <BoxForm text={'Vl. de emprestimo contratado'}>
        <Input
         type="number"

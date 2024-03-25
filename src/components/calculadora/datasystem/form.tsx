@@ -23,7 +23,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       
-      <Flex h={'40%'} justify={'center'} align={'center'} mt={'120px'} mb={20}>
+      <Flex h={'40%'} w={['100%', '100%','80%','80%', '100%']} justify={'center'} align={'center'} mt={'120px'} mb={20}>
         <Flex flex={1}  flexDir={'column'} textAlign={'center'} justify={'center'} align={'center'}>
           <Text w={"100%"} mb={'30px'}>Valor Parcela Atual</Text>
           <Input
@@ -49,7 +49,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
         </Flex>
       </Flex>
 
-      <Flex gap={4}>
+      <Flex gap={4} w={['100%', '100%','80%','80%', '100%']}>
         <Flex flex={1}  align={"center"} flexDir={'column'} textAlign={'center'} justify={'center'} >
           <Text w={"100%"}  mb={'30px'}>Vl Emprestimo</Text>
           <Input
