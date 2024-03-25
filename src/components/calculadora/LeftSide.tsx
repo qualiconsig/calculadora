@@ -49,7 +49,9 @@ export const LeftSide = ({calculated, formreceived, tax}:any) => {
   >
     
     <Box w={"90%"} h={'100vh'} m={"0 auto"} mt={10} color={"black"}>
+      
       <Text fontSize={20}>Simulação calculadora </Text>
+      <Text mt={2} mb={2}>Preencher somente os dados em amarelo</Text>
       <Box w={"100%"} >
         <Flex gap={'40px'}mt={2} justify={'center'}>
           <Button fontSize={'13px'} onClick={handleSelectDataSis}>Dados sistema</Button>

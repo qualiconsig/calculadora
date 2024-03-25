@@ -125,16 +125,14 @@ const handleCaptured = () => {
       {loading === false && <Loading />}
       {loading === true && (
         <>
-
         <Box  w={["100vw", "100vw","100vw","100vw", "98.8vw"]}>
        
           <Box  w={["100%", "80%"]}  m="0 auto"></Box>
           <Flex flexDir={['column','column', 'row']} >
             <Flex flexDir={'column'} w={'30%'}  >
             <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
-          
-            </Flex>
             
+            </Flex>  
             </Flex>
         </Box>
         </>

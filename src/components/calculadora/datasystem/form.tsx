@@ -19,6 +19,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
     setFormData(data);
     formreceived(data);
   };
+  
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       
@@ -29,7 +30,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
             type="number"
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
-            bg={"#edeafd"}
+            bg={"#f5f4b2"}
             w={"90%"}
             {...register("parcelaAtual")}
           />
@@ -41,7 +42,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
             type="number"
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
-            bg={"#edeafd"}
+            bg={"#f5f4b2"}
             w={"90%"}
             {...register("parcelaRestante")}
           />
@@ -55,7 +56,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
             type="number"
             focusBorderColor="#fff"
             border={"1px solid #d6d0f5"}
-            bg={"#edeafd"}
+            bg={"#f5f4b2"}
            
             {...register("vlEmprestimo")}
           />
@@ -64,7 +65,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
           <Text w={"100%"}  mb={'30px'}>Taxa atual</Text>
           <Flex
             borderRadius={"7px"}
-            bg={"#dce493"}
+            bg={"#a3eff5"}
             h={"40px"}
             align={"center"}
             w={"100%"}

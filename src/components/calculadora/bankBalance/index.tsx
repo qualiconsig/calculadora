@@ -29,7 +29,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
             type="number"
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
-            bg={"#edeafd"}
+            bg={"#f5f4b2"}
             w={"95%"}
             {...register("PrazoInicial")}
           />
@@ -40,7 +40,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
             type="number"
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
-            bg={"#edeafd"}
+            bg={"#f5f4b2"}
             w={"95%"}
             {...register("parcelaAtual")}
           />
@@ -54,7 +54,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
         type="number"
         focusBorderColor="#fff"
         border={"1px solid #d6d0f5"}
-        bg={"#edeafd"}
+        bg={"#f5f4b2"}
         w={"95%"}
         {...register("valorEmprestimoContrado")}
     />
@@ -66,7 +66,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
               type="number"
               focusBorderColor="#fff"
               border={"1px solid #d6d0f5"}
-              bg={"#edeafd"}
+              bg={"#f5f4b2"}
               w={"95%"}
               {...register("parcelaPaga")}
             />
@@ -79,7 +79,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
         <Text w={"35%"}>Taxa atual</Text>
         <Flex
           borderRadius={"7px"}
-          bg={"#dce493"}
+          bg={"#a3eff5"}
           h={"40px"}
           align={"center"}
           w={"40%"}
@@ -92,7 +92,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
         <Text w={"35%"}>Taxa atual do contrato</Text>
         <Flex
           borderRadius={"7px"}
-          bg={"#dce493"}
+          bg={"#a3eff5"}
           h={"40px"}
           align={"center"}
           w={"40%"}
@@ -105,7 +105,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
         <Text w={"35%"}>Saldo devedor aproximado</Text>
         <Flex
           borderRadius={"7px"}
-          bg={"#dce493"}
+          bg={"#a3eff5"}
           h={"40px"}
           align={"center"}
           w={"40%"}
