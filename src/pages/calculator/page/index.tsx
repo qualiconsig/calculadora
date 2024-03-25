@@ -168,9 +168,9 @@ export default function Calculadora() {
                   tax={taxa}
                 />
               </Flex>
-              <Flex flex={2} bg={"#2D2772"}    >
+              <Flex flex={2} bg={"#2D2772"}  align={'center'} justify={'center'} alignItems={'center'} alignContent={'center'}>
                 <Box  w={["100%", "95%", "95%", '95%',  '80%']}  >
-                  <Flex mt={2} ml={2} gap={2}>
+                  <Flex mt={2} ml={2} gap={2} justify={'center'} mb={10}>
                     <div onClick={selectPortabilidade}><Butto text="Portabilidade" /></div>
                     <div onClick={selectRefinanciamento}><Butto text="Refinanciamento"  /></div>
                   </Flex>
