@@ -10,7 +10,7 @@ export const Port = ({}) => {
       <Flex gap={'20px'} bg={'#0B132B'} p={'20px'} borderRadius={'8px'}> 
           <Box>
             <Text>Nova Taxa</Text>
-            <Box>
+            <Box textAlign={'center'}>
               <Text>1,72%</Text>
               <Text>1,70%</Text>
               <Text>1,66%</Text>
@@ -20,7 +20,7 @@ export const Port = ({}) => {
           </Box>
           <Box>
             <Text>Nova Parcela</Text>
-            <Box>
+            <Box textAlign={'center'}>
               <Text>529.78</Text>
               <Text>526,45</Text>
               <Text>519,83</Text>
@@ -30,7 +30,7 @@ export const Port = ({}) => {
           </Box>    
           <Box>
             <Text>Economia Cliente Mensal</Text>
-            <Box>
+            <Box textAlign={'center'}>
               <Text>37,59</Text>
               <Text>34,26</Text>
               <Text>27,64</Text>
@@ -38,7 +38,7 @@ export const Port = ({}) => {
               <Text>11,26</Text>
             </Box>
           </Box> 
-          <Box>
+          <Box textAlign={'center'}>
             <Text>Economia Total Periodo</Text>
             <Box>
               <Text>3082,59</Text>
