@@ -176,9 +176,10 @@ export default function Calculadora() {
                   </Flex>
                   <Flex justify={'center'} margin={'0 auto'}>
                     <Flex gap={'20px'} fontSize={'16px'} fontWeight={'700'} p={2} borderRadius={2} bg={'#636792'}>
+                      <Text color={'#4c1999'}>Inbursa</Text>
                       <Text color={'#50d61f'}>PagBank</Text>
                       <Text color={'#0e0f1b'}>C6</Text>
-                      <Text color={'#4c1999'}>Inbursa</Text>
+                      
                     </Flex>
                      
                     </Flex> 
@@ -190,7 +191,7 @@ export default function Calculadora() {
                   {portabilidade == true &&
                   <Box color={'white'}>
                     <Text color={'white'}>Portabilidade</Text>
-                      <Port color={"#453c8b"}/>
+                      <Port color={"#5248a0"}/>
                       
                     </Box>
                   }
