@@ -190,7 +190,7 @@ export default function Calculadora() {
                   {portabilidade == true &&
                   <Box color={'white'}>
                     <Text color={'white'}>Portabilidade</Text>
-                      <Port color={"#4c1999"}/>
+                      <Port color={"#453c8b"}/>
                       
                     </Box>
                   }
