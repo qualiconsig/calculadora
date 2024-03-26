@@ -1,10 +1,11 @@
 import { createContext, useContext, useState } from "react";
 
-interface NameProps {
+export interface NameProps {
   formdata: {
-    parcelaAtual: string,
-    parcelaRestante: string,
-    vlEmprestimo: string
+    Taxas: number[],
+    calc: number[],
+    parcelaAtual: number,
+    parcelaRestante: number
   };
   
 
@@ -15,7 +16,13 @@ interface MathContextProps {
   name?: NameProps
 }
 
+interface ResultContextProps {
+  setVlcontext: number,
+  vl: number
+}
+
 const formsendContext = createContext({} as  MathContextProps);
+const mathResultContext = createContext({} as ResultContextProps)
 
 export function MathContext({children}: any) {
   const [name, setName] = useState<NameProps>();

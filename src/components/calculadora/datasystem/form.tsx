@@ -1,6 +1,7 @@
 // CalculatorForm.jsx
 
-import { useNameContextHook } from "@/context/mathContext";
+import { useNameContextHook } from "@/context/formContext";
+import { Taxas, calcularPMT, calcularTaxa } from "@/math";
 import { resultProps } from "@/types";
 import { form } from "@/types/mod";
 import { Button, Flex, Input, Select, Text } from "@chakra-ui/react";
@@ -18,11 +19,14 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
   const {setName, name} = useNameContextHook()
   
   const [result, setResult] = useState<resultProps[]>();
-  const onSubmit: SubmitHandler<any> = async (data) => {
+  const onSubmit: SubmitHandler<any> = async (data: form) => {
     setFormData(data);
     formreceived(data);
-    setName({formdata: data})
-    
+    calculated(data)
+    const convertVl = parseFloat(data.vlEmprestimo)
+    const convertPcRest = parseFloat(data.parcelaRestante)
+
+  
   };
 
   

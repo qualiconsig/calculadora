@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+
+import { useNameContextHook } from "@/context/formContext";
+import { useContext, useEffect } from "react";
 
 export const Taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
 
 
 
 export function calcularPMT(valorPresente:number, numeroParcelas:number ) {
+
+
   let result:any = []
   Taxas.forEach(taxa => {
     const tx = taxa / 100;
@@ -14,10 +18,8 @@ export function calcularPMT(valorPresente:number, numeroParcelas:number ) {
     const pmtResult = (total.toFixed(2))
     const totalReplaced = pmtResult.toString().replace(".",",")
     result.push((parseFloat(totalReplaced)))
-    console.log(totalReplaced)
-    
   });
-  console.log('esse é o valor', result)
+  console.log(result)
   return result
  
 }

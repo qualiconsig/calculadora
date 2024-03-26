@@ -1,6 +1,6 @@
 
 import { BoxForm } from "@/components/utils/formBox";
-import { useNameContextHook } from "@/context/mathContext";
+import { useNameContextHook } from "@/context/formContext";
 import { resultProps } from "@/types";
 import { form } from "@/types/mod";
 import { Button, Flex, Input, Select, Text } from "@chakra-ui/react";

@@ -1,7 +1,7 @@
 "use client";
 import { resultProps } from "@/types";
 import { Box, Button, Flex, Switch, Text } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Loading from "@/components/loading";
 import { LeftSide } from "@/components/calculadora/LeftSide";
 import { calcularPMT, calcularTaxa } from "@/math";
@@ -10,6 +10,8 @@ import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import { Butto } from "@/components/utils/linkButton/linkBut";
 import { Port } from "@/components/refin-port/refin";
+import { Taxas } from "@/math";
+import { useNameContextHook } from "@/context/formContext";
 
 export default function Calculadora() {
   const [screentext, setScreenText] = useState<string>();
@@ -83,6 +85,8 @@ export default function Calculadora() {
   const activeLoading = () => setTimeout(() => setLoading(true), 3000);
   const [saldoDev, setSaldoDev] = useState();
 
+  const {setName, name} = useNameContextHook()
+
   const [option, setOption] = useState("Portabilidade");
 
   const handleFormData = (dataform: any) => {
@@ -97,10 +101,10 @@ export default function Calculadora() {
     if (formData) {
       const parcelaAtual: any = parseFloat(formData.parcelaAtual);
       setValorAtualParcela(parcelaAtual.toFixed(2));
-      const parcelaRestante = parseInt(formData.parcelaRestante);
+      const parcelaRestante = parseFloat(formData.parcelaRestante);
       setParcelaRestante(parcelaRestante);
 
-      const saldoDevedor: any = parseFloat(formData!.vlEmprestimo);
+      const saldoDevedor: any = (formData!.vlEmprestimo);
       setSaldoDev(saldoDevedor);
       const taxaEncontrada = calcularTaxa(
         parcelaAtual,
@@ -111,7 +115,20 @@ export default function Calculadora() {
       setTaxa(taxaEncontrada);
 
       const calc = calcularPMT(saldoDevedor, parcelaRestante);
+      
+
       setPMT(calc);
+      const taxa = Taxas
+
+      const objReceived = {
+        Taxas,
+        calc,
+        parcelaAtual,
+        parcelaRestante
+      }
+      setName({formdata: objReceived})
+      console.log(objReceived)
+
     }
   };
   useEffect(() => {
