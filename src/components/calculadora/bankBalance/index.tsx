@@ -1,5 +1,6 @@
 
 import { BoxForm } from "@/components/utils/formBox";
+import { useNameContextHook } from "@/context/mathContext";
 import { resultProps } from "@/types";
 import { form } from "@/types/mod";
 import { Button, Flex, Input, Select, Text } from "@chakra-ui/react";
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
+  const {setName, name} = useNameContextHook()
   const {
     register,
     handleSubmit,
@@ -18,6 +20,8 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
   const onSubmit: SubmitHandler<any> = async (data) => {
     setFormData(data);
     formreceived(data);
+    
+    
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

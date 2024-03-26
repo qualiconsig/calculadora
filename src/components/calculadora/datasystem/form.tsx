@@ -1,5 +1,6 @@
 // CalculatorForm.jsx
 
+import { useNameContextHook } from "@/context/mathContext";
 import { resultProps } from "@/types";
 import { form } from "@/types/mod";
 import { Button, Flex, Input, Select, Text } from "@chakra-ui/react";
@@ -14,11 +15,16 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
     formState: { errors },
   } = useForm<any>();
   const [formData, setFormData] = useState<form>();
+  const {setName, name} = useNameContextHook()
+  
   const [result, setResult] = useState<resultProps[]>();
   const onSubmit: SubmitHandler<any> = async (data) => {
     setFormData(data);
     formreceived(data);
+    setName({formdata: data})
+    
   };
+
   
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

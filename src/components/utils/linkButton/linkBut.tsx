@@ -25,7 +25,8 @@ export const Butto = ({text}:any) => {
   return (
     <Button bg={'#B5CCFF'} borderRadius={'3px'}  fontWeight={'500'} color={'white'} _hover={{
      transition: 'all ease 0.2s',
-      filter: "brightness(80%)"
+      filter: "brightness(80%)",
+      
     }}>{text}</Button>
   )
 }

@@ -1,5 +1,6 @@
 import { InfoSection, InfoVal } from "@/components/rightside/buscas";
 import { AllText } from "@/components/utils/alltext";
+import { useNameContextHook } from "@/context/mathContext";
 import {
   Box,
   Flex,
@@ -13,8 +14,10 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useContext } from "react";
 
 export const Port = ({ bank, color }: any) => {
+  
   return (
     <Box  mt={"20px"}>
       <Text color={"#bbd5ed"} fontSize={["13px", "15px", "15px"]}></Text>
@@ -61,6 +64,7 @@ export const Port = ({ bank, color }: any) => {
             </Tbody>
           </Table>
         </TableContainer>
+        
       </Flex>
     </Box>
   );
