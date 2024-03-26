@@ -168,7 +168,7 @@ export default function Calculadora() {
                   tax={taxa}
                 />
               </Flex>
-              <Flex flex={2}  bg={"#4f64aa"}  align={'center'} justify={'center'} >
+              <Flex flex={2}  bg={"#4f64aa"}   align={'center'} flexDir={['column', 'row']}  justify={'center'} >
                 <Box  w={["100%", "95%", "95%", '95%',  '80%']}  >
                   <Flex mt={2} ml={2} gap={2} justify={'center'} mb={10}>
                     <div onClick={selectPortabilidade}><Butto text="Portabilidade" /></div>
@@ -183,13 +183,13 @@ export default function Calculadora() {
                     </Flex>
                      
                     </Flex> 
-                  <Flex justify={'center'}>
+                  <Flex >
                     
                   {refin === true &&
                     <Text color={'white'}>Refinanciamento</Text>
                   }
                   {portabilidade == true &&
-                  <Box color={'white'}>
+                  <Box color={'white'} w={['100%', '100%']}>
                     <Text color={'white'}>Portabilidade</Text>
                       <Port color={"#1c308b"}/>
                       
