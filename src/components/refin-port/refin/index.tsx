@@ -50,7 +50,7 @@ export const Port = ({ bank, color }: any) => {
                 <Td>{item}</Td>
                 <Td>{name.formdata.calc[index]}</Td>
                 <Td>{name.formdata.parcelaAtual - name.formdata.calc[index]}</Td>
-                <Td>{(name.formdata.calc[index] -  name.formdata.parcelaAtual) * name.formdata.parcelaRestante}</Td>
+                <Td>{(name.formdata.parcelaAtual - name.formdata.calc[index]  ) * name.formdata.parcelaRestante}</Td>
               </Tr>
             ))}
           </Tbody>
