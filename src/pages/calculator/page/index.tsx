@@ -168,7 +168,7 @@ export default function Calculadora() {
                   tax={taxa}
                 />
               </Flex>
-              <Flex flex={2}  bg={"#2D2772"}  align={'center'} justify={'center'} >
+              <Flex flex={2}  bg={"#4f64aa"}  align={'center'} justify={'center'} >
                 <Box  w={["100%", "95%", "95%", '95%',  '80%']}  >
                   <Flex mt={2} ml={2} gap={2} justify={'center'} mb={10}>
                     <div onClick={selectPortabilidade}><Butto text="Portabilidade" /></div>
@@ -191,7 +191,7 @@ export default function Calculadora() {
                   {portabilidade == true &&
                   <Box color={'white'}>
                     <Text color={'white'}>Portabilidade</Text>
-                      <Port color={"#5248a0"}/>
+                      <Port color={"#1c308b"}/>
                       
                     </Box>
                   }

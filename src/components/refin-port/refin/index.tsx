@@ -1,6 +1,6 @@
 import { InfoSection, InfoVal } from "@/components/rightside/buscas";
 import { AllText } from "@/components/utils/alltext";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
 
 export const Port = ({ bank, color }: any) => {
   return (
@@ -10,64 +10,44 @@ export const Port = ({ bank, color }: any) => {
 
         <Flex w={'100%'} gap={'20px'}>
           <Box>
-            <Text h={'40px'} mb={'20px'}>Bancos</Text> 
-            <Box>
-              <AllText text='Inbursa' color='#891de2'/>
-              <AllText text='C6' color='black'/>
-              <AllText text='Pagbank' color='green.500'/> 
-              <AllText text='Pagbank' color='green.500'/> 
-              <AllText text='Inbursa' color='#891de2'/> 
-              <AllText text='C6' color='black'/>
-            </Box> 
-          </Box>
-
-          <Box textAlign={'center'}>
-            <Text h={'40px'} mb={'20px'}>Nova taxa</Text> 
-            <Box>
-              <AllText text='2.0%' color='#891de2'/>
-              <AllText text='1.75%' color='black'/>
-              <AllText text='1.66%' color='green.500'/> 
-              <AllText text='1.60%' color='green.500'/> 
-              <AllText text='1.56%' color='#891de2'/> 
-              <AllText text='1.50%' color='black'/>
-            </Box> 
-          </Box>
-
-          <Box textAlign={'center'}>
-            <Text h={'40px'} mb={'20px'}>Nova parcela</Text> 
-            <Box>
-              <AllText text='582,93' color='#891de2'/>
-              <AllText text='579,37' color='black'/>
-              <AllText text='572,37' color='green.500'/> 
-              <AllText text='561,71' color='green.500'/> 
-              <AllText text='554,54' color='#891de2'/> 
-              <AllText text='542,15' color='black'/>
-            </Box> 
-          </Box>
-
-          <Box>
-            <Text h={'40px'} mb={'20px'}>Eco. mensal cliente</Text> 
-            <Box textAlign={'center'}>
-              <AllText text='2,93' color='#891de2'/>
-              <AllText text='6,37' color='black'/>
-              <AllText text='13,37' color='green.500'/> 
-              <AllText text='23,71' color='green.500'/> 
-              <AllText text='14,54' color='#891de2'/> 
-              <AllText text='30,15'  color='black'/>
-            </Box> 
-          </Box>
-
-          <Box>
-            <Text h={'40px'} mb={'20px'}>Eco do cliente total</Text> 
-            <Box textAlign={'center'}>
-              <AllText text='197,55' color='#891de2'/>
-              <AllText text='476,31' color='black'/>
-              <AllText text='1.036,00' color='green.500'/> 
-              <AllText text='232,71' color='green.500'/> 
-              <AllText text='1224,54' color='#891de2'/> 
-              <AllText text='3220,15' color='black'/>
-            </Box> 
-          </Box>
+            <TableContainer>
+                  <Table variant='simple'>
+                      <TableCaption color={'white'}>Portabilidade</TableCaption>
+                      <Thead >
+                        <Tr>
+                          <Th color={'yellow'}>Bancos</Th>
+                          <Th color={'yellow'}>Nova taxa</Th>
+                          <Th color={'yellow'}>Nova parcela</Th>
+                          <Th color={'yellow'}>Economia mensal cliente</Th>
+                          <Th color={'yellow'}>Economia total periodo</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        <Tr bg={'purple.700'}>
+                          <Td>Inbursa</Td>
+                          <Td>1,76</Td>
+                          <Td>583,32</Td>
+                          <Td>2,47</Td>
+                          <Td>194,76</Td>
+                        </Tr>
+                        <Tr bg={'black'}>
+                          <Td>C6</Td>
+                          <Td>1,76</Td>
+                          <Td>583,32</Td>
+                          <Td>2,47</Td>
+                          <Td>194,76</Td>
+                        </Tr>
+                        <Tr bg={'green.600'}>
+                          <Td>Pagbank</Td>
+                          <Td>1,76</Td>
+                          <Td>583,32</Td>
+                          <Td>2,47</Td>
+                          <Td>194,76</Td>
+                        </Tr>
+                      </Tbody>
+                  </Table>  
+            </TableContainer>
+           </Box>
 
         </Flex>
         
