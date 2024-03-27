@@ -111,23 +111,23 @@ export default function Calculadora() {
       setSaldoDev(saldoDevedor);
 
       const CalculadoraInbursa = () => {
-        const taxa = [ 1.45, 1.54, 1.58 , 1.68 ,1.78]
-        const InbursaCalc = new CalculadoraGeral(taxa)
+        const taxas = [ 1.45, 1.54, 1.58 , 1.68 ,1.78]
+        const InbursaCalc = new CalculadoraGeral(taxas)
         const TaxaCalc = InbursaCalc.calcularTaxa(
           parcelaAtual,
           parcelaRestante,
           -saldoDevedor,
           1e-6
         )
-        const PmtCalc = InbursaCalc.calcularPMT(
+        const pmt = InbursaCalc.calcularPMT(
           saldoDevedor,
           parcelaRestante
         )
         
         const objInbursaPmt = {
           nameBank: 'Inbursa',
-          taxa,
-          PmtCalc,
+          taxas,
+          pmt,
           parcelaAtual,
           parcelaRestante,
         };
@@ -145,32 +145,33 @@ export default function Calculadora() {
           -saldoDevedor,
           1e-6
         );
-        const pagbankpmt = pagbankCalc.calcularPMT(saldoDevedor, parcelaRestante)
+        const pmt = pagbankCalc.calcularPMT(saldoDevedor, parcelaRestante)
         setTaxa(taxaPagbank);
-        setPMT(pagbankpmt);
+        setPMT(pmt);
 
         const objPagBank = {
           nameBank: 'Pagbank',
           taxas,
-          pagbankpmt,
+          pmt,
           parcelaAtual,
           parcelaRestante,
         };
         setName({formdata: objPagBank})
       };
       console.log(name)
+
       const CalculadoraC = () => {
-        const taxas = [1.55, 1.60, 1.65, 1.70, 1.75, 1.60, 1.65, 1.70, 1.75, 1.76]
+        const taxas = [1.55, 1.60, 1.65, 1.70, 1.75]
         const c6calc = new CalculadoraGeral(taxas)
         const taxaCalc = c6calc.calcularTaxa( parcelaAtual,
           parcelaRestante,
           -saldoDevedor,
           1e-6)
-        const c6pmt = c6calc.calcularPMT(saldoDevedor, parcelaRestante)
+        const pmt = c6calc.calcularPMT(saldoDevedor, parcelaRestante)
         const objc6Bank = {
           nameBank: 'C6',
-          taxa,
-          c6pmt,
+          taxas,
+          pmt,
           parcelaAtual,
           parcelaRestante,
         };
@@ -183,7 +184,25 @@ export default function Calculadora() {
       CalculadoraInbursa()
 
     }
+    
   };
+  const [ordenedList, setOrdenedList] = useState()
+
+  const bola = () => {
+    const pagbank = name?.formdata
+    const inbursa = inbursatax?.formdata
+    const c6 = c6tax?.formdata
+    
+    const allbank:any = [
+      {pagbank},
+      {inbursa},
+      {c6}
+    ]
+    setOrdenedList(allbank)
+    console.log(ordenedList)
+  }
+
+
   useEffect(() => {
     received();
   }, [formData]);
@@ -214,7 +233,20 @@ export default function Calculadora() {
       setPortabilidade(false);
       return;
     }
+    const pagbank = name?.formdata
+    const inbursa = inbursatax?.formdata
+    const c6 = c6tax?.formdata
+    
+    const allbank:any = [
+      pagbank,
+      inbursa,
+      c6
+    ]
+    setOrdenedList(allbank)
+    console.log(ordenedList)
+
     setPortabilidade(true);
+
   };
 
   useEffect(() => {
@@ -243,6 +275,7 @@ export default function Calculadora() {
                 align={"center"}
                 flexDir={["column", "row"]}
                 justify={"center"}
+
               >
                 <Box w={["100%", "95%", "95%", "95%", "80%"]}>
                   <Flex mt={2} ml={2} gap={2} justify={"center"} mb={10}>
@@ -274,7 +307,7 @@ export default function Calculadora() {
                     {portabilidade == true && (
                       <Box color={"white"} w={["100%", "100%"]}>
                         <Text color={"white"}>Portabilidade</Text>
-                        <Port color={"#1c308b"} />
+                        <Port color={"#1c308b"} data={ordenedList}/>
                       </Box>
                     )}
                   </Flex>

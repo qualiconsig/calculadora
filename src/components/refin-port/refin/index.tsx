@@ -21,34 +21,43 @@ import {
   others,
 } from "@chakra-ui/react";
 import { all } from "axios";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
-export const Port = ({ bank, color }: any) => {
+export const Port = ({ bank, color, data }: any) => {
   
   const {name, setName} = useNameContextHook();
   const {inbursatax ,setInbursaTax } = useInbursaContextHook()
   const {c6tax , setC6Tax} = useC6ContextHook()
+
+  const [ordenedList, setOrdenedList] = useState<any>()
 
   const porp = () => {
     const pagbank = name?.formdata
     const inbursa = inbursatax?.formdata
     const c6 = c6tax?.formdata
     
-    const allbank = {
-      pagbank,
-      inbursa,
-      c6
-    }
+    const allbank:any = [
+      {pagbank},
+      {inbursa},
+      {c6}
+    ]
+    setOrdenedList(allbank)
+    console.log(ordenedList)
     
-    console.log(allbank)
+
   }
 
   useEffect(()=> {
-    porp()
+   
+    console.log(data)
+    for(let i in data) {
+      console.log(data[i].nameBank)
+    }
   },[])
   
   return (
     <Box mt={"20px"}>
+      
     <Text color={"#bbd5ed"} fontSize={["13px", "15px", "15px"]}></Text>
     <Flex gap={"20px"} bg={color} p={"20px"} borderRadius={"8px"}>
       <TableContainer
@@ -69,13 +78,13 @@ export const Port = ({ bank, color }: any) => {
             </Tr>
           </Thead>
           <Tbody>
-            {name?.formdata.taxas.map((item, index) => (
+            {data.map((item, index) => (
               <Tr key={index}>
-                <Td>{bank}</Td>
-                <Td>{item}</Td>
-                <Td>{name.formdata.pagbankpmt[index]}</Td>
-                <Td>{name.formdata.parcelaAtual - name.formdata.pagbankpmt[index]}</Td>
-                <Td>{(name.formdata.parcelaAtual - name.formdata.pagbankpmt[index]  ) * name.formdata.parcelaRestante}</Td>
+                <Td>{item.nameBank}</Td>
+                <Td>{item.taxas[index]}</Td>
+                <Td>{item.pmt[index]}</Td>
+                <Td>{item.parcelaAtual - item.pmt[index]}</Td>
+                <Td>{(item.parcelaAtual - item.pmt[index]  ) * item.parcelaRestante}</Td>
               </Tr>
             ))}
           </Tbody>

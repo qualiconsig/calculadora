@@ -4,7 +4,7 @@ export interface NameProps {
   formdata: {
     nameBank: string
     taxas: number[],
-    pagbankpmt: number[],
+    pmt: number[],
     parcelaAtual: number,
     parcelaRestante: number
   };
