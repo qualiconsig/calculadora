@@ -12,6 +12,10 @@ import { Butto } from "@/components/utils/linkButton/linkBut";
 import { Port } from "@/components/refin-port/refin";
 import { Taxas } from "@/math";
 import { useNameContextHook } from "@/context/formContext";
+import { calcularPMTInbursa, calcularTaxaInbursa } from "@/math/inbursa";
+import { TaxasInbursa } from "@/math/inbursa";
+import { useInbursaContextHook } from "@/context/guardResfrommath";
+import { CalculadoraGeral } from "@/math/calculadora";
 
 export default function Calculadora() {
   const [screentext, setScreenText] = useState<string>();
@@ -85,7 +89,7 @@ export default function Calculadora() {
   const activeLoading = () => setTimeout(() => setLoading(true), 3000);
   const [saldoDev, setSaldoDev] = useState();
 
-  const {setName, name} = useNameContextHook()
+  const { setName, name } = useNameContextHook();
 
   const [option, setOption] = useState("Portabilidade");
 
@@ -97,6 +101,8 @@ export default function Calculadora() {
       return;
     }
   };
+  const [taxaInbusa, setTaxaInbursa] = useState<any>();
+  const { inbursatax, setInbursaTax } = useInbursaContextHook();
   const received = () => {
     if (formData) {
       const parcelaAtual: any = parseFloat(formData.parcelaAtual);
@@ -104,30 +110,73 @@ export default function Calculadora() {
       const parcelaRestante = parseFloat(formData.parcelaRestante);
       setParcelaRestante(parcelaRestante);
 
-      const saldoDevedor: any = (formData!.vlEmprestimo);
+      const saldoDevedor: any = formData!.vlEmprestimo;
       setSaldoDev(saldoDevedor);
-      const taxaEncontrada = calcularTaxa(
-        parcelaAtual,
-        parcelaRestante,
-        -saldoDevedor,
-        1e-6
-      );
-      setTaxa(taxaEncontrada);
 
-      const calc = calcularPMT(saldoDevedor, parcelaRestante);
-      
+      const CalculadoraInbursa = () => {
+        const taxa = [ 1.45, 1.54, 1.58 , 1.68 ,1.78]
+        const InbursaCalc = new CalculadoraGeral(taxa)
+        const TaxaCalc = InbursaCalc.calcularTaxa(
+          parcelaAtual,
+          parcelaRestante,
+          -saldoDevedor,
+          1e-6
+        )
+        const PmtCalc = InbursaCalc.calcularPMT(
+          saldoDevedor,
+          parcelaRestante
+        )
+        
+        const objInbursaPmt = {
+          nameBank: 'Inbursa',
+          taxa,
+          PmtCalc,
+          parcelaAtual,
+          parcelaRestante,
+        };
+        setInbursaTax({ formdata: objInbursaPmt });
+        
+      };
+      console.log('inbursa', inbursatax)
+      const CalculadoraPagBank = () => {
+        const taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
+        const pagbankCalc = new CalculadoraGeral(taxas)
+        const taxaPagbank = pagbankCalc.calcularTaxa(
+          parcelaAtual,
+          parcelaRestante,
+          -saldoDevedor,
+          1e-6
+        );
+        const pagbankpmt = pagbankCalc.calcularPMT(saldoDevedor, parcelaRestante)
+        setTaxa(taxaPagbank);
+        setPMT(pagbankpmt);
 
-      setPMT(calc);
-      const taxa = Taxas
+        const objPagBank = {
+          nameBank: 'Pagbank',
+          taxas,
+          pagbankpmt,
+          parcelaAtual,
+          parcelaRestante,
+        };
+        
+        console.log('pagbank', objPagBank);
+      };
 
-      const objReceived = {
-        Taxas,
-        calc,
-        parcelaAtual,
-        parcelaRestante
+      const CalculadoraC = () => {
+        const taxas = [1.55, 1.60, 1.65, 1.70, 1.75, 1.60, 1.65, 1.70, 1.75, 1.76]
+        const c6calc = new CalculadoraGeral(taxas)
+        const taxaCalc = c6calc.calcularTaxa( parcelaAtual,
+          parcelaRestante,
+          -saldoDevedor,
+          1e-6)
+        const ptm = c6calc.calcularPMT(saldoDevedor, parcelaRestante)
+        console.log(taxaCalc, ptm)
+
       }
-      setName({formdata: objReceived})
-      console.log(objReceived)
+
+      CalculadoraC()
+      CalculadoraPagBank()
+      CalculadoraInbursa()
 
     }
   };
@@ -140,30 +189,29 @@ export default function Calculadora() {
     console.log(datacalc);
   };
 
-  const [portabilidade, setPortabilidade] = useState(false)
-  const [refin, setrefin] = useState(false)
+  const [portabilidade, setPortabilidade] = useState(false);
+  const [refin, setrefin] = useState(false);
 
   const selectRefinanciamento = () => {
     if (portabilidade === true) {
       setPortabilidade(false);
     }
-    if(refin == true) {
-      setrefin(false)
-      return
+    if (refin == true) {
+      setrefin(false);
+      return;
     }
-    setrefin(true)
-    
+    setrefin(true);
   };
   const selectPortabilidade = () => {
     if (refin == true) {
-      setrefin(false)
+      setrefin(false);
     }
-    if(portabilidade == true) {
-      setPortabilidade(false)
-      return 
+    if (portabilidade == true) {
+      setPortabilidade(false);
+      return;
     }
-    setPortabilidade(true)
-  }
+    setPortabilidade(true);
+  };
 
   useEffect(() => {
     activeLoading();
@@ -178,41 +226,54 @@ export default function Calculadora() {
           <Box w={["100vw", "100vw", "100vw", "100vw", "98.8vw"]}>
             <Box w={["100%", "80%"]} m="0 auto"></Box>
             <Flex flexDir={["column", "column", "row"]}>
-              <Flex flexDir={"column"} >
+              <Flex flexDir={"column"}>
                 <LeftSide
                   calculated={handleCalc}
                   formreceived={handleFormData}
                   tax={taxa}
                 />
               </Flex>
-              <Flex flex={2}  bg={"#4f64aa"}   align={'center'} flexDir={['column', 'row']}  justify={'center'} >
-                <Box  w={["100%", "95%", "95%", '95%',  '80%']}  >
-                  <Flex mt={2} ml={2} gap={2} justify={'center'} mb={10}>
-                    <div onClick={selectPortabilidade}><Butto text="Portabilidade" /></div>
-                    <div onClick={selectRefinanciamento}><Butto text="Refinanciamento"  /></div>
+              <Flex
+                flex={2}
+                bg={"#4f64aa"}
+                align={"center"}
+                flexDir={["column", "row"]}
+                justify={"center"}
+              >
+                <Box w={["100%", "95%", "95%", "95%", "80%"]}>
+                  <Flex mt={2} ml={2} gap={2} justify={"center"} mb={10}>
+                    <div onClick={selectPortabilidade}>
+                      <Butto text="Portabilidade" />
+                    </div>
+                    <div onClick={selectRefinanciamento}>
+                      <Butto text="Refinanciamento" />
+                    </div>
                   </Flex>
-                  <Flex justify={'center'} margin={'0 auto'}>
-                    <Flex gap={'20px'} fontSize={'16px'} fontWeight={'700'} p={2} borderRadius={2} bg={'#636792'}>
-                      <Text color={'#4c1999'}>Inbursa</Text>
-                      <Text color={'#50d61f'}>PagBank</Text>
-                      <Text color={'#0e0f1b'}>C6</Text>
-                      
+                  <Flex justify={"center"} margin={"0 auto"}>
+                    <Flex
+                      gap={"20px"}
+                      fontSize={"16px"}
+                      fontWeight={"700"}
+                      p={2}
+                      borderRadius={2}
+                      bg={"#636792"}
+                    >
+                      <Text color={"#4c1999"}>Inbursa</Text>
+                      <Text color={"#50d61f"}>PagBank</Text>
+                      <Text color={"#0e0f1b"}>C6</Text>
                     </Flex>
-                     
-                    </Flex> 
-                  <Flex >
-                    
-                  {refin === true &&
-                    <Text color={'white'}>Refinanciamento</Text>
-                  }
-                  {portabilidade == true &&
-                  <Box color={'white'} w={['100%', '100%']}>
-                    <Text color={'white'}>Portabilidade</Text>
-                      <Port color={"#1c308b"}/>
-                      
-                    </Box>
-                  }
-                 </Flex>
+                  </Flex>
+                  <Flex>
+                    {refin === true && (
+                      <Text color={"white"}>Refinanciamento</Text>
+                    )}
+                    {portabilidade == true && (
+                      <Box color={"white"} w={["100%", "100%"]}>
+                        <Text color={"white"}>Portabilidade</Text>
+                        <Port color={"#1c308b"} />
+                      </Box>
+                    )}
+                  </Flex>
                 </Box>
               </Flex>
             </Flex>
