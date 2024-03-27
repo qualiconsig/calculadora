@@ -9,9 +9,10 @@ import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import { Butto } from "@/components/utils/linkButton/linkBut";
 import { Port } from "@/components/refin-port/refin";
-import { useNameContextHook } from "@/context/formContext";
-import { useInbursaContextHook } from "@/context/guardResfrommath";
+import { useNameContextHook } from "@/context/pagbankContext";
+import { useInbursaContextHook } from "@/context/InbursaContext";
 import { CalculadoraGeral } from "@/math/calculadora";
+import { useC6ContextHook } from "@/context/C6Context";
 
 export default function Calculadora() {
   const [screentext, setScreenText] = useState<string>();
@@ -98,6 +99,7 @@ export default function Calculadora() {
     }
   };
   const { inbursatax, setInbursaTax } = useInbursaContextHook();
+  const {c6tax, setC6Tax} = useC6ContextHook()
   const received = () => {
     if (formData) {
       const parcelaAtual: any = parseFloat(formData.parcelaAtual);
@@ -164,8 +166,15 @@ export default function Calculadora() {
           parcelaRestante,
           -saldoDevedor,
           1e-6)
-        const ptm = c6calc.calcularPMT(saldoDevedor, parcelaRestante)
-        console.log(taxaCalc, ptm)
+        const c6pmt = c6calc.calcularPMT(saldoDevedor, parcelaRestante)
+        const objc6Bank = {
+          nameBank: 'C6',
+          taxa,
+          c6pmt,
+          parcelaAtual,
+          parcelaRestante,
+        };
+        setC6Tax({formdata: objc6Bank})
 
       }
 

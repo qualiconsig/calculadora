@@ -14,7 +14,6 @@ export class CalculadoraGeral {
       const totalReplaced = pmtResult.toString().replace(".", ",");
       result.push(parseFloat(totalReplaced));
     });
-    console.log(result);
     return result;
   }
 

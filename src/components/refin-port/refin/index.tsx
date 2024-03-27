@@ -1,7 +1,11 @@
+
 import { InfoSection, InfoVal } from "@/components/rightside/buscas";
 import { AllText } from "@/components/utils/alltext";
-import { useNameContextHook } from "@/context/formContext";
-import { NameProps } from "@/context/formContext";
+import { useC6ContextHook } from "@/context/C6Context";
+import { useInbursaContextHook } from "@/context/InbursaContext";
+import { useNameContextHook } from "@/context/pagbankContext";
+import { NameProps } from "@/context/pagbankContext";
+import { sortTaxas } from "@/sort";
 import {
   Box,
   Flex,
@@ -16,11 +20,32 @@ import {
   Tr,
   others,
 } from "@chakra-ui/react";
+import { all } from "axios";
 import { useContext, useEffect } from "react";
 
 export const Port = ({ bank, color }: any) => {
-  const {setName, name} = useNameContextHook()
   
+  const {name, setName} = useNameContextHook();
+  const {inbursatax ,setInbursaTax } = useInbursaContextHook()
+  const {c6tax , setC6Tax} = useC6ContextHook()
+
+  const porp = () => {
+    const pagbank = name?.formdata
+    const inbursa = inbursatax?.formdata
+    const c6 = c6tax?.formdata
+    
+    const allbank = {
+      pagbank,
+      inbursa,
+      c6
+    }
+    
+    console.log(allbank)
+  }
+
+  useEffect(()=> {
+    porp()
+  },[])
   
   return (
     <Box mt={"20px"}>
@@ -44,13 +69,13 @@ export const Port = ({ bank, color }: any) => {
             </Tr>
           </Thead>
           <Tbody>
-            {name?.formdata.Taxas.map((item, index) => (
+            {name?.formdata.taxas.map((item, index) => (
               <Tr key={index}>
                 <Td>{bank}</Td>
                 <Td>{item}</Td>
-                <Td>{name.formdata.calc[index]}</Td>
-                <Td>{name.formdata.parcelaAtual - name.formdata.calc[index]}</Td>
-                <Td>{(name.formdata.parcelaAtual - name.formdata.calc[index]  ) * name.formdata.parcelaRestante}</Td>
+                <Td>{name.formdata.pagbankpmt[index]}</Td>
+                <Td>{name.formdata.parcelaAtual - name.formdata.pagbankpmt[index]}</Td>
+                <Td>{(name.formdata.parcelaAtual - name.formdata.pagbankpmt[index]  ) * name.formdata.parcelaRestante}</Td>
               </Tr>
             ))}
           </Tbody>
