@@ -132,7 +132,7 @@ export default function Calculadora() {
         setInbursaTax({ formdata: objInbursaPmt });
         
       };
-      console.log('inbursa', inbursatax)
+      console.log(inbursatax)
       
       const CalculadoraPagBank = () => {
         const taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
@@ -154,10 +154,9 @@ export default function Calculadora() {
           parcelaAtual,
           parcelaRestante,
         };
-        
-        console.log('pagbank', objPagBank);
+        setName({formdata: objPagBank})
       };
-
+      console.log(name)
       const CalculadoraC = () => {
         const taxas = [1.55, 1.60, 1.65, 1.70, 1.75, 1.60, 1.65, 1.70, 1.75, 1.76]
         const c6calc = new CalculadoraGeral(taxas)

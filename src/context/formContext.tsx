@@ -2,8 +2,9 @@ import { createContext, useContext, useState } from "react";
 
 export interface NameProps {
   formdata: {
+    nameBank: string
     taxas: number[],
-    pagbankCalc: number[],
+    pagbankpmt: number[],
     parcelaAtual: number,
     parcelaRestante: number
   };
