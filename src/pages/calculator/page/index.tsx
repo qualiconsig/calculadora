@@ -1,19 +1,15 @@
 "use client";
 import { resultProps } from "@/types";
-import { Box, Button, Flex, Switch, Text } from "@chakra-ui/react";
-import { useContext, useEffect, useRef, useState } from "react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
 import Loading from "@/components/loading";
 import { LeftSide } from "@/components/calculadora/LeftSide";
-import { calcularPMT, calcularTaxa } from "@/math";
 import { form } from "@/types/mod";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import { Butto } from "@/components/utils/linkButton/linkBut";
 import { Port } from "@/components/refin-port/refin";
-import { Taxas } from "@/math";
 import { useNameContextHook } from "@/context/formContext";
-import { calcularPMTInbursa, calcularTaxaInbursa } from "@/math/inbursa";
-import { TaxasInbursa } from "@/math/inbursa";
 import { useInbursaContextHook } from "@/context/guardResfrommath";
 import { CalculadoraGeral } from "@/math/calculadora";
 
@@ -101,7 +97,6 @@ export default function Calculadora() {
       return;
     }
   };
-  const [taxaInbusa, setTaxaInbursa] = useState<any>();
   const { inbursatax, setInbursaTax } = useInbursaContextHook();
   const received = () => {
     if (formData) {
@@ -138,6 +133,7 @@ export default function Calculadora() {
         
       };
       console.log('inbursa', inbursatax)
+      
       const CalculadoraPagBank = () => {
         const taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
         const pagbankCalc = new CalculadoraGeral(taxas)
