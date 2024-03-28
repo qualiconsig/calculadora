@@ -277,7 +277,9 @@ export default function Calculadora() {
                 justify={"center"}
 
               >
+                
                 <Box w={["100%", "95%", "95%", "95%", "80%"]}>
+                {formData &&
                   <Flex mt={2} ml={2} gap={2} justify={"center"} mb={10}>
                     <div onClick={selectPortabilidade}>
                       <Butto text="Portabilidade" />
@@ -286,7 +288,9 @@ export default function Calculadora() {
                       <Butto text="Refinanciamento" />
                     </div>
                   </Flex>
+                }
                   <Flex justify={"center"} margin={"0 auto"}>
+                  { portabilidade === true && 
                     <Flex
                       gap={"20px"}
                       fontSize={"16px"}
@@ -295,14 +299,17 @@ export default function Calculadora() {
                       borderRadius={2}
                       bg={"#636792"}
                     >
+                      
                       <Text color={"#4c1999"}>Inbursa</Text>
                       <Text color={"#50d61f"}>PagBank</Text>
                       <Text color={"#0e0f1b"}>C6</Text>
+                    
                     </Flex>
+                     }
                   </Flex>
                   <Flex>
                     {refin === true && (
-                      <Text color={"white"}>Refinanciamento</Text>
+                      <Text color={"white"}>Em desenvolvimento...</Text>
                     )}
                     {portabilidade == true && (
                       <Box color={"white"} w={["100%", "100%"]}>
