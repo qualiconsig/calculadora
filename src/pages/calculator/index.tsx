@@ -135,7 +135,7 @@ export default function Calculadora() {
         setInbursaTax({ formdata: objInbursaPmt });
         
       };
-      console.log(inbursatax)
+      console.log(saldoDev)
       
       const CalculadoraPagBank = () => {
         const taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
@@ -315,7 +315,7 @@ export default function Calculadora() {
                     {portabilidade == true && (
                       <Box color={"white"} w={["100%", "100%"]}>
                         <Text color={"white"}>Portabilidade</Text>
-                        <Port color={"#1c308b"} data={ordenedList}/>
+                        <Port color={"#1c308b"} data={ordenedList} sd={saldoDev} taxa={taxa}/>
                       </Box>
                     )}
                   </Flex>

@@ -146,7 +146,7 @@ useEffect(()=>{
           h={"40px"}
           align={"center"}
           w={"40%"}
-        >
+        > 
           {TaxaCa &&
             <Text ml={"10px"}>{TaxaCa}</Text>
           }

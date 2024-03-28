@@ -1,9 +1,11 @@
 import { Box, Flex, Table, TableCaption, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
+import Link from "next/link";
 import React, { useEffect, useState } from 'react';
+import { SlArrowDown, SlArrowRight } from "react-icons/sl";
 
-export const Port = ({ bank, color, data }: any) => {
+export const Port = ({color, data, sd,taxa }: any) => {
   const [ordenedList, setOrdenedList] = useState<any[]>([]);
-
+  
   useEffect(() => {
     const formattedData: any[] = [];
     data.forEach((element: any) => {
@@ -25,6 +27,7 @@ export const Port = ({ bank, color, data }: any) => {
     
     setOrdenedList(formattedData);
     
+   
   }, [data]);
 
   const getRowColor = (nameBank: string) => {
@@ -58,15 +61,19 @@ export const Port = ({ bank, color, data }: any) => {
           </Thead>
           <Tbody>
             {ordenedList.map((item, index) => (
+              
               <Tr key={index} style={{ backgroundColor: getRowColor(item.nameBank) }}>
                 <Td>{item.nameBank}</Td>
                 <Td>{item.tax}</Td>
                 <Td>{item.pmt}</Td>
                 <Td>{item.parcelaAtual - item.pmt}</Td>
-                <Td>{(item.parcelaAtual - item.pmt) * item.parcelaRestante}</Td>
+                <Td><Link href={`calculator/page/${item.nameBank}-${item.tax}-${item.parcelaAtual}-${sd}-${taxa}-${item.pmt}-${item.parcelaRestante}-${item.parcelaAtual - item.pmt}-${(item.parcelaAtual - item.pmt) * item.parcelaRestante}`}>{(item.parcelaAtual - item.pmt) * item.parcelaRestante} <SlArrowDown /></Link></Td>
+                
               </Tr>
+              
             ))}
           </Tbody>
+          
         </Table>
       </Flex>
     </Box>
