@@ -124,7 +124,7 @@ useEffect(()=>{
       </Flex>
 
       <Flex mb={7} align={"center"}>
-        <Text w={"35%"}>Taxa atual</Text>
+        <Text w={"35%"}>Parcelas restantes</Text>
         <Flex
           borderRadius={"7px"}
           bg={"#a3eff5"}
@@ -133,13 +133,13 @@ useEffect(()=>{
           w={"40%"}
         >
           {TaxaCa !== 100 && 
-          <Text ml={"10px"}>{TaxaCa}</Text>
+          <Text ml={"10px"}>{prazoIncial - parcelaPaga}</Text>
          }
         </Flex>
       </Flex>
 
       <Flex mb={7} align={"center"}>
-        <Text w={"35%"}>Taxa atual do contrato</Text>
+        <Text w={"35%"}>Taxa atual contrato</Text>
         <Flex
           borderRadius={"7px"}
           bg={"#a3eff5"}
@@ -147,12 +147,14 @@ useEffect(()=>{
           align={"center"}
           w={"40%"}
         >
-          <Text ml={"10px"}></Text>
+          {TaxaCa &&
+            <Text ml={"10px"}>{TaxaCa}</Text>
+          }
         </Flex>
       </Flex>
 
       <Flex mb={7} align={"center"}>
-        <Text w={"35%"}>{pmt}</Text>
+        <Text w={"35%"}>Saldo devedor aproximado</Text>
         <Flex
           borderRadius={"7px"}
           bg={"#a3eff5"}
@@ -160,7 +162,9 @@ useEffect(()=>{
           align={"center"}
           w={"40%"}
         >
-          <Text ml={"10px"}></Text>
+          {pmt &&
+          <Text ml={"10px"}>{pmt}</Text>
+          }
         </Flex>
       </Flex>
     
