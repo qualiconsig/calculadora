@@ -9,7 +9,7 @@ import { Button, Flex, Input, Select, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-export function CalculatorForm({ calculated, formreceived, taxx }: any) {
+export function CalculatorForm({ calculatedSaldoReal, formreceived, taxx }: any) {
   const {
     register,
     handleSubmit,
@@ -22,10 +22,10 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
   const onSubmit: SubmitHandler<any> = async (data: form) => {
     setFormData(data);
     formreceived(data);
-    calculated(data)
+
     const convertVl = parseFloat(data.vlEmprestimo)
     const convertPcRest = parseFloat(data.parcelaRestante)
-
+    
   
   };
 
@@ -68,7 +68,7 @@ export function CalculatorForm({ calculated, formreceived, taxx }: any) {
             border={"1px solid #d6d0f5"}
             bg={"#f5f4b2"}
            
-            {...register("vlEmprestimo")}
+            {...register("vlEmprestimo")} 
           />
         </Flex>
         <Flex flex={1}  align={"center"} textAlign={'center'} flexDir={'column'} justify={'center'} >

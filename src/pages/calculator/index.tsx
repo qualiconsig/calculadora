@@ -1,188 +1,322 @@
 "use client";
 import { resultProps } from "@/types";
-import {Box,Button,Flex, Text} from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import Loading from "@/components/loading";
 import { LeftSide } from "@/components/calculadora/LeftSide";
-import { InfoSection, InfoVal } from "@/components/rightside/buscas";
-import { QualiFooter } from "@/components/LogoQuali/footer";
-import { Refin } from "@/components/rightside/refin";
-import { calcularPMT, calcularTaxa } from "@/math";
 import { form } from "@/types/mod";
-import { Taxas } from "@/math";
-
-import { ScreenCapture } from 'react-screen-capture';
-import html2canvas from 'html2canvas';
-import { saveAs } from 'file-saver'
+import html2canvas from "html2canvas";
+import { saveAs } from "file-saver";
+import { Butto } from "@/components/utils/linkButton/linkBut";
+import { Port } from "@/components/refin-port/refin";
+import { useNameContextHook } from "@/context/pagbankContext";
+import { useInbursaContextHook } from "@/context/InbursaContext";
+import { CalculadoraGeral } from "@/math/calculadora";
+import { useC6ContextHook } from "@/context/C6Context";
 
 export default function Calculadora() {
-  const [screentext, setScreenText] = useState<string>()
+  const [screentext, setScreenText] = useState<string>();
   const captureRef = useRef<HTMLDivElement>(null);
 
   const handleCapture = () => {
     if (captureRef.current) {
-        html2canvas(captureRef.current).then(canvas => {
-            if (canvas) {
-                canvas.toBlob(blob => {
-                    if (blob) {
-                        saveAs(blob, "screenshot.png");
-                    } else {
-                        console.error("Erro ao criar o blob da captura.");
-                    }
+      html2canvas(captureRef.current).then((canvas) => {
+        if (canvas) {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              saveAs(blob, "screenshot.png");
+            } else {
+              console.error("Erro ao criar o blob da captura.");
+            }
+          });
+        } else {
+          console.error("Erro ao criar o canvas da captura.");
+        }
+      });
+    } else {
+      console.error("Elemento de captura não encontrado.");
+    }
+  };
+
+  const handleCaptured = () => {
+    if (captureRef.current) {
+      html2canvas(captureRef.current).then((canvas) => {
+        if (canvas) {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const item = new ClipboardItem({ "image/png": blob });
+              navigator.clipboard
+                .write([item])
+                .then(() => {
+                  setScreenText(
+                    "Captura de tela copiada para a área de transferência!"
+                  );
+                  setTimeout(() => {
+                    setScreenText("");
+                  }, 3000);
+                })
+                .catch((err) => {
+                  console.error(
+                    "Erro ao copiar a captura de tela para a área de transferência:",
+                    err
+                  );
                 });
             } else {
-                console.error("Erro ao criar o canvas da captura.");
+              console.error("Erro ao criar o blob da captura.");
             }
-        });
-    } else {
-        console.error("Elemento de captura não encontrado.");
-    }
-};
-
-const handleCaptured = () => {
-  if (captureRef.current) {
-      html2canvas(captureRef.current).then(canvas => {
-          if (canvas) {
-              canvas.toBlob(blob => {
-                  if (blob) {
-                      const item = new ClipboardItem({ 'image/png': blob });
-                      navigator.clipboard.write([item]).then(() => {
-                        setScreenText("Captura de tela copiada para a área de transferência!");
-                        setTimeout(() => {
-                          setScreenText('');
-                        }, 3000);
-                      }).catch(err => {
-                          console.error("Erro ao copiar a captura de tela para a área de transferência:", err);
-                      });
-                  } else {
-                      console.error("Erro ao criar o blob da captura.");
-                  }
-              }, 'image/png');
-          } else {
-              console.error("Erro ao criar o canvas da captura.");
-          }
+          }, "image/png");
+        } else {
+          console.error("Erro ao criar o canvas da captura.");
+        }
       });
-  } else {
+    } else {
       console.error("Elemento de captura não encontrado.");
-  }
-};
-  
+    }
+  };
+
   const [formData, setFormData] = useState<form>();
   const [result, setCalcResult] = useState<resultProps[]>();
   const [loading, setLoading] = useState(false);
 
-  const [pmt, setPMT]= useState<any>()
+  const [pmt, setPMT] = useState<any>();
 
-  const [taxa, setTaxa] = useState<any>()
-  const [valorAtualParcela, setValorAtualParcela] = useState<number>()
-  const [parcelaRestante, setParcelaRestante] = useState<number>()
+  const [taxa, setTaxa] = useState<any>();
+  const [valorAtualParcela, setValorAtualParcela] = useState<number>();
+  const [parcelaRestante, setParcelaRestante] = useState<number>();
   const activeLoading = () => setTimeout(() => setLoading(true), 3000);
-  const [saldoDev, setSaldoDev] = useState()
+  const [saldoDev, setSaldoDev] = useState();
 
-  const handleFormData =  (dataform: any)  => {
+  const { setName, name } = useNameContextHook();
+
+  const [option, setOption] = useState("Portabilidade");
+
+  const handleFormData = (dataform: any) => {
     setFormData(dataform);
-    console.log(dataform)
-    if(dataform) {
-      
-      
+    console.log(dataform);
+    if (dataform) {
     } else {
-      return
+      return;
     }
-  } 
+  };
+  const { inbursatax, setInbursaTax } = useInbursaContextHook();
+  const {c6tax, setC6Tax} = useC6ContextHook()
   const received = () => {
-    if(formData) {
-      const parcelaAtual:any =  parseFloat(formData.parcelaAtual)
-      setValorAtualParcela(parcelaAtual.toFixed(2))
-      const parcelaRestante =  parseInt(formData.parcelaRestante)
-      setParcelaRestante(parcelaRestante)
-      
-      const saldoDevedor:any =  parseFloat(formData!.vlEmprestimo)
-      setSaldoDev(saldoDevedor)
-      const taxaEncontrada =  calcularTaxa(parcelaAtual, parcelaRestante, -saldoDevedor, 1e-6);
-      setTaxa(taxaEncontrada)
+    if (formData) {
+      const parcelaAtual: any = parseFloat(formData.parcelaAtual);
+      setValorAtualParcela(parcelaAtual.toFixed(2));
+      const parcelaRestante = parseFloat(formData.parcelaRestante);
+      setParcelaRestante(parcelaRestante);
 
-      const calc = calcularPMT(saldoDevedor, parcelaRestante)
-      setPMT(calc)
+      const saldoDevedor: any = formData!.vlEmprestimo;
+      setSaldoDev(saldoDevedor);
+
+      const CalculadoraInbursa = () => {
+        const taxas = [ 1.45, 1.54, 1.58 , 1.68 ,1.78]
+        const InbursaCalc = new CalculadoraGeral(taxas)
+        const TaxaCalc = InbursaCalc.calcularTaxa(
+          parcelaAtual,
+          parcelaRestante,
+          -saldoDevedor,
+          1e-6
+        )
+        const pmt = InbursaCalc.calcularPMT(
+          saldoDevedor,
+          parcelaRestante
+        )
+        
+        const objInbursaPmt = {
+          nameBank: 'Inbursa',
+          taxas,
+          pmt,
+          parcelaAtual,
+          parcelaRestante,
+        };
+        setInbursaTax({ formdata: objInbursaPmt });
+        
+      };
+      console.log(inbursatax)
+      
+      const CalculadoraPagBank = () => {
+        const taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
+        const pagbankCalc = new CalculadoraGeral(taxas)
+        const taxaPagbank = pagbankCalc.calcularTaxa(
+          parcelaAtual,
+          parcelaRestante,
+          -saldoDevedor,
+          1e-6
+        );
+        const pmt = pagbankCalc.calcularPMT(saldoDevedor, parcelaRestante)
+        setTaxa(taxaPagbank);
+        setPMT(pmt);
+
+        const objPagBank = {
+          nameBank: 'Pagbank',
+          taxas,
+          pmt,
+          parcelaAtual,
+          parcelaRestante,
+        };
+        setName({formdata: objPagBank})
+      };
+      console.log(name)
+
+      const CalculadoraC = () => {
+        const taxas = [1.55, 1.60, 1.65, 1.70, 1.75]
+        const c6calc = new CalculadoraGeral(taxas)
+        const taxaCalc = c6calc.calcularTaxa( parcelaAtual,
+          parcelaRestante,
+          -saldoDevedor,
+          1e-6)
+        const pmt = c6calc.calcularPMT(saldoDevedor, parcelaRestante)
+        const objc6Bank = {
+          nameBank: 'C6',
+          taxas,
+          pmt,
+          parcelaAtual,
+          parcelaRestante,
+        };
+        setC6Tax({formdata: objc6Bank})
+
+      }
+
+      CalculadoraC()
+      CalculadoraPagBank()
+      CalculadoraInbursa()
+
     }
+    
+  };
+  const [ordenedList, setOrdenedList] = useState()
+
+  const bola = () => {
+    const pagbank = name?.formdata
+    const inbursa = inbursatax?.formdata
+    const c6 = c6tax?.formdata
+    
+    const allbank:any = [
+      {pagbank},
+      {inbursa},
+      {c6}
+    ]
+    setOrdenedList(allbank)
+    console.log(ordenedList)
   }
+
+
   useEffect(() => {
-    received()
-  },[formData])
+    received();
+  }, [formData]);
 
   const handleCalc = (datacalc: any) => {
-    setCalcResult(datacalc)
-    console.log(datacalc)
-  }
+    setCalcResult(datacalc);
+    console.log(datacalc);
+  };
+
+  const [portabilidade, setPortabilidade] = useState(false);
+  const [refin, setrefin] = useState(false);
+
+  const selectRefinanciamento = () => {
+    if (portabilidade === true) {
+      setPortabilidade(false);
+    }
+    if (refin == true) {
+      setrefin(false);
+      return;
+    }
+    setrefin(true);
+  };
+  const selectPortabilidade = () => {
+    if (refin == true) {
+      setrefin(false);
+    }
+    if (portabilidade == true) {
+      setPortabilidade(false);
+      return;
+    }
+    const pagbank = name?.formdata
+    const inbursa = inbursatax?.formdata
+    const c6 = c6tax?.formdata
+    
+    const allbank:any = [
+      pagbank,
+      inbursa,
+      c6
+    ]
+    setOrdenedList(allbank)
+    console.log(ordenedList)
+
+    setPortabilidade(true);
+
+  };
 
   useEffect(() => {
     activeLoading();
-    
-    console.log(formData)
+
+    console.log(formData);
   }, []);
   return (
     <>
-    
       {loading === false && <Loading />}
       {loading === true && (
         <>
+          <Box w={["100vw", "100vw", "100vw", "100vw", "98.8vw"]}>
+            <Box w={["100%", "80%"]} m="0 auto"></Box>
+            <Flex flexDir={["column", "column", "row"]}>
+              <Flex flexDir={"column"}>
+                <LeftSide
+                  calculated={handleCalc}
+                  formreceived={handleFormData}
+                  tax={taxa}
+                />
+              </Flex>
+              <Flex
+                flex={2}
+                bg={"#4f64aa"}
+                align={"center"}
+                flexDir={["column", "row"]}
+                justify={"center"}
 
-        <Box  w={["100vw", "100vw","100vw","100vw", "98.8vw"]}>
-       
-          <Box  w={["100%", "80%"]}  m="0 auto"></Box>
-          <Flex flexDir={['column','column', 'row']} >
-            <Flex flexDir={'column'} w={'30%'}  >
-            <LeftSide calculated={handleCalc} formreceived={handleFormData} tax={taxa}/>
-            
-            </Flex>
-            {/* <Box flex={2} bg={"#436087"} ref={captureRef}>
-               <Flex
-                w={["100%", "95%", "95%", '95%',  '80%']}
-                m={"50px auto"}
-                p={5}
-                gap={['5px', '4px', '3px', '4px', '3px']}
-                borderRadius={5}
-                justifyContent="space-between"
-                bg={"#2D2772"}
-                color="white"
               >
-                <InfoSection
-                  title="Economia Mensal do Cliente"
-                  icon="R$"  
-                  items={pmt?.map((item:any) =>  (valorAtualParcela! - item  ).toFixed(2)                                                                                                                                                                )}
-                />
-                <InfoVal
-                  title="Nova Taxa"
-                  items={Taxas?.map((item) => item)}
-                  icon="%"
-                />
-
-                 <Box position={'absolute'} right={'20px'} bottom={['21%', '24%', '50%', '50%', '56%']}><Button alignItems={'center'} bg={'transparent'} onClick={handleCaptured}>Capturar tela</Button>
-                  { screentext &&
-                    <Text transform={'all ease 0.2'} bg={'yellow.500'} borderRadius={4} p={2} color={'black'}>{screentext}</Text>}
-                </Box> 
-                <InfoSection
-                  title="Nova Parcela"
-                  items={pmt?.map((item:any) => item)}
-                  icon="R$"
-                  
-                />
-                <InfoSection
-                  title="Economia Total no Período"
-                  items={pmt?.map((item:any) => ((valorAtualParcela! - item  ) * parcelaRestante!).toFixed(2))}
-                  icon="R$"
-                />
-              </Flex> 
-             <Flex >
-                <Refin saldo={saldoDev} parcelaAtual={valorAtualParcela} parcelaRest={parcelaRestante} />
-              </Flex>  
-              <QualiFooter/>
-            </Box>
-            */}
-          </Flex>
-        </Box>
+                <Box w={["100%", "95%", "95%", "95%", "80%"]}>
+                  <Flex mt={2} ml={2} gap={2} justify={"center"} mb={10}>
+                    <div onClick={selectPortabilidade}>
+                      <Butto text="Portabilidade" />
+                    </div>
+                    <div onClick={selectRefinanciamento}>
+                      <Butto text="Refinanciamento" />
+                    </div>
+                  </Flex>
+                  <Flex justify={"center"} margin={"0 auto"}>
+                    <Flex
+                      gap={"20px"}
+                      fontSize={"16px"}
+                      fontWeight={"700"}
+                      p={2}
+                      borderRadius={2}
+                      bg={"#636792"}
+                    >
+                      <Text color={"#4c1999"}>Inbursa</Text>
+                      <Text color={"#50d61f"}>PagBank</Text>
+                      <Text color={"#0e0f1b"}>C6</Text>
+                    </Flex>
+                  </Flex>
+                  <Flex>
+                    {refin === true && (
+                      <Text color={"white"}>Refinanciamento</Text>
+                    )}
+                    {portabilidade == true && (
+                      <Box color={"white"} w={["100%", "100%"]}>
+                        <Text color={"white"}>Portabilidade</Text>
+                        <Port color={"#1c308b"} data={ordenedList}/>
+                      </Box>
+                    )}
+                  </Flex>
+                </Box>
+              </Flex>
+            </Flex>
+          </Box>
         </>
       )}
     </>
   );
 }
-
