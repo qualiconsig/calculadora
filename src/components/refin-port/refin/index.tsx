@@ -24,73 +24,82 @@ import { all } from "axios";
 import { useContext, useEffect, useState } from "react";
 
 export const Port = ({ bank, color, data }: any) => {
-  
-  const {name, setName} = useNameContextHook();
-  const {inbursatax ,setInbursaTax } = useInbursaContextHook()
-  const {c6tax , setC6Tax} = useC6ContextHook()
+  const [ordenedList, setOrdenedList] = useState<any[]>([]);
 
-  const [ordenedList, setOrdenedList] = useState<any>()
+  useEffect(() => {
+    const formattedData: any[] = [];
+    data.forEach((element: any) => {
+      const tax = element.taxas;
+      for (let i = 0; i < tax.length; i++) {
+        const obj = {
+          nameBank: element.nameBank,
+          tax: tax[i],
+          pmt: element.pmt[i],
+          parcelaAtual: element.parcelaAtual,
+          parcelaRestante: element.parcelaRestante
+        };
+        formattedData.push(obj);
+      }
+    });
 
-  const porp = () => {
-    const pagbank = name?.formdata
-    const inbursa = inbursatax?.formdata
-    const c6 = c6tax?.formdata
+    // Ordenar a lista pelo valor da taxa
+    formattedData.sort((a, b) => a.tax - b.tax);
+
     
-    const allbank:any = [
-      {pagbank},
-      {inbursa},
-      {c6}
-    ]
-    setOrdenedList(allbank)
-    console.log(ordenedList)
+
+    setOrdenedList(formattedData);
+
     
-
-  }
-
-  useEffect(()=> {
-   
-    console.log(data)
-    for(let i in data) {
-      console.log(data[i].nameBank)
+  }, [data]);
+  const getRowColor = (nameBank: string) => {
+    // Definindo a cor com base no nome do banco
+    switch (nameBank) {
+      case 'Pagbank':
+        return 'green';
+      case 'Inbursa':
+        return 'purple';
+      case 'C6':
+        return 'black';
+      default:
+        return color;
     }
-  },[])
-  
+  };
   return (
     <Box mt={"20px"}>
-      
-    <Text color={"#bbd5ed"} fontSize={["13px", "15px", "15px"]}></Text>
-    <Flex gap={"20px"} bg={color} p={"20px"} borderRadius={"8px"}>
-      <TableContainer
-        margin={"0 auto"}
-        h={"100%"}
-        w={["100%", "60%", "70%", "85%", "100%"]}
-        fontSize={["10px", "12px", "12px", "13px", "15px"]}
-      >
-        <Table variant="simple">
-          <TableCaption color={"white"}>Portabilidade</TableCaption>
-          <Thead>
-            <Tr>
-              <Th color={'yellow'}>Bancos</Th>
-              <Th color={"yellow"}>Nova taxa</Th>
-              <Th color={"yellow"}>Nova parcela</Th>
-              <Th color={"yellow"}>Economia mensal cliente</Th>
-              <Th color={"yellow"}>Economia total periodo</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data.map((item, index) => (
-              <Tr key={index}>
-                <Td>{item.nameBank}</Td>
-                <Td>{item.taxas[index]}</Td>
-                <Td>{item.pmt[index]}</Td>
-                <Td>{item.parcelaAtual - item.pmt[index]}</Td>
-                <Td>{(item.parcelaAtual - item.pmt[index]  ) * item.parcelaRestante}</Td>
+      <Text color={"#bbd5ed"} fontSize={["13px", "15px", "15px"]}></Text>
+      <Flex gap={"20px"} bg={color} p={"20px"} borderRadius={"8px"}>
+        <TableContainer
+          margin={"0 auto"}
+          h={"100%"}
+          w={["100%", "60%", "70%", "85%", "100%"]}
+          fontSize={["10px", "12px", "12px", "13px", "15px"]}
+        >
+          <Table variant="simple">
+            <TableCaption color={"white"}>Portabilidade</TableCaption>
+            <Thead>
+              <Tr>
+                <Th color={'yellow'}>Bancos</Th>
+                <Th color={"yellow"}>Nova taxa</Th>
+                <Th color={"yellow"}>Nova parcela</Th>
+                <Th color={"yellow"}>Economia mensal cliente</Th>
+                <Th color={"yellow"}>Economia total periodo</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
-    </Flex>
-  </Box>
+            </Thead>
+            <Tbody>
+              {ordenedList.map((item, index) => (
+                <Tr key={index} style={{ backgroundColor: getRowColor(item.nameBank) }}>
+                  <Td>{item.nameBank}</Td>
+                  <Td>{item.tax}</Td>
+                  <Td>{item.pmt}</Td>
+                  <Td>{item.parcelaAtual}</Td>
+                  <Td>{item.parcelaRestante}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Flex>
+    </Box>
   );
 };
+
