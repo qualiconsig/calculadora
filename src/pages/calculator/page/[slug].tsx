@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function Resumo () {
   const router = useRouter()
-  const valRouter = router.query.slug
+  const valRouter:any = router.query.slug
 
   const [val, setval] = useState()
   const [val1, setval1] = useState()
