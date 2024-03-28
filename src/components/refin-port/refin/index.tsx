@@ -48,9 +48,10 @@ export const Port = ({ bank, color, data }: any) => {
     
 
     setOrdenedList(formattedData);
-
+    
     
   }, [data]);
+  console.log(ordenedList)
   const getRowColor = (nameBank: string) => {
     // Definindo a cor com base no nome do banco
     switch (nameBank) {
@@ -91,8 +92,8 @@ export const Port = ({ bank, color, data }: any) => {
                   <Td>{item.nameBank}</Td>
                   <Td>{item.tax}</Td>
                   <Td>{item.pmt}</Td>
-                  <Td>{item.parcelaAtual}</Td>
-                  <Td>{item.parcelaRestante}</Td>
+                  <Td>{item.parcelaAtual - item.pmt}</Td>
+                  <Td>{(item.parcelaAtual - item.pmt) * item.parcelaRestante}</Td>
                 </Tr>
               ))}
             </Tbody>
