@@ -26,7 +26,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
   const [valorEmprestimo, setvalorEmprestimo] = useState<any>()
 
   const [TaxaCa, setTaxaCalc] = useState<any>()
-
+  const [pmt, setPmt] = useState<any>()
   const onSubmit: SubmitHandler<any> = async (data) => {
     setFormData(data);
     formreceived(data);
@@ -59,7 +59,7 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
           prazoIncial,
           parcelaPaga
         )
-        console.log(pmt)
+        setPmt(pmt.toFixed(2))
         console.log(TaxaCalc)
   } 
   CalculadoraInbursa()
@@ -152,7 +152,7 @@ useEffect(()=>{
       </Flex>
 
       <Flex mb={7} align={"center"}>
-        <Text w={"35%"}>Saldo devedor aproximado</Text>
+        <Text w={"35%"}>{pmt}</Text>
         <Flex
           borderRadius={"7px"}
           bg={"#a3eff5"}
