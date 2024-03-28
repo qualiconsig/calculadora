@@ -53,6 +53,9 @@ export class CalculadoraGeral {
 
     return parseFloat(numCort);
   }
+  calcularValorPresenteComParcelasPagas(valorPresente: number, numeroParcelas: number, parcelasPagas: number) {
+    return valorPresente * Math.pow(1 + (this.taxas[0] / 100), parcelasPagas) - (this.calcularPMT(valorPresente, numeroParcelas)[0] * ((Math.pow(1 + (this.taxas[0] / 100), parcelasPagas) - 1) / (this.taxas[0] / 100)));
+  }
 }
 
 

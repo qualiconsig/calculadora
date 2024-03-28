@@ -119,6 +119,7 @@ export default function Calculadora() {
           -saldoDevedor,
           1e-6
         )
+        
         const pmt = InbursaCalc.calcularPMT(
           saldoDevedor,
           parcelaRestante

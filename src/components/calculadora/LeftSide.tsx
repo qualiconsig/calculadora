@@ -4,7 +4,7 @@ import {CalculateRealBalance} from './bankBalance'
 import { useState } from "react";
 import { resultProps } from "@/types";
 
-export const LeftSide = ({calculated, formreceived, tax}:any) => {
+export const LeftSide = ({calculated, formreceived, tax, taxaCalc}:any) => {
 
   const [formData, setFormData] = useState();
   const [calcResult, setCalcResult] = useState<resultProps[]>();

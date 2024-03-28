@@ -1,6 +1,8 @@
 
 import { BoxForm } from "@/components/utils/formBox";
 import { useNameContextHook } from "@/context/pagbankContext";
+import { CalculadoraGeral } from "@/math/calculadora";
+import Calculadora from "@/pages/calculator";
 import { resultProps } from "@/types";
 import { form } from "@/types/mod";
 import { Button, Flex, Input, Select, Text } from "@chakra-ui/react";
@@ -17,12 +19,54 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
   } = useForm<any>();
   const [formData, setFormData] = useState<form>();
   const [result, setResult] = useState<resultProps[]>();
+
+  const [prazoIncial, setPrazoInicial] = useState<any>()
+  const [parcelaAtual, setparcelaAtual] = useState<any>()
+  const [parcelaPaga, setParcelaPaga] = useState<any>()
+  const [valorEmprestimo, setvalorEmprestimo] = useState<any>()
+
+  const [TaxaCa, setTaxaCalc] = useState<any>()
+
   const onSubmit: SubmitHandler<any> = async (data) => {
     setFormData(data);
     formreceived(data);
     
+
+    setPrazoInicial(data.PrazoInicial)
+    setparcelaAtual(data.parcelaAtual)
+    setParcelaPaga(data.parcelaPaga)
+    setvalorEmprestimo(data.valorEmprestimoContrado)
+
+    console.log(prazoIncial)
     
   };
+
+  const saldoR = () => {
+
+    const CalculadoraInbursa = () => {
+        const taxas = [ 1.45, 1.54, 1.58 , 1.68 ,1.78]
+        const InbursaCalc = new CalculadoraGeral(taxas)
+        const TaxaCalc = InbursaCalc.calcularTaxa(
+          parcelaAtual,
+          prazoIncial,
+          -valorEmprestimo,
+          1e-6
+        )
+        setTaxaCalc(TaxaCalc)
+       
+        const pmt = InbursaCalc.calcularValorPresenteComParcelasPagas(
+          valorEmprestimo,
+          prazoIncial,
+          parcelaPaga
+        )
+        console.log(pmt)
+        console.log(TaxaCalc)
+  } 
+  CalculadoraInbursa()
+}
+useEffect(()=>{
+  saldoR()
+},[valorEmprestimo])
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
      
@@ -88,7 +132,9 @@ export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
           align={"center"}
           w={"40%"}
         >
-          <Text ml={"10px"}></Text>
+          {TaxaCa !== 100 && 
+          <Text ml={"10px"}>{TaxaCa}</Text>
+         }
         </Flex>
       </Flex>
 
