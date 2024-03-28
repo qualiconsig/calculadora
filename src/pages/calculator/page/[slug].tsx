@@ -78,7 +78,7 @@ export default function Resumo() {
   }, [screentext]);
 
   return (
-    <Flex direction="column" minHeight="100vh" bg="#2C3E50">
+    <Flex direction="column" minHeight="100vh" bg="#2C3E50" ref={captureRef}>
       <Flex align="center" bg="#E74C3C" p={4}>
         <Box as={FaArrowLeft} color="white" />
         <Link href="/calculator" >
@@ -123,7 +123,7 @@ export default function Resumo() {
         </Flex>
 
         {screentext && (
-          <Text bg="blue.600" color="white" p={2} borderRadius="md" textAlign="center" mt={4}>{screentext}</Text>
+          <Text bg="pink.600" color="white" p={2} borderRadius="md" textAlign="center" mt={4}>{screentext}</Text>
         )}
 
         <Box textAlign="center" mt={4}>
