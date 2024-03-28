@@ -1,10 +1,42 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import html2canvas from "html2canvas";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Resumo () {
   const router = useRouter()
   const valRouter:any = router.query.slug
+
+  const [screentext, setScreenText] = useState<string>()
+  const captureRef = useRef<HTMLDivElement>(null);
+
+  const handleCaptured = () => {
+    if (captureRef.current) {
+        html2canvas(captureRef.current).then(canvas => {
+            if (canvas) {
+                canvas.toBlob(blob => {
+                    if (blob) {
+                        const item = new ClipboardItem({ 'image/png': blob });
+                        navigator.clipboard.write([item]).then(() => {
+                          setScreenText("Captura de tela copiada para a área de transferência!");
+                          setTimeout(() => {
+                            setScreenText('');
+                          }, 2000); // Definindo o temporizador para 2 segundos
+                        }).catch(err => {
+                            console.error("Erro ao copiar a captura de tela para a área de transferência:", err);
+                        });
+                    } else {
+                        console.error("Erro ao criar o blob da captura.");
+                    }
+                }, 'image/png');
+            } else {
+                console.error("Erro ao criar o canvas da captura.");
+            }
+        });
+    } else {
+        console.error("Elemento de captura não encontrado.");
+    }
+  };
 
   const [val, setval] = useState()
   const [val1, setval1] = useState()
@@ -33,15 +65,24 @@ export default function Resumo () {
     percorrerRota()
   },[])
 
+  useEffect(() => {
+    if (screentext) {
+      const timeout = setTimeout(() => {
+        setScreenText('');
+      }, 2000); // Definindo o temporizador para 2 segundos
+      return () => clearTimeout(timeout); // Limpa o temporizador ao desmontar o componente
+    }
+  }, [screentext]);
+
   return (
-    <Flex h={'100vh'}  bg={'gray.600'} >
+    <>
+    <Flex   bg={'gray.600'} ref={captureRef} flexDir={'column'} >
       <Box margin={'0 auto'} w={'80vw'}>
         <Box bg={'white'} p={2} borderBottomRadius={5}>
           <Text fontSize={'20px'} textAlign={'center'}>Resumo Da Proposta</Text>
           <Text fontWeight={'bold'}>Banco: {val}</Text>
         </Box>
         <Flex gap={5}  h={'100vh'} justifyContent={'space-between'}  align={'center'}>
-          
           <Box borderRadius={'14px'} alignContent={'center'} h={'30%'} w={'35%'} border={'1px solid orange'} p={2}>
             <Text mb={2} textAlign={'center'}  fontSize={'18px'} color={'orange.500'}>Contrato atual</Text>
             <Box textAlign={'center'} color={'white'} lineHeight={2}>
@@ -67,8 +108,17 @@ export default function Resumo () {
               <Text>Economia total: {val8}</Text>
             </Box>
           </Box>
+         
+          {screentext && 
+          <Text position={'absolute'} margin={'0 auto'} bg={'blue.600'} bottom={'60%'} p={2} color={'white'} right={'35%'}>{screentext}</Text>
+      }
         </Flex>
+        <Box position={'absolute'} bottom={'100px'}>
+          <Button onClick={handleCaptured}>Capturar tela</Button>
+        </Box>
       </Box>
+       
     </Flex>
+    </>
   )
 }
