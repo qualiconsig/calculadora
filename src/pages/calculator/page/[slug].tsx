@@ -1,124 +1,135 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Link, Text } from "@chakra-ui/react";
 import html2canvas from "html2canvas";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 
-export default function Resumo () {
-  const router = useRouter()
-  const valRouter:any = router.query.slug
+export default function Resumo() {
+  const router = useRouter();
+  const valRouter:any = router.query.slug;
 
-  const [screentext, setScreenText] = useState<string>()
+  const [screentext, setScreenText] = useState<string>("");
   const captureRef = useRef<HTMLDivElement>(null);
 
   const handleCaptured = () => {
     if (captureRef.current) {
-        html2canvas(captureRef.current).then(canvas => {
-            if (canvas) {
-                canvas.toBlob(blob => {
-                    if (blob) {
-                        const item = new ClipboardItem({ 'image/png': blob });
-                        navigator.clipboard.write([item]).then(() => {
-                          setScreenText("Captura de tela copiada para a área de transferência!");
-                          setTimeout(() => {
-                            setScreenText('');
-                          }, 2000); // Definindo o temporizador para 2 segundos
-                        }).catch(err => {
-                            console.error("Erro ao copiar a captura de tela para a área de transferência:", err);
-                        });
-                    } else {
-                        console.error("Erro ao criar o blob da captura.");
-                    }
-                }, 'image/png');
+      html2canvas(captureRef.current).then((canvas) => {
+        if (canvas) {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const item = new ClipboardItem({ 'image/png': blob });
+              navigator.clipboard.write([item]).then(() => {
+                setScreenText("Captura de tela copiada para a área de transferência!");
+                setTimeout(() => {
+                  setScreenText("");
+                }, 2000);
+              }).catch(err => {
+                console.error("Erro ao copiar a captura de tela para a área de transferência:", err);
+              });
             } else {
-                console.error("Erro ao criar o canvas da captura.");
+              console.error("Erro ao criar o blob da captura.");
             }
-        });
+          }, 'image/png');
+        } else {
+          console.error("Erro ao criar o canvas da captura.");
+        }
+      });
     } else {
-        console.error("Elemento de captura não encontrado.");
+      console.error("Elemento de captura não encontrado.");
     }
   };
 
-  const [val, setval] = useState()
-  const [val1, setval1] = useState()
-  const [val2, setval2] = useState()
-  const [val3, setval3] = useState()
-  const [val4, setval4] = useState()
-  const [val5, setval5] = useState()
-  const [val6, setval6] = useState()
-  const [val7, setval7] = useState()
-  const [val8, setval8] = useState()
+  const [val, setVal] = useState<any>("");
+  const [val1, setVal1] = useState("");
+  const [val2, setVal2] = useState("");
+  const [val3, setVal3] = useState("");
+  const [val4, setVal4] = useState("");
+  const [val5, setVal5] = useState("");
+  const [val6, setVal6] = useState("");
+  const [val7, setVal7] = useState("");
+  const [val8, setVal8] = useState("");
 
   const percorrerRota = () => {
-    const per = valRouter?.split('-')
-    setval(per[0]);
-    setval1(per[1]);
-    setval2(per[2]);
-    setval3(per[3]);
-    setval4(per[4]);
-    setval5(per[5]);
-    setval6(per[6]);
-    setval7(per[7]);
-    setval8(per[8]);
-  }
+    const per:any = valRouter?.split("-");
+    if (per) {
+      setVal(per[0]);
+      setVal1(per[1]);
+      setVal2(per[2]);
+      setVal3(per[3]);
+      setVal4(per[4]);
+      setVal5(per[5]);
+      setVal6(per[6]);
+      setVal7(per[7]);
+      setVal8(per[8]);
+    }
+  };
 
-  useEffect(()=>{
-    percorrerRota()
-  },[])
+  useEffect(() => {
+    percorrerRota();
+  }, []);
 
   useEffect(() => {
     if (screentext) {
       const timeout = setTimeout(() => {
-        setScreenText('');
-      }, 2000); // Definindo o temporizador para 2 segundos
-      return () => clearTimeout(timeout); // Limpa o temporizador ao desmontar o componente
+        setScreenText("");
+      }, 2000);
+      return () => clearTimeout(timeout);
     }
   }, [screentext]);
 
   return (
-    <>
-    <Flex   bg={'gray.600'} ref={captureRef} flexDir={'column'} >
-      <Box margin={'0 auto'} w={'80vw'}>
-        <Box bg={'white'} p={2} borderBottomRadius={5}>
-          <Text fontSize={'20px'} textAlign={'center'}>Resumo Da Proposta</Text>
-          <Text fontWeight={'bold'}>Banco: {val}</Text>
+    <Flex direction="column" minHeight="100vh" bg="#2C3E50">
+      <Flex align="center" bg="#E74C3C" p={4}>
+        <Box as={FaArrowLeft} color="white" />
+        <Link href="/calculator" >
+          <Text ml={2} color="white">Voltar</Text>
+        </Link>
+      </Flex>
+
+      <Box mx="auto" maxW="80vw" flex="1">
+        <Box bg="white" p={4} borderRadius="md" mb={4}>
+          <Text fontSize="xl" textAlign="center" fontWeight="bold">Resumo da Proposta</Text>
+          <Text fontWeight="bold">Banco: {val}</Text>
         </Box>
-        <Flex gap={5}  h={'100vh'} justifyContent={'space-between'}  align={'center'}>
-          <Box borderRadius={'14px'} alignContent={'center'} h={'30%'} w={'35%'} border={'1px solid orange'} p={2}>
-            <Text mb={2} textAlign={'center'}  fontSize={'18px'} color={'orange.500'}>Contrato atual</Text>
-            <Box textAlign={'center'} color={'white'} lineHeight={2}>
-              <Text>Parcela atual: {val2}</Text>
-              <Text>Taxa atual contrato: {val4}</Text>
-              <Text>Saldo devedor Aproximado: {val3}</Text>
-              <Text>Parcelas restantes: {val6}</Text>
+
+        <Flex justify="space-between" alignItems="stretch" flexWrap="wrap" gap={2}>
+          <Box flex="1" minW="250px" bg="#ECF0F1" p={4} borderRadius="md" mb={4}>
+            <Text mb={2} fontSize="xl" textAlign="center" color="orange.500">Contrato Atual</Text>
+            <Box color="black">
+              <Text>Parcela Atual: {val2}</Text>
+              <Text>Taxa Atual do Contrato: {val4}</Text>
+              <Text>Saldo Devedor Aproximado: {val3}</Text>
+              <Text>Parcelas Restantes: {val6}</Text>
             </Box>
           </Box>
-          <Box borderRadius={'14px'} alignContent={'center'}  h={'30%'} w={'35%'} border={'1px solid orange'} p={2}>
-            <Text mb={2} textAlign={'center'} fontSize={'18px'} color={'orange.500'}>Novo contrato</Text>
-            <Box textAlign={'center'} lineHeight={2} color={'white'}>
-              <Text>Nova taxa: {val1}</Text>
+
+          <Box flex="1" minW="250px" bg="#ECF0F1" p={4} borderRadius="md" mb={4}>
+            <Text mb={2} fontSize="xl" textAlign="center" color="orange.500">Novo Contrato</Text>
+            <Box color="black">
+              <Text>Nova Taxa: {val1}</Text>
               <Text>Nova Parcela: {val5}</Text>
-              <Text>Saldo devedor Aproximado: {val3}</Text>
-              <Text>Parcelas restantes: {val6}</Text>
+              <Text>Saldo Devedor Aproximado: {val3}</Text>
+              <Text>Parcelas Restantes: {val6}</Text>
             </Box>
           </Box>
-          <Box borderRadius={'14px'} alignContent={'center'}h={'30%'} w={'35%'} border={'1px solid orange'} p={2}>
-            <Text mb={2} textAlign={'center'}  fontSize={'18px'} color={'orange.500'}>Economia cliente</Text>
-            <Box textAlign={'center'} lineHeight={2} color={'white'}>
+
+          <Box flex="1" minW="250px" bg="#ECF0F1"  p={4} borderRadius="md" mb={4}>
+            <Text mb={2} fontSize="xl" textAlign="center" color="orange.500">Economia Cliente</Text>
+            <Box color="black">
               <Text>Economia Mensal: {val7}</Text>
-              <Text>Economia total: {val8}</Text>
+              <Text>Economia Total: {val8}</Text>
             </Box>
           </Box>
-         
-          {screentext && 
-          <Text position={'absolute'} margin={'0 auto'} bg={'blue.600'} bottom={'60%'} p={2} color={'white'} right={'35%'}>{screentext}</Text>
-      }
         </Flex>
-        <Box position={'absolute'} bottom={'100px'}>
-          <Button onClick={handleCaptured}>Capturar tela</Button>
+
+        {screentext && (
+          <Text bg="blue.600" color="white" p={2} borderRadius="md" textAlign="center" mt={4}>{screentext}</Text>
+        )}
+
+        <Box textAlign="center" mt={4}>
+          <Button onClick={handleCaptured}>Capturar Tela</Button>
         </Box>
       </Box>
-       
     </Flex>
-    </>
-  )
+  );
 }
