@@ -10,9 +10,9 @@ export class CalculadoraGeral {
       const tx = taxa / 100;
       let total = (valorPresente * tx) / (1 - Math.pow(1 + tx, -numeroParcelas));
 
-      const pmtResult = total.toFixed(2);
+      const pmtResult =  parseFloat(total.toFixed(2));
       const totalReplaced = pmtResult.toString().replace(".", ",");
-      result.push(parseFloat(totalReplaced));
+      result.push(pmtResult);
     });
     return result;
   }

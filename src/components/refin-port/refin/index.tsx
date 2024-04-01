@@ -114,6 +114,16 @@ export const Port = ({ color, data, sd, taxa }: any) => {
     setSelectedItem(null);
     setIsModalOpen(false);
   };
+  const formatNumber = (number:any) => {
+    // Separar a parte inteira dos centavos
+    const parts = number.toString().split(".");
+    // Formatar a parte inteira com ponto como separador de milhares
+    const formattedInteger = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    // Se houver centavos, adicionar a vírgula e os centavos
+    const formattedDecimal = parts[1] ? `,${parts[1]}` : '';
+    // Retornar o número formatado
+    return formattedInteger + formattedDecimal;
+  };
 
   return (
     <>
@@ -144,21 +154,21 @@ export const Port = ({ color, data, sd, taxa }: any) => {
             </Thead>
             <Tbody>
               {ordenedList.map((item, index) => (
-                <Tr
-                  key={index}
-                  onClick={() => handleRowClick(item)}
-                  cursor="pointer"
-                  _hover={{ bg: getRowColor(item.nameBank) }}
-                >
-                  <Td>{item.nameBank}</Td>
-                  <Td>{item.tax}</Td>
-                  <Td>{item.pmt}</Td>
-                  <Td>{item.parcelaAtual - item.pmt}</Td>
-                  <Td>
-                    {(item.parcelaAtual - item.pmt) * item.parcelaRestante}{" "}
-                    <SlArrowDown />
-                  </Td>
-                </Tr>
+             <Tr
+             key={index}
+             onClick={() => handleRowClick(item)}
+             cursor="pointer"
+             _hover={{ bg: getRowColor(item.nameBank) }}
+           >
+             <Td>{item.nameBank}</Td>
+             <Td>{formatNumber(item.tax)}</Td>
+             <Td>{formatNumber(item.pmt)}</Td>
+             <Td>{formatNumber((item.parcelaAtual - item.pmt).toFixed(2))}</Td>
+             <Td>
+               {formatNumber(((item.parcelaAtual - item.pmt) * item.parcelaRestante).toFixed(2))}{" "}
+               <SlArrowDown />
+             </Td>
+           </Tr>
               ))}
             </Tbody>
           </Table>
