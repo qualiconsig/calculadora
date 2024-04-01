@@ -196,7 +196,7 @@ export const Port = ({ color, data, sd, taxa }: any) => {
               >
                 <Box>
                   <Text fontWeight="bold" >Nova Taxa:</Text>
-                  <Text >{selectedItem.tax}%</Text>
+                  <Text >{selectedItem.tax.toFixed(2)}%</Text>
                 </Box>
                 <Box>
                   <Text fontWeight="bold" >Taxa Antiga:</Text>
@@ -204,7 +204,7 @@ export const Port = ({ color, data, sd, taxa }: any) => {
                 </Box>
                 <Box>
                   <Text fontWeight="bold" >Nova Parcela:</Text>
-                  <Text >{selectedItem.pmt}</Text>
+                  <Text >{formatNumber(selectedItem.pmt.toFixed(2))}</Text>
                 </Box>
                 <Box>
                   <Text fontWeight="bold" >Parcela Antiga:</Text>
@@ -212,11 +212,11 @@ export const Port = ({ color, data, sd, taxa }: any) => {
                 </Box>
                 <Box>
                   <Text fontWeight="bold" >Economia Mensal do Cliente:</Text>
-                  <Text >{selectedItem.parcelaAtual - selectedItem.pmt}</Text>
+                  <Text >{formatNumber((selectedItem.parcelaAtual - selectedItem.pmt).toFixed(2))}</Text>
                 </Box>
                 <Box>
                   <Text fontWeight="bold" >Economia Total no Período:</Text>
-                  <Text >{(selectedItem.parcelaAtual - selectedItem.pmt) * selectedItem.parcelaRestante}</Text>
+                  <Text > {formatNumber(((selectedItem.parcelaAtual - selectedItem.pmt) * selectedItem.parcelaRestante).toFixed(2))}{" "}</Text>
                 </Box>
               </Grid>
             )}
