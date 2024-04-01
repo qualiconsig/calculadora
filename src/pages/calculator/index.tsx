@@ -102,8 +102,10 @@ export default function Calculadora() {
   const {c6tax, setC6Tax} = useC6ContextHook()
   const received = () => {
     if (formData) {
-      const parcelaAtual: any = parseFloat(formData.parcelaAtual);
-      setValorAtualParcela(parcelaAtual.toFixed(2));
+      const parcelaAtual: any = parseFloat((formData.parcelaAtual).toString().replace(',', '.'));
+      const convertParcelaAtual:any = parseFloat(parcelaAtual)
+      
+      setValorAtualParcela(convertParcelaAtual.toFixed(2));
       const parcelaRestante = parseFloat(formData.parcelaRestante);
       setParcelaRestante(parcelaRestante);
 
@@ -317,7 +319,7 @@ export default function Calculadora() {
                     {portabilidade == true && (
                       <Box color={"white"} w={["100%", "100%"]}>
                         <Text color={"white"}>Portabilidade</Text>
-                        <Port color={"#1c308b"} data={ordenedList} sd={saldoDev} taxa={taxa}/>
+                        <Port color={"#1c308b"} data={ordenedList} sd={saldoDev} taxa={taxa} valorAtualParcela={valorAtualParcela}/>
                       </Box>
                     )}
                   </Flex>

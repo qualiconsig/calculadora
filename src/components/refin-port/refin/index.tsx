@@ -26,13 +26,14 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { SlArrowDown, SlArrowRight } from "react-icons/sl";
 
-export const Port = ({ color, data, sd, taxa }: any) => {
+export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   const [screentext, setScreenText] = useState<string>("");
   const captureRef = useRef<HTMLDivElement>(null);
   const [ordenedList, setOrdenedList] = useState<any[]>([]);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  console.log(valorAtualParcela)
   const handleCaptured = () => {
     if (captureRef.current) {
       html2canvas(captureRef.current).then((canvas) => {
@@ -90,7 +91,7 @@ export const Port = ({ color, data, sd, taxa }: any) => {
 
     setOrdenedList(formattedData);
   }, [data]);
-
+  console.log('saldo', data)
   const getRowColor = (nameBank: string) => {
     // Definindo a cor com base no nome do banco
     switch (nameBank) {
@@ -208,7 +209,7 @@ export const Port = ({ color, data, sd, taxa }: any) => {
                 </Box>
                 <Box>
                   <Text fontWeight="bold" >Parcela Antiga:</Text>
-                  <Text >{selectedItem.parcelaAtual}</Text>
+                  <Text >{formatNumber((selectedItem.parcelaAtual).toFixed(2))}</Text>
                 </Box>
                 <Box>
                   <Text fontWeight="bold" >Economia Mensal do Cliente:</Text>
