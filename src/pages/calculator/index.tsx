@@ -84,7 +84,7 @@ export default function Calculadora() {
   const [valorAtualParcela, setValorAtualParcela] = useState<number>();
   const [parcelaRestante, setParcelaRestante] = useState<number>();
   const activeLoading = () => setTimeout(() => setLoading(true), 3000);
-  const [saldoDev, setSaldoDev] = useState();
+  const [saldoDev, setSaldoDev] = useState<any>();
 
   const { setName, name } = useNameContextHook();
 
@@ -108,7 +108,9 @@ export default function Calculadora() {
       setParcelaRestante(parcelaRestante);
 
       const saldoDevedor: any = formData!.vlEmprestimo;
-      setSaldoDev(saldoDevedor);
+      const converSaldoDevedor = saldoDevedor.toString().replace(',', '.')
+      const convertSaldoNumber = parseFloat(converSaldoDevedor)
+      setSaldoDev(convertSaldoNumber);
 
       const CalculadoraInbursa = () => {
         const taxas = [ 1.45, 1.54, 1.58 , 1.68 ,1.78]
@@ -116,12 +118,12 @@ export default function Calculadora() {
         const TaxaCalc = InbursaCalc.calcularTaxa(
           parcelaAtual,
           parcelaRestante,
-          -saldoDevedor,
+          -convertSaldoNumber,
           1e-6
         )
         
         const pmt = InbursaCalc.calcularPMT(
-          saldoDevedor,
+          convertSaldoNumber,
           parcelaRestante
         )
         
@@ -135,7 +137,7 @@ export default function Calculadora() {
         setInbursaTax({ formdata: objInbursaPmt });
         
       };
-      console.log(saldoDev)
+      
       
       const CalculadoraPagBank = () => {
         const taxas = [1.72, 1.70, 1.66, 1.60, 1.56]
@@ -143,10 +145,10 @@ export default function Calculadora() {
         const taxaPagbank = pagbankCalc.calcularTaxa(
           parcelaAtual,
           parcelaRestante,
-          -saldoDevedor,
+          -convertSaldoNumber,
           1e-6
         );
-        const pmt = pagbankCalc.calcularPMT(saldoDevedor, parcelaRestante)
+        const pmt = pagbankCalc.calcularPMT(convertSaldoNumber, parcelaRestante)
         setTaxa(taxaPagbank);
         setPMT(pmt);
 
@@ -166,9 +168,9 @@ export default function Calculadora() {
         const c6calc = new CalculadoraGeral(taxas)
         const taxaCalc = c6calc.calcularTaxa( parcelaAtual,
           parcelaRestante,
-          -saldoDevedor,
+          -convertSaldoNumber,
           1e-6)
-        const pmt = c6calc.calcularPMT(saldoDevedor, parcelaRestante)
+        const pmt = c6calc.calcularPMT(convertSaldoNumber, parcelaRestante)
         const objc6Bank = {
           nameBank: 'C6',
           taxas,
