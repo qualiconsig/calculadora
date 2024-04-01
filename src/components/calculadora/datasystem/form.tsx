@@ -37,7 +37,7 @@ export function CalculatorForm({ calculatedSaldoReal, formreceived, taxx }: any)
         <Flex flex={1}  flexDir={'column'} textAlign={'center'} justify={'center'} align={'center'}>
           <Text w={"100%"} mb={'30px'}>Valor Parcela Atual</Text>
           <Input
-            type="number"
+            type="text"
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
             bg={"#f5f4b2"}
@@ -49,7 +49,7 @@ export function CalculatorForm({ calculatedSaldoReal, formreceived, taxx }: any)
         <Flex w={'50%'}  align={"center"} flexDir={'column'} textAlign={'center'} justify={'center'}>
           <Text  mb={'30px'} w={"100%"}>Parcela Restante</Text>
           <Input
-            type="number"
+            type="text"
             focusBorderColor="white"
             border={"1px solid #d6d0f5"}
             bg={"#f5f4b2"}
@@ -63,7 +63,7 @@ export function CalculatorForm({ calculatedSaldoReal, formreceived, taxx }: any)
         <Flex flex={1}  align={"center"} flexDir={'column'} textAlign={'center'} justify={'center'} >
           <Text w={"100%"}  mb={'30px'}>Vl Emprestimo</Text>
           <Input
-            type="number"
+            type="text"
             focusBorderColor="#fff"
             border={"1px solid #d6d0f5"}
             bg={"#f5f4b2"}
