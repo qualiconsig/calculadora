@@ -33,7 +33,6 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  console.log(valorAtualParcela)
   const handleCaptured = () => {
     if (captureRef.current) {
       html2canvas(captureRef.current).then((canvas) => {
@@ -91,7 +90,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
     setOrdenedList(formattedData);
   }, [data]);
-  console.log('saldo', data)
+  console.log("saldo", data);
   const getRowColor = (nameBank: string) => {
     // Definindo a cor com base no nome do banco
     switch (nameBank) {
@@ -115,17 +114,17 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
     setSelectedItem(null);
     setIsModalOpen(false);
   };
-  const formatNumber = (number:any) => {
+  const formatNumber = (number: any) => {
     // Separar a parte inteira dos centavos
     const parts = number.toString().split(".");
     // Formatar a parte inteira com ponto como separador de milhares
     const formattedInteger = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     // Se houver centavos, adicionar a vírgula e os centavos
-    const formattedDecimal = parts[1] ? `,${parts[1]}` : '';
+    const formattedDecimal = parts[1] ? `,${parts[1]}` : "";
     // Retornar o número formatado
     return formattedInteger + formattedDecimal;
   };
-
+  console.log(selectedItem);
   return (
     <>
       <Box mt={4} mx="auto" maxWidth="800px">
@@ -155,86 +154,173 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
             </Thead>
             <Tbody>
               {ordenedList.map((item, index) => (
-             <Tr
-             key={index}
-             onClick={() => handleRowClick(item)}
-             cursor="pointer"
-             _hover={{ bg: getRowColor(item.nameBank) }}
-           >
-             <Td>{item.nameBank}</Td>
-             <Td>{formatNumber(item.tax)}</Td>
-             <Td>{formatNumber(item.pmt)}</Td>
-             <Td>{formatNumber((item.parcelaAtual - item.pmt).toFixed(2))}</Td>
-             <Td>
-               {formatNumber(((item.parcelaAtual - item.pmt) * item.parcelaRestante).toFixed(2))}{" "}
-               <SlArrowDown />
-             </Td>
-           </Tr>
+                <Tr
+                  key={index}
+                  onClick={() => handleRowClick(item)}
+                  cursor="pointer"
+                  _hover={{ bg: getRowColor(item.nameBank) }}
+                >
+                  <Td>{item.nameBank}</Td>
+                  <Td>{formatNumber(item.tax)}</Td>
+                  <Td>{formatNumber(item.pmt)}</Td>
+                  <Td>
+                    {formatNumber((item.parcelaAtual - item.pmt).toFixed(2))}
+                  </Td>
+                  <Td>
+                    {formatNumber(
+                      (
+                        (item.parcelaAtual - item.pmt) *
+                        item.parcelaRestante
+                      ).toFixed(2)
+                    )}{" "}
+                    <SlArrowDown />
+                  </Td>
+                </Tr>
               ))}
             </Tbody>
           </Table>
         </Flex>
       </Box>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="3xl" >
-      <ModalOverlay />
-      <ModalContent >
-        <ModalHeader fontSize="2xl" fontWeight="bold" color="cyan.500" textAlign="center">
-          Resumo da Proposta
-        </ModalHeader>
-        <ModalCloseButton color="gray.500" />
-        <ModalBody ref={captureRef}>
-          <Flex direction="column" gap={4} marginBottom="20px">
-            <Flex gap={2}>
-              <Text fontWeight="bold">Banco:</Text>
-              <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
-            </Flex>
-            {selectedItem && (
-              <Grid
-                templateColumns="repeat(2, 1fr)"
-                gap={6}
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Box>
-                  <Text fontWeight="bold" >Nova Taxa:</Text>
-                  <Text >{selectedItem.tax.toFixed(2)}%</Text>
-                </Box>
-                <Box>
-                  <Text fontWeight="bold" >Taxa Antiga:</Text>
-                  <Text >{taxa}%</Text>
-                </Box>
-                <Box>
-                  <Text fontWeight="bold" >Nova Parcela:</Text>
-                  <Text >{formatNumber(selectedItem.pmt.toFixed(2))}</Text>
-                </Box>
-                <Box>
-                  <Text fontWeight="bold" >Parcela Antiga:</Text>
-                  <Text >{formatNumber((selectedItem.parcelaAtual).toFixed(2))}</Text>
-                </Box>
-                <Box>
-                  <Text fontWeight="bold" >Economia Mensal do Cliente:</Text>
-                  <Text >{formatNumber((selectedItem.parcelaAtual - selectedItem.pmt).toFixed(2))}</Text>
-                </Box>
-                <Box>
-                  <Text fontWeight="bold" >Economia Total no Período:</Text>
-                  <Text > {formatNumber(((selectedItem.parcelaAtual - selectedItem.pmt) * selectedItem.parcelaRestante).toFixed(2))}{" "}</Text>
-                </Box>
-              </Grid>
-            )}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="6xl">
+  <ModalOverlay />
+  <ModalContent bg={"#f4f4f4"} borderRadius={"20px"} boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}>
+    <ModalHeader
+      fontSize="2xl"
+      fontWeight="bold"
+      color="cyan.500"
+      textAlign="center"
+    >
+      Resumo da Proposta
+    </ModalHeader>
+    <ModalCloseButton color="gray.500" />
+    <ModalBody ref={captureRef}>
+      <Flex direction="column" gap={4} marginBottom="20px">
+        <Flex gap={2}>
+          <Text fontWeight="bold">Banco:</Text>
+          <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
+        </Flex>
+        {selectedItem && (
+          <Flex direction={{ base: "column", md: "row" }} gap={4}>
+            {/* Contrato Atual */}
+            <Box flex={1} bg={"#ffffff"} p={4} borderRadius={"12px"} boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}>
+              <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                Contrato Atual
+              </Text>
+              <Flex flexDirection="column" gap={2}>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Taxa Atual:</Text>
+                  <Text>{taxa} %</Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Parcela Atual:</Text>
+                  <Text>
+                    R${" "}
+                    {formatNumber(selectedItem.parcelaAtual.toFixed(2))}
+                  </Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>
+                    Saldo Devedor Aproximado:
+                  </Text>
+                  <Text>R$ {sd}</Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Parcela restante:</Text>
+                  <Text>{selectedItem.parcelaRestante}</Text>
+                </Flex>
+              </Flex>
+            </Box>
+
+            {/* Novo Contrato */}
+            <Box flex={1} bg={"#ffffff"} p={4} borderRadius={"12px"} boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}>
+              <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                Novo contrato
+              </Text>
+              <Flex flexDirection="column" gap={2}>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Nova taxa:</Text>
+                  <Text>{selectedItem.tax.toFixed(2)} %</Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Nova parcela:</Text>
+                  <Text>
+                    R$ {formatNumber(selectedItem.pmt.toFixed(2))}
+                  </Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Parcela restante:</Text>
+                  <Text>{selectedItem.parcelaRestante}</Text>
+                </Flex>
+              </Flex>
+            </Box>
+
+            {/* Economia do Cliente */}
+            <Box flex={1} bg={"#ffffff"} p={4} borderRadius={"12px"} boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}>
+              <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                Economia do cliente
+              </Text>
+              <Flex flexDirection="column" gap={2}>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Economia mensal:</Text>
+                  <Text>
+                    R${" "}
+                    {formatNumber(
+                      (selectedItem.parcelaAtual - selectedItem.pmt).toFixed(
+                        2
+                      )
+                    )}
+                  </Text>
+                </Flex>
+                <Flex justifyContent="space-between">
+                  <Text fontWeight={"500"}>Economia Total:</Text>
+                  <Text>
+                    R${" "}
+                    {formatNumber(
+                      (
+                        (selectedItem.parcelaAtual - selectedItem.pmt) *
+                        selectedItem.parcelaRestante
+                      ).toFixed(2)
+                    )}
+                  </Text>
+                </Flex>
+              </Flex>
+            </Box>
           </Flex>
-        </ModalBody>
-        <ModalFooter justifyContent="center">
-          <Tooltip label="Capturar Tela" placement="top" hasArrow bg="gray.800" color="white">
-            <Button bg="red.500" _hover={{ bg: "red.600" }} onClick={handleCaptured} leftIcon={<FiCheckCircle />} size="lg">
-              Capturar
-            </Button>
-          </Tooltip>
-          <Button ml={4} bg="gray.500" _hover={{ bg: "gray.600" }} onClick={handleCloseModal} leftIcon={<FiXCircle />} size="lg">
-            Fechar
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+        )}
+      </Flex>
+    </ModalBody>
+    <ModalFooter justifyContent="center">
+      <Tooltip
+        label="Capturar Tela"
+        placement="top"
+        hasArrow
+        bg="gray.800"
+        color="white"
+      >
+        <Button
+          bg="cyan.500"
+          _hover={{ bg: "cyan.600" }}
+          onClick={handleCaptured}
+          leftIcon={<FiCheckCircle />}
+          size="lg"
+        >
+          Capturar
+        </Button>
+      </Tooltip>
+      <Button
+        ml={4}
+        bg="gray.500"
+        _hover={{ bg: "gray.600" }}
+        onClick={handleCloseModal}
+        leftIcon={<FiXCircle />}
+        size="lg"
+      >
+        Fechar
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
     </>
   );
 };
