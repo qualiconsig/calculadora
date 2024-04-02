@@ -24,11 +24,13 @@ import {
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 
-export const Port = ({ data, sd }: any) => {
-  const [ordenedList, setOrdenedList] = useState<any[]>([]);
-  const [selectedBank, setSelectedBank] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
+  const [screentext, setScreenText] = useState<string>("");
   const captureRef = useRef<HTMLDivElement>(null);
+  const [ordenedList, setOrdenedList] = useState<any[]>([]);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedBank, setSelectedBank] = useState<string | null>(null);
 
   useEffect(() => {
     const formattedData: any[] = [];
@@ -52,6 +54,24 @@ export const Port = ({ data, sd }: any) => {
     setOrdenedList(formattedData);
   }, [data]);
 
+  const getRowColor = (nameBank: string) => {
+    // Definindo a cor com base no nome do banco
+    switch (nameBank) {
+      case "Pagbank":
+        return "green";
+      case "Inbursa":
+        return "purple";
+      case "C6":
+        return "black";
+      default:
+        return color;
+    }
+  };
+
+  const handleRowClick = (item: any) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
   const handleCaptured = () => {
     if (captureRef.current) {
       html2canvas(captureRef.current).then((canvas) => {
@@ -62,10 +82,18 @@ export const Port = ({ data, sd }: any) => {
               navigator.clipboard
                 .write([item])
                 .then(() => {
-                  console.log("Captura de tela copiada para a área de transferência!");
+                  setScreenText(
+                    "Captura de tela copiada para a área de transferência!"
+                  );
+                  setTimeout(() => {
+                    setScreenText("");
+                  }, 2000);
                 })
                 .catch((err) => {
-                  console.error("Erro ao copiar a captura de tela para a área de transferência:", err);
+                  console.error(
+                    "Erro ao copiar a captura de tela para a área de transferência:",
+                    err
+                  );
                 });
             } else {
               console.error("Erro ao criar o blob da captura.");
@@ -80,69 +108,58 @@ export const Port = ({ data, sd }: any) => {
     }
   };
 
-  const formatNumber = (number: any) => {
-    // Formatar o número com ponto como separador de milhares
-    return new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 }).format(number);
+  const handleCloseModal = () => {
+    setSelectedItem(null);
+    setIsModalOpen(false);
   };
 
-  // Método para filtrar os dados com base no banco selecionado
-  const filterDataByBank = () => {
-    if (!selectedBank) return ordenedList; // Retorna os dados ordenados se nenhum banco estiver selecionado
-    return ordenedList.filter((item) => item.nameBank === selectedBank);
-  };
-
-  // Método para lidar com a seleção de banco
-  const handleBankSelect = (bank: any) => {
+  const handleBankSelect = (bank: string | null) => {
     setSelectedBank(bank);
   };
 
-  // Método para definir a cor com base no nome do banco
-  const getBankColor = (nameBank: string) => {
-    switch (nameBank) {
-      case "Pagbank":
-        return "green";
-      case "Inbursa":
-        return "purple";
-      case "C6":
-        return "black";
-      default:
-        return "gray";
-    }
+  const formatNumber = (number: any) => {
+    // Separar a parte inteira dos centavos
+    const parts = number.toString().split(".");
+    // Formatar a parte inteira com ponto como separador de milhares
+    const formattedInteger = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    // Se houver centavos, adicionar a vírgula e os centavos
+    const formattedDecimal = parts[1] ? `,${parts[1]}` : "";
+    // Retornar o número formatado
+    return formattedInteger + formattedDecimal;
   };
 
   return (
     <>
-      <Flex justify="center" gap={4}>
+     <Flex justify="center" gap={4}>
         <Text
-          color={selectedBank === "Inbursa" ? "purple" : "gray.500"}
+          color={selectedBank === "Inbursa" ? "purple" : "gray"}
           cursor="pointer"
           onClick={() => handleBankSelect("Inbursa")}
         >
           Inbursa
         </Text>
         <Text
-          color={selectedBank === "Pagbank" ? "green" : "gray.500"}
+          color={selectedBank === "Pagbank" ? "green" : "gray"}
           cursor="pointer"
           onClick={() => handleBankSelect("Pagbank")}
         >
           Pagbank
         </Text>
         <Text
-          color={selectedBank === "C6" ? "black" : "gray.500"}
+          color={selectedBank === "C6" ? "black" : "gray"}
           cursor="pointer"
           onClick={() => handleBankSelect("C6")}
         >
           C6
         </Text>
         <Text
-          color={!selectedBank ? "blue.500" : "gray.500"}
+          color={!selectedBank ? "blue" : "gray"}
           cursor="pointer"
           onClick={() => handleBankSelect(null)}
         >
           Todos
         </Text>
       </Flex>
-
       <Box mt={4} mx="auto" maxWidth="800px">
         <Flex justify="center" align="center" mb={4}>
           <Text fontSize={["xl", "2xl"]} color="#bbd5ed" fontWeight="bold">
@@ -150,7 +167,7 @@ export const Port = ({ data, sd }: any) => {
           </Text>
         </Flex>
         <Flex
-          bg="gray.500"
+          bg={color}
           p={4}
           borderRadius="8px"
           overflowX="auto"
@@ -169,12 +186,17 @@ export const Port = ({ data, sd }: any) => {
               </Tr>
             </Thead>
             <Tbody>
-              {filterDataByBank().map((item, index) => (
+              {ordenedList.map((item, index) => (
                 <Tr
                   key={index}
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => handleRowClick(item)}
                   cursor="pointer"
-                  _hover={{ bg: getBankColor(item.nameBank) }}
+                  _hover={{ bg: getRowColor(item.nameBank) }}
+                  display={
+                    selectedBank && selectedBank !== item.nameBank
+                      ? "none"
+                      : "table-row"
+                  }
                 >
                   <Td>{item.nameBank}</Td>
                   <Td>{formatNumber(item.tax.toFixed(2))}</Td>
@@ -188,7 +210,7 @@ export const Port = ({ data, sd }: any) => {
                         (item.parcelaAtual - item.pmt) *
                         item.parcelaRestante
                       ).toFixed(2)
-                    )}
+                    )}{" "}
                     <SlArrowDown />
                   </Td>
                 </Tr>
@@ -197,7 +219,7 @@ export const Port = ({ data, sd }: any) => {
           </Table>
         </Flex>
       </Box>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} size="6xl">
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="6xl">
         <ModalOverlay />
         <ModalContent
           bg={"#f4f4f4"}
@@ -215,8 +237,114 @@ export const Port = ({ data, sd }: any) => {
           <ModalCloseButton color="gray.500" />
           <ModalBody ref={captureRef}>
             <Flex direction="column" gap={4} marginBottom="20px">
-              <Text fontWeight="bold">Banco: {selectedBank}</Text>
-              {/* Adicione aqui o restante do conteúdo do modal */}
+              <Flex gap={2}>
+                <Text fontWeight="bold">Banco:</Text>
+                <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
+              </Flex>
+              {selectedItem && (
+                <Flex direction={{ base: "column", md: "row" }} gap={4}>
+                  {/* Contrato Atual */}
+                  <Box
+                    flex={1}
+                    bg={"#ffffff"}
+                    p={4}
+                    borderRadius={"12px"}
+                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                  >
+                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                      Contrato Atual
+                    </Text>
+                    <Flex flexDirection="column" gap={2}>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Taxa Atual:</Text>
+                        <Text>{taxa} %</Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Parcela Atual:</Text>
+                        <Text>
+                          R${" "}
+                          {formatNumber(selectedItem.parcelaAtual.toFixed(2))}
+                        </Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>
+                          Saldo Devedor Aproximado:
+                        </Text>
+                        <Text>R$ {sd}</Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Parcela restante:</Text>
+                        <Text>{selectedItem.parcelaRestante}</Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+
+                  <Box
+                    flex={1}
+                    bg={"#ffffff"}
+                    p={4}
+                    borderRadius={"12px"}
+                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                  >
+                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                      Novo contrato
+                    </Text>
+                    <Flex flexDirection="column" gap={2}>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Nova taxa:</Text>
+                        <Text>{selectedItem.tax.toFixed(2)} %</Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Nova parcela:</Text>
+                        <Text>
+                          R$ {formatNumber(selectedItem.pmt.toFixed(2))}
+                        </Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Parcela restante:</Text>
+                        <Text>{selectedItem.parcelaRestante}</Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+
+                  <Box
+                    flex={1}
+                    bg={"#ffffff"}
+                    p={4}
+                    borderRadius={"12px"}
+                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                  >
+                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                      Economia do cliente
+                    </Text>
+                    <Flex flexDirection="column" gap={2}>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Economia mensal:</Text>
+                        <Text>
+                          R${" "}
+                          {formatNumber(
+                            (
+                              selectedItem.parcelaAtual - selectedItem.pmt
+                            ).toFixed(2)
+                          )}
+                        </Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Economia Total:</Text>
+                        <Text>
+                          R${" "}
+                          {formatNumber(
+                            (
+                              (selectedItem.parcelaAtual - selectedItem.pmt) *
+                              selectedItem.parcelaRestante
+                            ).toFixed(2)
+                          )}
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </Flex>
+              )}
             </Flex>
           </ModalBody>
           <ModalFooter justifyContent="center">
@@ -241,7 +369,7 @@ export const Port = ({ data, sd }: any) => {
               ml={4}
               bg="gray.500"
               _hover={{ bg: "gray.600" }}
-              onClick={() => setIsModalOpen(false)}
+              onClick={handleCloseModal}
               leftIcon={<FiXCircle />}
               size="lg"
             >
@@ -250,6 +378,7 @@ export const Port = ({ data, sd }: any) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+     
     </>
   );
 };
