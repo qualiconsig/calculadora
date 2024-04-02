@@ -47,7 +47,7 @@ export function CalculatorForm({ calculatedSaldoReal, formreceived, taxx }: any)
         </Flex>
 
         <Flex w={'50%'}  align={"center"} flexDir={'column'} textAlign={'center'} justify={'center'}>
-          <Text  mb={'30px'} w={"100%"}>Parcela Restante</Text>
+          <Text  mb={'30px'} w={"100%"}>Prazo restante</Text>
           <Input
             type="text"
             focusBorderColor="white"
