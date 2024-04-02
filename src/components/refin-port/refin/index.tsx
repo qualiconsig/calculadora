@@ -24,7 +24,7 @@ import {
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 
-export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
+export const Port = ({ data, sd }: any) => {
   const [ordenedList, setOrdenedList] = useState<any[]>([]);
   const [selectedBank, setSelectedBank] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -92,29 +92,43 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   };
 
   // Método para lidar com a seleção de banco
-  const handleBankSelect = (bank: any) => {
+  const handleBankSelect = (bank: string) => {
     setSelectedBank(bank);
+  };
+
+  // Método para definir a cor com base no nome do banco
+  const getBankColor = (nameBank: string) => {
+    switch (nameBank) {
+      case "Pagbank":
+        return "green";
+      case "Inbursa":
+        return "purple";
+      case "C6":
+        return "black";
+      default:
+        return "gray";
+    }
   };
 
   return (
     <>
       <Flex justify="center" gap={4}>
         <Text
-          color={selectedBank === "Inbursa" ? "blue.500" : "gray.500"}
+          color={selectedBank === "Inbursa" ? "purple" : "gray.500"}
           cursor="pointer"
           onClick={() => handleBankSelect("Inbursa")}
         >
           Inbursa
         </Text>
         <Text
-          color={selectedBank === "Pagbank" ? "blue.500" : "gray.500"}
+          color={selectedBank === "Pagbank" ? "green" : "gray.500"}
           cursor="pointer"
           onClick={() => handleBankSelect("Pagbank")}
         >
           Pagbank
         </Text>
         <Text
-          color={selectedBank === "C6" ? "blue.500" : "gray.500"}
+          color={selectedBank === "C6" ? "black" : "gray.500"}
           cursor="pointer"
           onClick={() => handleBankSelect("C6")}
         >
@@ -128,6 +142,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
           Todos
         </Text>
       </Flex>
+
       <Box mt={4} mx="auto" maxWidth="800px">
         <Flex justify="center" align="center" mb={4}>
           <Text fontSize={["xl", "2xl"]} color="#bbd5ed" fontWeight="bold">
@@ -135,7 +150,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
           </Text>
         </Flex>
         <Flex
-          bg={color}
+          bg="gray.500"
           p={4}
           borderRadius="8px"
           overflowX="auto"
@@ -157,9 +172,9 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
               {filterDataByBank().map((item, index) => (
                 <Tr
                   key={index}
-                  cursor="pointer"
-                  _hover={{ bg: "blue.200" }}
                   onClick={() => setIsModalOpen(true)}
+                  cursor="pointer"
+                  _hover={{ bg: getBankColor(item.nameBank) }}
                 >
                   <Td>{item.nameBank}</Td>
                   <Td>{formatNumber(item.tax.toFixed(2))}</Td>
@@ -173,7 +188,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                         (item.parcelaAtual - item.pmt) *
                         item.parcelaRestante
                       ).toFixed(2)
-                    )}{" "}
+                    )}
                     <SlArrowDown />
                   </Td>
                 </Tr>
