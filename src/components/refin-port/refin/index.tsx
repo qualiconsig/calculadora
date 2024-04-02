@@ -182,145 +182,164 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
         </Flex>
       </Box>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="6xl">
-  <ModalOverlay />
-  <ModalContent bg={"#f4f4f4"} borderRadius={"20px"} boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}>
-    <ModalHeader
-      fontSize="2xl"
-      fontWeight="bold"
-      color="cyan.500"
-      textAlign="center"
-    >
-      Resumo da Proposta
-    </ModalHeader>
-    <ModalCloseButton color="gray.500" />
-    <ModalBody ref={captureRef}>
-      <Flex direction="column" gap={4} marginBottom="20px">
-        <Flex gap={2}>
-          <Text fontWeight="bold">Banco:</Text>
-          <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
-        </Flex>
-        {selectedItem && (
-          <Flex direction={{ base: "column", md: "row" }} gap={4}>
-            {/* Contrato Atual */}
-            <Box flex={1} bg={"#ffffff"} p={4} borderRadius={"12px"} boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}>
-              <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
-                Contrato Atual
-              </Text>
-              <Flex flexDirection="column" gap={2}>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Taxa Atual:</Text>
-                  <Text>{taxa} %</Text>
-                </Flex>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Parcela Atual:</Text>
-                  <Text>
-                    R${" "}
-                    {formatNumber(selectedItem.parcelaAtual.toFixed(2))}
-                  </Text>
-                </Flex>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>
-                    Saldo Devedor Aproximado:
-                  </Text>
-                  <Text>R$ {sd}</Text>
-                </Flex>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Parcela restante:</Text>
-                  <Text>{selectedItem.parcelaRestante}</Text>
-                </Flex>
-              </Flex>
-            </Box>
-
-            {/* Novo Contrato */}
-            <Box flex={1} bg={"#ffffff"} p={4} borderRadius={"12px"} boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}>
-              <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
-                Novo contrato
-              </Text>
-              <Flex flexDirection="column" gap={2}>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Nova taxa:</Text>
-                  <Text>{selectedItem.tax.toFixed(2)} %</Text>
-                </Flex>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Nova parcela:</Text>
-                  <Text>
-                    R$ {formatNumber(selectedItem.pmt.toFixed(2))}
-                  </Text>
-                </Flex>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Parcela restante:</Text>
-                  <Text>{selectedItem.parcelaRestante}</Text>
-                </Flex>
-              </Flex>
-            </Box>
-
-            {/* Economia do Cliente */}
-            <Box flex={1} bg={"#ffffff"} p={4} borderRadius={"12px"} boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}>
-              <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
-                Economia do cliente
-              </Text>
-              <Flex flexDirection="column" gap={2}>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Economia mensal:</Text>
-                  <Text>
-                    R${" "}
-                    {formatNumber(
-                      (selectedItem.parcelaAtual - selectedItem.pmt).toFixed(
-                        2
-                      )
-                    )}
-                  </Text>
-                </Flex>
-                <Flex justifyContent="space-between">
-                  <Text fontWeight={"500"}>Economia Total:</Text>
-                  <Text>
-                    R${" "}
-                    {formatNumber(
-                      (
-                        (selectedItem.parcelaAtual - selectedItem.pmt) *
-                        selectedItem.parcelaRestante
-                      ).toFixed(2)
-                    )}
-                  </Text>
-                </Flex>
-              </Flex>
-            </Box>
-          </Flex>
-        )}
-      </Flex>
-    </ModalBody>
-    <ModalFooter justifyContent="center">
-      <Tooltip
-        label="Capturar Tela"
-        placement="top"
-        hasArrow
-        bg="gray.800"
-        color="white"
-      >
-        <Button
-          bg="cyan.500"
-          _hover={{ bg: "cyan.600" }}
-          onClick={handleCaptured}
-          leftIcon={<FiCheckCircle />}
-          size="lg"
+        <ModalOverlay />
+        <ModalContent
+          bg={"#f4f4f4"}
+          borderRadius={"20px"}
+          boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
         >
-          Capturar
-        </Button>
-      </Tooltip>
-      <Button
-        ml={4}
-        bg="gray.500"
-        _hover={{ bg: "gray.600" }}
-        onClick={handleCloseModal}
-        leftIcon={<FiXCircle />}
-        size="lg"
-      >
-        Fechar
-      </Button>
-    </ModalFooter>
-  </ModalContent>
-</Modal>
+          <ModalHeader
+            fontSize="2xl"
+            fontWeight="bold"
+            color="cyan.500"
+            textAlign="center"
+          >
+            Resumo da Proposta
+          </ModalHeader>
+          <ModalCloseButton color="gray.500" />
+          <ModalBody ref={captureRef}>
+            <Flex direction="column" gap={4} marginBottom="20px">
+              <Flex gap={2}>
+                <Text fontWeight="bold">Banco:</Text>
+                <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
+              </Flex>
+              {selectedItem && (
+                <Flex direction={{ base: "column", md: "row" }} gap={4}>
+                  {/* Contrato Atual */}
+                  <Box
+                    flex={1}
+                    bg={"#ffffff"}
+                    p={4}
+                    borderRadius={"12px"}
+                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                  >
+                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                      Contrato Atual
+                    </Text>
+                    <Flex flexDirection="column" gap={2}>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Taxa Atual:</Text>
+                        <Text>{taxa} %</Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Parcela Atual:</Text>
+                        <Text>
+                          R${" "}
+                          {formatNumber(selectedItem.parcelaAtual.toFixed(2))}
+                        </Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>
+                          Saldo Devedor Aproximado:
+                        </Text>
+                        <Text>R$ {sd}</Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Parcela restante:</Text>
+                        <Text>{selectedItem.parcelaRestante}</Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
 
+                  <Box
+                    flex={1}
+                    bg={"#ffffff"}
+                    p={4}
+                    borderRadius={"12px"}
+                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                  >
+                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                      Novo contrato
+                    </Text>
+                    <Flex flexDirection="column" gap={2}>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Nova taxa:</Text>
+                        <Text>{selectedItem.tax.toFixed(2)} %</Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Nova parcela:</Text>
+                        <Text>
+                          R$ {formatNumber(selectedItem.pmt.toFixed(2))}
+                        </Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Parcela restante:</Text>
+                        <Text>{selectedItem.parcelaRestante}</Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+
+                  <Box
+                    flex={1}
+                    bg={"#ffffff"}
+                    p={4}
+                    borderRadius={"12px"}
+                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                  >
+                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                      Economia do cliente
+                    </Text>
+                    <Flex flexDirection="column" gap={2}>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Economia mensal:</Text>
+                        <Text>
+                          R${" "}
+                          {formatNumber(
+                            (
+                              selectedItem.parcelaAtual - selectedItem.pmt
+                            ).toFixed(2)
+                          )}
+                        </Text>
+                      </Flex>
+                      <Flex justifyContent="space-between">
+                        <Text fontWeight={"500"}>Economia Total:</Text>
+                        <Text>
+                          R${" "}
+                          {formatNumber(
+                            (
+                              (selectedItem.parcelaAtual - selectedItem.pmt) *
+                              selectedItem.parcelaRestante
+                            ).toFixed(2)
+                          )}
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </Flex>
+              )}
+            </Flex>
+          </ModalBody>
+          <ModalFooter justifyContent="center">
+            <Tooltip
+              label="Capturar Tela"
+              placement="top"
+              hasArrow
+              bg="gray.800"
+              color="white"
+            >
+              <Button
+                bg="cyan.500"
+                _hover={{ bg: "cyan.600" }}
+                onClick={handleCaptured}
+                leftIcon={<FiCheckCircle />}
+                size="lg"
+              >
+                Capturar
+              </Button>
+            </Tooltip>
+            <Button
+              ml={4}
+              bg="gray.500"
+              _hover={{ bg: "gray.600" }}
+              onClick={handleCloseModal}
+              leftIcon={<FiXCircle />}
+              size="lg"
+            >
+              Fechar
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
