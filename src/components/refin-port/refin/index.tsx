@@ -92,7 +92,7 @@ export const Port = ({ data, sd }: any) => {
   };
 
   // Método para lidar com a seleção de banco
-  const handleBankSelect = (bank: string) => {
+  const handleBankSelect = (bank: any) => {
     setSelectedBank(bank);
   };
 
