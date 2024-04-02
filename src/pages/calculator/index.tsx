@@ -295,22 +295,7 @@ export default function Calculadora() {
                   </Flex>
                 }
                   <Flex justify={"center"} margin={"0 auto"}>
-                  { portabilidade === true && 
-                    <Flex
-                      gap={"20px"}
-                      fontSize={"16px"}
-                      fontWeight={"700"}
-                      p={2}
-                      borderRadius={2}
-                      bg={"#636792"}
-                    >
-                      
-                      <Text color={"#4c1999"}>Inbursa</Text>
-                      <Text color={"#50d61f"}>PagBank</Text>
-                      <Text color={"#0e0f1b"}>C6</Text>
-                    
-                    </Flex>
-                     }
+                 
                   </Flex>
                   <Flex>
                     {refin === true && (
@@ -318,7 +303,7 @@ export default function Calculadora() {
                     )}
                     {portabilidade == true && (
                       <Box color={"white"} w={["100%", "100%"]}>
-                        <Text color={"white"}>Portabilidade</Text>
+                        
                         <Port color={"#1c308b"} data={ordenedList} sd={saldoDev} taxa={taxa} valorAtualParcela={valorAtualParcela}/>
                       </Box>
                     )}

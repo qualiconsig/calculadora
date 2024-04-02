@@ -32,6 +32,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   const [ordenedList, setOrdenedList] = useState<any[]>([]);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedBank, setSelectedBank] = useState<string | null>(null);
 
   const handleCaptured = () => {
     if (captureRef.current) {
@@ -90,7 +91,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
     setOrdenedList(formattedData);
   }, [data]);
-  console.log("saldo", data);
+
   const getRowColor = (nameBank: string) => {
     // Definindo a cor com base no nome do banco
     switch (nameBank) {
@@ -114,6 +115,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
     setSelectedItem(null);
     setIsModalOpen(false);
   };
+
   const formatNumber = (number: any) => {
     // Separar a parte inteira dos centavos
     const parts = number.toString().split(".");
@@ -124,9 +126,43 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
     // Retornar o número formatado
     return formattedInteger + formattedDecimal;
   };
-  console.log(selectedItem);
+
+  // Método para filtrar os dados com base no banco selecionado
+  const filterDataByBank = () => {
+    if (!selectedBank) return ordenedList; // Retorna os dados ordenados se nenhum banco estiver selecionado
+    return ordenedList.filter(item => item.nameBank === selectedBank);
+  };
+
+  // Método para lidar com a seleção de banco
+  const handleBankSelect = (bank: string) => {
+    setSelectedBank(bank);
+  };
+
   return (
     <>
+    <Flex justify="center" gap={4}>
+    <Text
+      color={selectedBank === "Inbursa" ? "blue.500" : "gray.500"}
+      cursor="pointer"
+      onClick={() => handleBankSelect("Inbursa")}
+    >
+      Inbursa
+    </Text>
+    <Text
+      color={selectedBank === "Pagbank" ? "blue.500" : "gray.500"}
+      cursor="pointer"
+      onClick={() => handleBankSelect("Pagbank")}
+    >
+      Pagbank
+    </Text>
+    <Text
+      color={selectedBank === "C6" ? "blue.500" : "gray.500"}
+      cursor="pointer"
+      onClick={() => handleBankSelect("C6")}
+    >
+      C6
+    </Text>
+  </Flex>
       <Box mt={4} mx="auto" maxWidth="800px">
         <Flex justify="center" align="center" mb={4}>
           <Text fontSize={["xl", "2xl"]} color="#bbd5ed" fontWeight="bold">
@@ -153,7 +189,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
               </Tr>
             </Thead>
             <Tbody>
-              {ordenedList.map((item, index) => (
+              {filterDataByBank().map((item, index) => (
                 <Tr
                   key={index}
                   onClick={() => handleRowClick(item)}
@@ -161,8 +197,8 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                   _hover={{ bg: getRowColor(item.nameBank) }}
                 >
                   <Td>{item.nameBank}</Td>
-                  <Td>{formatNumber(item.tax)}</Td>
-                  <Td>{formatNumber(item.pmt)}</Td>
+                  <Td>{formatNumber((item.tax).toFixed(2))}</Td>
+                  <Td>{formatNumber((item.pmt).toFixed(2))}</Td>
                   <Td>
                     {formatNumber((item.parcelaAtual - item.pmt).toFixed(2))}
                   </Td>

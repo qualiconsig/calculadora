@@ -17,7 +17,8 @@ export class CalculadoraGeral {
     const valorPresenteNumber = this.parseNumber(valorPresente);
     const result: number[] = [];
     this.taxas.forEach((taxa: number) => {
-      const tx = taxa / 100;
+      const tax = taxa + 0.05
+      const tx = tax / 100   ;
       let total = (valorPresenteNumber * tx) / (1 - Math.pow(1 + tx, -numeroParcelas));
       const pmtResult = parseFloat(total.toFixed(2));
       result.push(pmtResult);
