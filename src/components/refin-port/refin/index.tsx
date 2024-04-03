@@ -33,6 +33,7 @@ import { MdEmail, MdOutlineMailOutline } from "react-icons/md";
 import { FaPhone, FaPhoneAlt } from "react-icons/fa";
 import { LiaFileContractSolid } from "react-icons/lia";
 import { AiOutlineFileText } from "react-icons/ai";
+import { PiArrowFatLineUpDuotone, PiFunnelSimple } from "react-icons/pi";
 
 export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   const [screentext, setScreenText] = useState<string>("");
@@ -212,6 +213,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
             <Tbody>
               {ordenedList.map((item, index) => (
                 <Tr
+                h={'70px'}
                   key={index}
                   onClick={() => handleRowClick(item)}
                   cursor="pointer"
@@ -223,19 +225,21 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                   }
                 >
                   <Td>{item.nameBank}</Td>
-                  <Td>{formatNumber(item.tax.toFixed(2))}</Td>
-                  <Td>{formatNumber(item.pmt.toFixed(2))}</Td>
+                  <Td>{formatNumber(item.tax.toFixed(2))} %</Td>
+                  <Td>R$ {formatNumber(item.pmt.toFixed(2))}</Td>
                   <Td>
-                    {formatNumber((item.parcelaAtual - item.pmt).toFixed(2))}
+                    R$ {formatNumber((item.parcelaAtual - item.pmt).toFixed(2))}
                   </Td>
                   <Td>
-                    {formatNumber(
+                   R$ {formatNumber(
                       (
                         (item.parcelaAtual - item.pmt) *
                         item.parcelaRestante
                       ).toFixed(2)
                     )}{" "}
-                    <SlArrowDown />
+                    
+                    <Icon color={'white'} as={PiFunnelSimple}/>
+
                   </Td>
                 </Tr>
               ))}
