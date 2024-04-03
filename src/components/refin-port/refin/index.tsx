@@ -83,7 +83,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
   const handleCaptured = () => {
     setIsCapturing(true);
-    setTimeout(() => {
+    
       if (captureRef.current) {
         html2canvas(captureRef.current, { useCORS: true })
           .then((canvas) => {
@@ -100,7 +100,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       setIsCapturing(false);
                       setTimeout(() => {
                         setScreenText("");
-                      }, 2000);
+                      }, 3000);
                     })
                     .catch((err) => {
                       console.error(
@@ -127,7 +127,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
         console.error("Elemento de captura não encontrado.");
         setIsCapturing(false);
       }
-    }, 1000); // Espera um segundo para garantir a renderização completa
+    
   };
 
   const handleCloseModal = () => {
@@ -241,15 +241,14 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
           </Table>
         </Flex>
       </Box>
-      
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="6xl">
-        <ModalOverlay  />
+        <ModalOverlay />
         <ModalContent
-         
+          
           borderRadius={"20px"}
           boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
           bgGradient='linear(to-r, #87CEEB  ,#1E90FF )'
-                        
+          ref={captureRef}
         >
           <ModalHeader
             fontSize="2xl"
@@ -402,8 +401,44 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
               <Text fontWeight={'500'} color={'gray.800'}> 27.733.374/0001-72</Text>
             </Flex>
           </Flex>
-         
-          
+          <ModalFooter justifyContent="center">
+            <Flex>
+              {isCapturing ? (
+                <Center>
+                  <Spinner size="lg" />
+                  <Text ml={2}>Capturando...</Text>
+                </Center>
+              ) : (
+                <Tooltip
+                  label="Capturar Tela"
+                  placement="top"
+                  hasArrow
+                  bg="gray.800"
+                  color="white"
+                >
+                  <Button
+                    bg="cyan.500"
+                    _hover={{ bg: "cyan.600" }}
+                    onClick={handleCaptured}
+                    leftIcon={<FiCheckCircle />}
+                    size="lg"
+                  >
+                    Capturar
+                  </Button>
+                </Tooltip>
+              )}
+              <Button
+                ml={4}
+                bg="gray.500"
+                _hover={{ bg: "gray.600" }}
+                onClick={handleCloseModal}
+                leftIcon={<FiXCircle />}
+                size="lg"
+              >
+                Fechar
+              </Button>
+            </Flex>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

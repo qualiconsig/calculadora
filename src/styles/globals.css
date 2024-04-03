@@ -32,3 +32,18 @@
 
 
 }
+@media print {
+  .modal-content {
+    background: white;
+    box-shadow: none;
+  }
+  .modal-header {
+    display: none;
+  }
+  .modal-body {
+    padding: 0;
+  }
+  .modal-footer {
+    display: none;
+  }
+}
