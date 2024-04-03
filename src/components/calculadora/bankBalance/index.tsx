@@ -1,4 +1,5 @@
 
+import { AnimatedText } from "@/components/emManutenção";
 import { BoxForm } from "@/components/utils/formBox";
 import { useNameContextHook } from "@/context/pagbankContext";
 import { CalculadoraGeral } from "@/math/calculadora";
@@ -9,6 +10,7 @@ import { Box, Button, Flex, Input, Select, Text } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+
 
 export function CalculateRealBalance({ calculated, formreceived, taxx }: any) {
   const {setName, name} = useNameContextHook()
@@ -69,7 +71,7 @@ useEffect(()=>{
 },[valorEmprestimo])
   return (
     <Flex h={'40vh'} justify={'center'} align={'center'}>
-      <Text>Em desenvolvimento</Text>
+      <AnimatedText/>
     </Flex>
 
     // <form onSubmit={handleSubmit(onSubmit)}>
