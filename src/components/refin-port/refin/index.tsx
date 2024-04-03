@@ -24,6 +24,7 @@ import {
   Tooltip,
   Center,
   Spinner,
+  Icon,
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
@@ -249,9 +250,12 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
           borderRadius={"14px"}
           boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
           bgGradient='linear(to-r, #87CEEB  ,#1E90FF )'
-          ref={captureRef}
+          
           
         >
+          <Box  borderRadius={"14px"}
+        
+          bgGradient='linear(to-r, #87CEEB  ,#1E90FF )'  ref={captureRef}>
           <ModalHeader
             fontSize="2xl"
             fontWeight="bold"
@@ -288,7 +292,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                     bg={"#6699CC"}
                     p={4}
                     borderRadius={"12px"}
-                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                    
                   >
                     <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                       Contrato Atual
@@ -323,7 +327,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                     bg={"#6699CC"}
                     p={4}
                     borderRadius={"12px"}
-                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                   
                   >
                     <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                       Novo contrato
@@ -351,7 +355,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                     bg={"#6699CC"}
                     p={4}
                     borderRadius={"12px"}
-                    boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
+                  
                   >
                     <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                       Economia do cliente
@@ -387,8 +391,8 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
             </Flex>
           </ModalBody>
           <Flex justify={"center"} gap={5} mb="50px">
-            <Flex align={"center"} gap={1}>
-              <FaPhoneAlt />
+            <Flex justify={'center'} align={"center"} gap={1} fontSize={'15px'}>
+              <Icon alignContent={'center'}  textAlign={'center'}><FaPhoneAlt/></Icon>
               <Text fontWeight={"600"}>Contato</Text>
               <Text fontWeight={'500'} color={'gray.800'}>: 0800 888 5842</Text>
             </Flex>
@@ -403,46 +407,43 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
               <Text fontWeight={'500'} color={'gray.800'}> 27.733.374/0001-72</Text>
             </Flex>
           </Flex>
+          </Box>
+
           <ModalFooter justifyContent="center">
-            <Flex>
-              {isCapturing ? (
-                <Center>
-                  <Spinner size="lg" />
-                  <Text ml={2}>Capturando...</Text>
-                </Center>
-              ) : (
-                <Tooltip
-                  label="Capturar Tela"
-                  placement="top"
-                  hasArrow
-                  bg="gray.800"
-                  color="white"
-                >
-                  <Button
-                    bg="cyan.500"
-                    _hover={{ bg: "cyan.600" }}
-                    onClick={handleCaptured}
-                    leftIcon={<FiCheckCircle />}
-                    size="lg"
-                  >
-                    Capturar
-                  </Button>
-                </Tooltip>
-              )}
-              <Button
-                ml={4}
-                bg="gray.500"
-                _hover={{ bg: "gray.600" }}
-                onClick={handleCloseModal}
-                leftIcon={<FiXCircle />}
-                size="lg"
-              >
-                Fechar
-              </Button>
-            </Flex>
+            
+          <Flex>
+          
+               
+                
+               
+          </Flex>
+             <Button
+             bg="cyan.500"
+             _hover={{ bg: "cyan.600" }}
+             onClick={handleCaptured}
+             leftIcon={<FiCheckCircle />}
+             size="lg"
+           >
+             Capturar
+           </Button>
+        
+     
+       <Button
+         ml={4}
+         bg="gray.500"
+         _hover={{ bg: "gray.600" }}
+         onClick={handleCloseModal}
+         leftIcon={<FiXCircle />}
+         size="lg"
+       >
+         Fechar
+       </Button>
           </ModalFooter>
+          
         </ModalContent>
+        
       </Modal>
+      
     </>
   );
 };
