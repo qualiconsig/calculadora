@@ -248,12 +248,13 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
         <ModalContent
           borderRadius={"14px"}
           boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
+          bgGradient="linear(to-r, #87CEEB  ,#1E90FF )"
          
         >
           <Box
             borderRadius={"14px"}
             bgGradient="linear(to-r, #87CEEB  ,#1E90FF )"
-            h={'70vh'}
+          
             ref={captureRef}
           >
             <ModalHeader
@@ -288,27 +289,27 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                         Contrato Atual
                       </Text>
-                      <Flex flexDirection="column"  gap={2}>
-                        <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Taxa Atual:</Text>
-                          <Text>{taxa} %</Text>
+                      <Flex flexDirection="column"  gap={3}>
+                        <Flex>
+                          <Text flex={2} fontWeight={"500"}>Taxa Atual:</Text>
+                          <Text flex={1} >{taxa} %</Text>
                         </Flex>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Parcela Atual:</Text>
-                          <Text>
+                          <Text flex={2} fontWeight={"500"}>Parcela Atual:</Text>
+                          <Text flex={1}>
                             R${" "}
                             {formatNumber(selectedItem.parcelaAtual.toFixed(2))}
                           </Text>
                         </Flex>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>
+                          <Text flex={2} fontWeight={"500"}>
                             Saldo Devedor Aproximado:
                           </Text>
-                          <Text>R$ {sd}</Text>
+                          <Text flex={1}>R$ {sd}</Text>
                         </Flex>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Parcela restante:</Text>
-                          <Text>{selectedItem.parcelaRestante}</Text>
+                          <Text fontWeight={"500"} flex={2}>Parcela restante:</Text>
+                          <Text flex={1}>{selectedItem.parcelaRestante}</Text>
                         </Flex>
                       </Flex>
                     </Box>
@@ -319,30 +320,30 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       </Text>
                       <Flex flexDirection="column" gap={2}>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Nova taxa:</Text>
-                          <Text>{selectedItem.tax.toFixed(2)} %</Text>
+                          <Text flex={2} fontWeight={"500"}>Nova taxa:</Text>
+                          <Text flex={1}>{selectedItem.tax.toFixed(2)} %</Text>
                         </Flex>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Nova parcela:</Text>
-                          <Text>
+                          <Text flex={2} fontWeight={"500"}>Nova parcela:</Text>
+                          <Text flex={1}>
                             R$ {formatNumber(selectedItem.pmt.toFixed(2))}
                           </Text>
                         </Flex>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Parcela restante:</Text>
-                          <Text>{selectedItem.parcelaRestante}</Text>
+                          <Text flex={2} fontWeight={"500"}>Parcela restante:</Text>
+                          <Text flex={1}>{selectedItem.parcelaRestante}</Text>
                         </Flex>
                       </Flex>
                     </Box>
 
                     <Box flex={1} bg={"#6699CC"} p={4} borderRadius={"12px"}>
-                      <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                      <Text  fontWeight={"bold"} fontSize={"xl"} mb={4}>
                         Economia do cliente
                       </Text>
                       <Flex flexDirection="column" gap={2}>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Economia mensal:</Text>
-                          <Text color={'green.700'} fontWeight={'bold'}>
+                          <Text flex={2} fontWeight={"500"}>Economia mensal:</Text>
+                          <Text flex={1} color={'green.700'}  fontSize={['11px','12px', '12px' ,'14px', '16px']}fontWeight={'bold'}>
                             R${" "}
                             {formatNumber(
                               (
@@ -352,8 +353,8 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                           </Text>
                         </Flex>
                         <Flex justifyContent="space-between">
-                          <Text fontWeight={"500"}>Economia Total:</Text>
-                          <Text color={'green.700'} fontWeight={'bold'}>
+                          <Text flex={2} fontWeight={"500"}>Economia Total:</Text>
+                          <Text flex={1} color={'green.700'} fontSize={['11px','12px', '12px' ,'14px', '16px']} fontWeight={'bold'}>
                             R${" "}
                             {formatNumber(
                               (
