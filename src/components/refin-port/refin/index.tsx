@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useRef, useState } from "react";
 import qualiconsig from "../../../../public/qualiconsi.png";
 import html2canvas from "html2canvas";
@@ -100,7 +101,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       setIsCapturing(false);
                       setTimeout(() => {
                         setScreenText("");
-                      }, 3000);
+                      }, 4000);
                     })
                     .catch((err) => {
                       console.error(
@@ -241,14 +242,15 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
           </Table>
         </Flex>
       </Box>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="6xl">
+      <Modal isOpen={isModalOpen}  onClose={handleCloseModal} size="full">
         <ModalOverlay />
         <ModalContent
           
-          borderRadius={"20px"}
+          borderRadius={"14px"}
           boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
           bgGradient='linear(to-r, #87CEEB  ,#1E90FF )'
           ref={captureRef}
+          
         >
           <ModalHeader
             fontSize="2xl"
