@@ -154,30 +154,30 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
   return (
     <>
-      <Flex justify="center" gap={4}>
+      <Flex justify="center" gap={4} >
         <Text
-          color={selectedBank === "Inbursa" ? "purple" : "gray"}
+          color={selectedBank === "Inbursa" ? "purple" : "white"}
           cursor="pointer"
           onClick={() => handleBankSelect("Inbursa")}
         >
           Inbursa
         </Text>
         <Text
-          color={selectedBank === "Pagbank" ? "green" : "gray"}
+          color={selectedBank === "Pagbank" ? "green.400" : "white"}
           cursor="pointer"
           onClick={() => handleBankSelect("Pagbank")}
         >
           Pagbank
         </Text>
         <Text
-          color={selectedBank === "C6" ? "black" : "gray"}
+          color={selectedBank === "C6" ? "black" : "white"}
           cursor="pointer"
           onClick={() => handleBankSelect("C6")}
         >
           C6
         </Text>
         <Text
-          color={!selectedBank ? "blue" : "gray"}
+          color={!selectedBank ? "blue.400" : "white"}
           cursor="pointer"
           onClick={() => handleBankSelect(null)}
         >
