@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import qualiconsig from "../../../../public/qualiconsi.png";
 import html2canvas from "html2canvas";
@@ -29,9 +29,10 @@ import {
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
 import Image from "next/image";
-import { MdOutlineMailOutline } from "react-icons/md";
+import { MdEmail, MdOutlineMailOutline } from "react-icons/md";
 import { FaPhone, FaPhoneAlt } from "react-icons/fa";
 import { LiaFileContractSolid } from "react-icons/lia";
+import { AiOutlineFileText } from "react-icons/ai";
 
 export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   const [screentext, setScreenText] = useState<string>("");
@@ -85,51 +86,50 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
   const handleCaptured = () => {
     setIsCapturing(true);
-    
-      if (captureRef.current) {
-        html2canvas(captureRef.current, { useCORS: true })
-          .then((canvas) => {
-            if (canvas) {
-              canvas.toBlob((blob) => {
-                if (blob) {
-                  const item = new ClipboardItem({ "image/png": blob });
-                  navigator.clipboard
-                    .write([item])
-                    .then(() => {
-                      setScreenText(
-                        "Captura de tela copiada para a área de transferência!"
-                      );
-                      setIsCapturing(false);
-                      setTimeout(() => {
-                        setScreenText("");
-                      }, 4000);
-                    })
-                    .catch((err) => {
-                      console.error(
-                        "Erro ao copiar a captura de tela para a área de transferência:",
-                        err
-                      );
-                      setIsCapturing(false);
-                    });
-                } else {
-                  console.error("Erro ao criar o blob da captura.");
-                  setIsCapturing(false);
-                }
-              }, "image/png");
-            } else {
-              console.error("Erro ao criar o canvas da captura.");
-              setIsCapturing(false);
-            }
-          })
-          .catch((error) => {
-            console.error("Erro ao capturar a tela:", error);
+
+    if (captureRef.current) {
+      html2canvas(captureRef.current, { useCORS: true })
+        .then((canvas) => {
+          if (canvas) {
+            canvas.toBlob((blob) => {
+              if (blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard
+                  .write([item])
+                  .then(() => {
+                    setScreenText(
+                      "Captura de tela copiada para a área de transferência!"
+                    );
+                    setIsCapturing(false);
+                    setTimeout(() => {
+                      setScreenText("");
+                    }, 4000);
+                  })
+                  .catch((err) => {
+                    console.error(
+                      "Erro ao copiar a captura de tela para a área de transferência:",
+                      err
+                    );
+                    setIsCapturing(false);
+                  });
+              } else {
+                console.error("Erro ao criar o blob da captura.");
+                setIsCapturing(false);
+              }
+            }, "image/png");
+          } else {
+            console.error("Erro ao criar o canvas da captura.");
             setIsCapturing(false);
-          });
-      } else {
-        console.error("Elemento de captura não encontrado.");
-        setIsCapturing(false);
-      }
-    
+          }
+        })
+        .catch((error) => {
+          console.error("Erro ao capturar a tela:", error);
+          setIsCapturing(false);
+        });
+    } else {
+      console.error("Elemento de captura não encontrado.");
+      setIsCapturing(false);
+    }
   };
 
   const handleCloseModal = () => {
@@ -243,207 +243,187 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
           </Table>
         </Flex>
       </Box>
-      <Modal isOpen={isModalOpen}  onClose={handleCloseModal} size="full">
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="full">
         <ModalOverlay />
         <ModalContent
-          
           borderRadius={"14px"}
           boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
-          bgGradient='linear(to-r, #87CEEB  ,#1E90FF )'
-          
-          
+          bgGradient="linear(to-r, #87CEEB  ,#1E90FF )"
         >
-          <Box  borderRadius={"14px"}
-        
-          bgGradient='linear(to-r, #87CEEB  ,#1E90FF )'  ref={captureRef}>
-          <ModalHeader
-            fontSize="2xl"
-            fontWeight="bold"
-            color="cyan.500"
-            textAlign="center"
-            
+          <Box
+            borderRadius={"14px"}
+            bgGradient="linear(to-r, #87CEEB  ,#1E90FF )"
+            ref={captureRef}
           >
-            <Box w={"200px"} h={"100px"}>
-              <Image src={qualiconsig} alt="Logo quali" />
-            </Box>
-            <Text color={'blue.800'}>Resumo da Proposta</Text>
-            
-          </ModalHeader>
-          <ModalCloseButton color="gray.500" />
-          <ModalBody>
-            <Flex
-              direction="column"
-              gap={4}
-              marginBottom="20px"
-            
-              style={{
-                padding: "2px",
-              }}
+            <ModalHeader
+              fontSize="2xl"
+              fontWeight="bold"
+              color="cyan.500"
+              textAlign="center"
             >
-              <Flex gap={2}>
-                <Text fontWeight="bold">Banco:</Text>
-                <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
-              </Flex>
-              {selectedItem && (
-                <Flex direction={{ base: "column", md: "row" }} gap={4}>
-                  {/* Contrato Atual */}
-                  <Box
-                    flex={1}
-                    bg={"#6699CC"}
-                    p={4}
-                    borderRadius={"12px"}
-                    
-                  >
-                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
-                      Contrato Atual
-                    </Text>
-                    <Flex flexDirection="column" gap={2}>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Taxa Atual:</Text>
-                        <Text>{taxa} %</Text>
-                      </Flex>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Parcela Atual:</Text>
-                        <Text>
-                          R${" "}
-                          {formatNumber(selectedItem.parcelaAtual.toFixed(2))}
-                        </Text>
-                      </Flex>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>
-                          Saldo Devedor Aproximado:
-                        </Text>
-                        <Text>R$ {sd}</Text>
-                      </Flex>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Parcela restante:</Text>
-                        <Text>{selectedItem.parcelaRestante}</Text>
-                      </Flex>
-                    </Flex>
-                  </Box>
-
-                  <Box
-                    flex={1}
-                    bg={"#6699CC"}
-                    p={4}
-                    borderRadius={"12px"}
-                   
-                  >
-                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
-                      Novo contrato
-                    </Text>
-                    <Flex flexDirection="column" gap={2}>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Nova taxa:</Text>
-                        <Text>{selectedItem.tax.toFixed(2)} %</Text>
-                      </Flex>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Nova parcela:</Text>
-                        <Text>
-                          R$ {formatNumber(selectedItem.pmt.toFixed(2))}
-                        </Text>
-                      </Flex>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Parcela restante:</Text>
-                        <Text>{selectedItem.parcelaRestante}</Text>
-                      </Flex>
-                    </Flex>
-                  </Box>
-
-                  <Box
-                    flex={1}
-                    bg={"#6699CC"}
-                    p={4}
-                    borderRadius={"12px"}
-                  
-                  >
-                    <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
-                      Economia do cliente
-                    </Text>
-                    <Flex flexDirection="column" gap={2} >
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Economia mensal:</Text>
-                        <Text>
-                          R${" "}
-                          {formatNumber(
-                            (
-                              selectedItem.parcelaAtual - selectedItem.pmt
-                            ).toFixed(2)
-                          )}
-                        </Text>
-                      </Flex>
-                      <Flex justifyContent="space-between">
-                        <Text fontWeight={"500"}>Economia Total:</Text>
-                        <Text>
-                          R${" "}
-                          {formatNumber(
-                            (
-                              (selectedItem.parcelaAtual - selectedItem.pmt) *
-                              selectedItem.parcelaRestante
-                            ).toFixed(2)
-                          )}
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  </Box>
+              <Box w={"200px"} h={"100px"}>
+                <Image src={qualiconsig} alt="Logo quali" />
+              </Box>
+              <Text color={"blue.800"}>Resumo da Proposta</Text>
+            </ModalHeader>
+            <ModalCloseButton color="gray.500" />
+            <ModalBody>
+              <Flex
+                direction="column"
+                gap={4}
+                marginBottom="20px"
+                style={{
+                  padding: "2px",
+                }}
+              >
+                <Flex gap={2}>
+                  <Text fontWeight="bold">Banco:</Text>
+                  <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
                 </Flex>
-              )}
-            </Flex>
-          </ModalBody>
-          <Flex justify={"center"} gap={5} mb="50px">
-            <Flex justify={'center'} align={"center"} gap={1} fontSize={'15px'}>
-              <Icon alignContent={'center'}  textAlign={'center'}><FaPhoneAlt/></Icon>
-              <Text fontWeight={"600"}>Contato</Text>
-              <Text fontWeight={'500'} color={'gray.800'}>: 0800 888 5842</Text>
-            </Flex>
-            <Flex align={"center"} gap={1}>
-              <MdOutlineMailOutline />
-              <Text  fontWeight={'500'} color={'gray.800'}>contato@qualiconsig.com.br</Text>
-            </Flex>
-            <Flex align={"center"} gap={1}>
-              <LiaFileContractSolid />
+                {selectedItem && (
+                  <Flex direction={{ base: "column", md: "row" }} gap={4}>
+                    {/* Contrato Atual */}
+                    <Box flex={1} bg={"#6699CC"} p={4} borderRadius={"12px"}>
+                      <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                        Contrato Atual
+                      </Text>
+                      <Flex flexDirection="column" gap={2}>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Taxa Atual:</Text>
+                          <Text>{taxa} %</Text>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Parcela Atual:</Text>
+                          <Text>
+                            R${" "}
+                            {formatNumber(selectedItem.parcelaAtual.toFixed(2))}
+                          </Text>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>
+                            Saldo Devedor Aproximado:
+                          </Text>
+                          <Text>R$ {sd}</Text>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Parcela restante:</Text>
+                          <Text>{selectedItem.parcelaRestante}</Text>
+                        </Flex>
+                      </Flex>
+                    </Box>
 
-              <Text fontWeight={"600"}>CNPJ:</Text>
-              <Text fontWeight={'500'} color={'gray.800'}> 27.733.374/0001-72</Text>
+                    <Box flex={1} bg={"#6699CC"} p={4} borderRadius={"12px"}>
+                      <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                        Novo contrato
+                      </Text>
+                      <Flex flexDirection="column" gap={2}>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Nova taxa:</Text>
+                          <Text>{selectedItem.tax.toFixed(2)} %</Text>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Nova parcela:</Text>
+                          <Text>
+                            R$ {formatNumber(selectedItem.pmt.toFixed(2))}
+                          </Text>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Parcela restante:</Text>
+                          <Text>{selectedItem.parcelaRestante}</Text>
+                        </Flex>
+                      </Flex>
+                    </Box>
+
+                    <Box flex={1} bg={"#6699CC"} p={4} borderRadius={"12px"}>
+                      <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
+                        Economia do cliente
+                      </Text>
+                      <Flex flexDirection="column" gap={2}>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Economia mensal:</Text>
+                          <Text>
+                            R${" "}
+                            {formatNumber(
+                              (
+                                selectedItem.parcelaAtual - selectedItem.pmt
+                              ).toFixed(2)
+                            )}
+                          </Text>
+                        </Flex>
+                        <Flex justifyContent="space-between">
+                          <Text fontWeight={"500"}>Economia Total:</Text>
+                          <Text>
+                            R${" "}
+                            {formatNumber(
+                              (
+                                (selectedItem.parcelaAtual - selectedItem.pmt) *
+                                selectedItem.parcelaRestante
+                              ).toFixed(2)
+                            )}
+                          </Text>
+                        </Flex>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                )}
+              </Flex>
+            </ModalBody>
+            <Flex
+              justify="center"
+              gap={5}
+              mb="50px"
+              direction="row"
+              align="center"
+            >
+              <Flex align="center" gap={1} fontSize="15px">
+                <Icon as={FaPhoneAlt} alignContent="center" textAlign="center" />
+                <Text fontWeight="600">Contato</Text>
+                <Text fontWeight="500" color="gray.800">
+                  : 0800 888 5842
+                </Text>
+              </Flex>
+              <Flex align="center" gap={1}>
+                <Icon as={MdEmail} h="20px" mt={1} alignContent="center" />
+                <Text fontWeight="500" color="gray.800">
+                  contato@qualiconsig.com.br
+                </Text>
+              </Flex>
+              <Flex align="center" gap={1}>
+                <Icon as={AiOutlineFileText} />
+                <Text fontWeight="600">CNPJ:</Text>
+                <Text fontWeight="500" color="gray.800">
+                  {" "}
+                  27.733.374/0001-72
+                </Text>
+              </Flex>
             </Flex>
-          </Flex>
           </Box>
 
           <ModalFooter justifyContent="center">
-            
-          <Flex>
-          
-               
-                
-               
-          </Flex>
-             <Button
-             bg="cyan.500"
-             _hover={{ bg: "cyan.600" }}
-             onClick={handleCaptured}
-             leftIcon={<FiCheckCircle />}
-             size="lg"
-           >
-             Capturar
-           </Button>
-        
-     
-       <Button
-         ml={4}
-         bg="gray.500"
-         _hover={{ bg: "gray.600" }}
-         onClick={handleCloseModal}
-         leftIcon={<FiXCircle />}
-         size="lg"
-       >
-         Fechar
-       </Button>
+            <Flex></Flex>
+            <Button
+              bg="cyan.500"
+              _hover={{ bg: "cyan.600" }}
+              onClick={handleCaptured}
+              leftIcon={<FiCheckCircle />}
+              size="lg"
+            >
+              Capturar
+            </Button>
+
+            <Button
+              ml={4}
+              bg="gray.500"
+              _hover={{ bg: "gray.600" }}
+              onClick={handleCloseModal}
+              leftIcon={<FiXCircle />}
+              size="lg"
+            >
+              Fechar
+            </Button>
           </ModalFooter>
-          
         </ModalContent>
-        
       </Modal>
-      
     </>
   );
 };
