@@ -248,11 +248,12 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
         <ModalContent
           borderRadius={"14px"}
           boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
-          bgGradient="linear(to-r, #87CEEB  ,#1E90FF )"
+         
         >
           <Box
             borderRadius={"14px"}
             bgGradient="linear(to-r, #87CEEB  ,#1E90FF )"
+            h={'70vh'}
             ref={captureRef}
           >
             <ModalHeader
@@ -261,7 +262,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
               color="cyan.500"
               textAlign="center"
             >
-              <Box w={"200px"} h={"100px"}>
+              <Box w={"200px"} h={"100px"} mx="left" mb={10}>
                 <Image src={qualiconsig} alt="Logo quali" />
               </Box>
               <Text color={"blue.800"}>Resumo da Proposta</Text>
@@ -287,7 +288,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                         Contrato Atual
                       </Text>
-                      <Flex flexDirection="column" gap={2}>
+                      <Flex flexDirection="column"  gap={2}>
                         <Flex justifyContent="space-between">
                           <Text fontWeight={"500"}>Taxa Atual:</Text>
                           <Text>{taxa} %</Text>
@@ -341,7 +342,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       <Flex flexDirection="column" gap={2}>
                         <Flex justifyContent="space-between">
                           <Text fontWeight={"500"}>Economia mensal:</Text>
-                          <Text>
+                          <Text color={'green.700'} fontWeight={'bold'}>
                             R${" "}
                             {formatNumber(
                               (
@@ -352,7 +353,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                         </Flex>
                         <Flex justifyContent="space-between">
                           <Text fontWeight={"500"}>Economia Total:</Text>
-                          <Text>
+                          <Text color={'green.700'} fontWeight={'bold'}>
                             R${" "}
                             {formatNumber(
                               (
