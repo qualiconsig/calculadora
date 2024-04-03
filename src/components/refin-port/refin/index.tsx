@@ -289,7 +289,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                 {selectedItem && (
                   <Flex direction={{ base: "column", md: "row" }} gap={4}>
                     {/* Contrato Atual */}
-                    <Box flex={1} bg={"#6699CC"} p={4} borderRadius={"12px"}>
+                    <Box flex={1} bg={"#4e79a3"} color={'white'} p={4} borderRadius={"12px"}>
                       <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                         Contrato Atual
                       </Text>
@@ -318,7 +318,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       </Flex>
                     </Box>
 
-                    <Box flex={1} bg={"#6699CC"} p={4} borderRadius={"12px"}>
+                    <Box flex={1} bg={"#4e79a3"} color={'white'} p={4} borderRadius={"12px"}>
                       <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                         Novo contrato
                       </Text>
@@ -340,14 +340,14 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                       </Flex>
                     </Box>
 
-                    <Box flex={1} bg={"#6699CC"} p={4} borderRadius={"12px"}>
+                    <Box flex={1} bg={"#4e79a3"} color={'white'} p={4} borderRadius={"12px"}>
                       <Text  fontWeight={"bold"} fontSize={"xl"} mb={4}>
                         Economia do cliente
                       </Text>
                       <Flex flexDirection="column" gap={2}>
                         <Flex justifyContent="space-between">
                           <Text flex={2} fontWeight={"500"}>Economia mensal:</Text>
-                          <Text flex={1} color={'green.700'}  fontSize={['11px','12px', '12px' ,'14px', '16px']}fontWeight={'bold'}>
+                          <Text flex={1} color={'#fff'}  fontSize={['11px','12px', '12px' ,'14px', '16px']}fontWeight={'bold'}>
                             R${" "}
                             {formatNumber(
                               (
@@ -358,7 +358,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                         </Flex>
                         <Flex justifyContent="space-between">
                           <Text flex={2} fontWeight={"500"}>Economia Total:</Text>
-                          <Text flex={1} color={'green.700'} fontSize={['11px','12px', '12px' ,'14px', '16px']} fontWeight={'bold'}>
+                          <Text flex={1} color={'#fff'} fontSize={['11px','12px', '12px' ,'14px', '16px']} fontWeight={'bold'}>
                             R${" "}
                             {formatNumber(
                               (
