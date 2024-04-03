@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import qualiconsig from "../../../../public/qualiconsi.png";
 import html2canvas from "html2canvas";
 import {
   Box,
@@ -20,9 +21,15 @@ import {
   ModalCloseButton,
   Button,
   Tooltip,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
+import Image from "next/image";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { FaPhone, FaPhoneAlt } from "react-icons/fa";
+import { LiaFileContractSolid } from "react-icons/lia";
 
 export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   const [screentext, setScreenText] = useState<string>("");
@@ -31,6 +38,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedBank, setSelectedBank] = useState<string | null>(null);
+  const [isCapturing, setIsCapturing] = useState<boolean>(false);
 
   useEffect(() => {
     const formattedData: any[] = [];
@@ -72,40 +80,54 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
     setSelectedItem(item);
     setIsModalOpen(true);
   };
+
   const handleCaptured = () => {
-    if (captureRef.current) {
-      html2canvas(captureRef.current).then((canvas) => {
-        if (canvas) {
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const item = new ClipboardItem({ "image/png": blob });
-              navigator.clipboard
-                .write([item])
-                .then(() => {
-                  setScreenText(
-                    "Captura de tela copiada para a área de transferência!"
-                  );
-                  setTimeout(() => {
-                    setScreenText("");
-                  }, 2000);
-                })
-                .catch((err) => {
-                  console.error(
-                    "Erro ao copiar a captura de tela para a área de transferência:",
-                    err
-                  );
-                });
+    setIsCapturing(true);
+    setTimeout(() => {
+      if (captureRef.current) {
+        html2canvas(captureRef.current, { useCORS: true })
+          .then((canvas) => {
+            if (canvas) {
+              canvas.toBlob((blob) => {
+                if (blob) {
+                  const item = new ClipboardItem({ "image/png": blob });
+                  navigator.clipboard
+                    .write([item])
+                    .then(() => {
+                      setScreenText(
+                        "Captura de tela copiada para a área de transferência!"
+                      );
+                      setIsCapturing(false);
+                      setTimeout(() => {
+                        setScreenText("");
+                      }, 2000);
+                    })
+                    .catch((err) => {
+                      console.error(
+                        "Erro ao copiar a captura de tela para a área de transferência:",
+                        err
+                      );
+                      setIsCapturing(false);
+                    });
+                } else {
+                  console.error("Erro ao criar o blob da captura.");
+                  setIsCapturing(false);
+                }
+              }, "image/png");
             } else {
-              console.error("Erro ao criar o blob da captura.");
+              console.error("Erro ao criar o canvas da captura.");
+              setIsCapturing(false);
             }
-          }, "image/png");
-        } else {
-          console.error("Erro ao criar o canvas da captura.");
-        }
-      });
-    } else {
-      console.error("Elemento de captura não encontrado.");
-    }
+          })
+          .catch((error) => {
+            console.error("Erro ao capturar a tela:", error);
+            setIsCapturing(false);
+          });
+      } else {
+        console.error("Elemento de captura não encontrado.");
+        setIsCapturing(false);
+      }
+    }, 1000); // Espera um segundo para garantir a renderização completa
   };
 
   const handleCloseModal = () => {
@@ -130,7 +152,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
   return (
     <>
-     <Flex justify="center" gap={4}>
+      <Flex justify="center" gap={4}>
         <Text
           color={selectedBank === "Inbursa" ? "purple" : "gray"}
           cursor="pointer"
@@ -219,24 +241,40 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
           </Table>
         </Flex>
       </Box>
+      
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="6xl">
-        <ModalOverlay />
+        <ModalOverlay  />
         <ModalContent
-          bg={"#f4f4f4"}
+         
           borderRadius={"20px"}
           boxShadow={"0px 4px 12px rgba(0, 0, 0, 0.1)"}
+          bgGradient='linear(to-r, #87CEEB  ,#1E90FF )'
+                        
         >
           <ModalHeader
             fontSize="2xl"
             fontWeight="bold"
             color="cyan.500"
             textAlign="center"
+            
           >
-            Resumo da Proposta
+            <Box w={"200px"} h={"100px"}>
+              <Image src={qualiconsig} alt="Logo quali" />
+            </Box>
+            <Text color={'blue.800'}>Resumo da Proposta</Text>
+            
           </ModalHeader>
           <ModalCloseButton color="gray.500" />
-          <ModalBody ref={captureRef}>
-            <Flex direction="column" gap={4} marginBottom="20px">
+          <ModalBody>
+            <Flex
+              direction="column"
+              gap={4}
+              marginBottom="20px"
+            
+              style={{
+                padding: "2px",
+              }}
+            >
               <Flex gap={2}>
                 <Text fontWeight="bold">Banco:</Text>
                 <Text>{selectedItem ? selectedItem.nameBank : ""}</Text>
@@ -246,7 +284,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                   {/* Contrato Atual */}
                   <Box
                     flex={1}
-                    bg={"#ffffff"}
+                    bg={"#6699CC"}
                     p={4}
                     borderRadius={"12px"}
                     boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
@@ -281,7 +319,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
                   <Box
                     flex={1}
-                    bg={"#ffffff"}
+                    bg={"#6699CC"}
                     p={4}
                     borderRadius={"12px"}
                     boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
@@ -309,7 +347,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
 
                   <Box
                     flex={1}
-                    bg={"#ffffff"}
+                    bg={"#6699CC"}
                     p={4}
                     borderRadius={"12px"}
                     boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.1)"}
@@ -317,7 +355,7 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
                     <Text fontWeight={"bold"} fontSize={"xl"} mb={4}>
                       Economia do cliente
                     </Text>
-                    <Flex flexDirection="column" gap={2}>
+                    <Flex flexDirection="column" gap={2} >
                       <Flex justifyContent="space-between">
                         <Text fontWeight={"500"}>Economia mensal:</Text>
                         <Text>
@@ -347,38 +385,27 @@ export const Port = ({ color, data, sd, taxa, valorAtualParcela }: any) => {
               )}
             </Flex>
           </ModalBody>
-          <ModalFooter justifyContent="center">
-            <Tooltip
-              label="Capturar Tela"
-              placement="top"
-              hasArrow
-              bg="gray.800"
-              color="white"
-            >
-              <Button
-                bg="cyan.500"
-                _hover={{ bg: "cyan.600" }}
-                onClick={handleCaptured}
-                leftIcon={<FiCheckCircle />}
-                size="lg"
-              >
-                Capturar
-              </Button>
-            </Tooltip>
-            <Button
-              ml={4}
-              bg="gray.500"
-              _hover={{ bg: "gray.600" }}
-              onClick={handleCloseModal}
-              leftIcon={<FiXCircle />}
-              size="lg"
-            >
-              Fechar
-            </Button>
-          </ModalFooter>
+          <Flex justify={"center"} gap={5} mb="50px">
+            <Flex align={"center"} gap={1}>
+              <FaPhoneAlt />
+              <Text fontWeight={"600"}>Contato</Text>
+              <Text fontWeight={'500'} color={'gray.800'}>: 0800 888 5842</Text>
+            </Flex>
+            <Flex align={"center"} gap={1}>
+              <MdOutlineMailOutline />
+              <Text  fontWeight={'500'} color={'gray.800'}>contato@qualiconsig.com.br</Text>
+            </Flex>
+            <Flex align={"center"} gap={1}>
+              <LiaFileContractSolid />
+
+              <Text fontWeight={"600"}>CNPJ:</Text>
+              <Text fontWeight={'500'} color={'gray.800'}> 27.733.374/0001-72</Text>
+            </Flex>
+          </Flex>
+         
+          
         </ModalContent>
       </Modal>
-     
     </>
   );
 };
